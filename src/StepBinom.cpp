@@ -34,14 +34,14 @@ double StepBinom::cost(unsigned int startIndex, unsigned int endIndex) const {
     if(cs[endIndex] == 0 || cw[endIndex] * size - cs[endIndex] < 0.5 ) {
       return 0; // likelihood is 1 since all data are identically 0 or identically size
     } else {
-      return cw[endIndex] * size * log( cw[endIndex] * size ) - cs[endIndex] * log( cs[endIndex] ) - ( cw[endIndex] * size - cs[endIndex] ) * log( cw[endIndex] * size - cs[endIndex] );
+      return cw[endIndex] * size * log( cw[endIndex] * size ) - cs[endIndex] * log(double( cs[endIndex] )) - ( cw[endIndex] * size - cs[endIndex] ) * log( cw[endIndex] * size - cs[endIndex] );
     }
   } else {
     if(cs[endIndex] - cs[startIndex - 1] == 0 || (cw[endIndex] - cw[startIndex - 1]) * size - (cs[endIndex] - cs[startIndex - 1]) < 0.5 ) {
 //       Rprintf("    si = %d, ei = %d, cssi1 = %d, csei = %d\n", startIndex, endIndex, cs[startIndex - 1], cs[endIndex]);
       return 0; // likelihood is 1 since all data are identically 0 or identically size
     } else {
-      return (cw[endIndex] - cw[startIndex - 1]) * size * log( (cw[endIndex] - cw[startIndex - 1]) * size ) - (cs[endIndex] - cs[startIndex - 1]) * log( (cs[endIndex] - cs[startIndex - 1]) ) - ( (cw[endIndex] - cw[startIndex - 1]) * size - (cs[endIndex] - cs[startIndex - 1]) ) * log( (cw[endIndex] - cw[startIndex - 1]) * size - (cs[endIndex] - cs[startIndex - 1]) );
+      return (cw[endIndex] - cw[startIndex - 1]) * size * log( (cw[endIndex] - cw[startIndex - 1]) * size ) - (cs[endIndex] - cs[startIndex - 1]) * log(double( (cs[endIndex] - cs[startIndex - 1]) )) - ( (cw[endIndex] - cw[startIndex - 1]) * size - (cs[endIndex] - cs[startIndex - 1]) ) * log( (cw[endIndex] - cw[startIndex - 1]) * size - (cs[endIndex] - cs[startIndex - 1]) );
     }
   }
 }

@@ -33,13 +33,13 @@ double StepPoisson::cost(unsigned int startIndex, unsigned int endIndex) const {
     if(cs[endIndex] == 0) {
       return 0; // likelihood is 1
     } else {
-      return cs[endIndex] * ( 1 + log(cw[endIndex]) - log(cs[endIndex]) );
+      return cs[endIndex] * ( 1 + log(cw[endIndex]) - log(double(cs[endIndex])) );
     }
   } else {
     if(cs[endIndex] - cs[startIndex - 1] == 0) {
       return 0; // likelihood is 1
     } else {
-      return ( cs[endIndex] - cs[startIndex - 1] ) * ( 1 + log( cw[endIndex] - cw[startIndex - 1] ) - log( cs[endIndex] - cs[startIndex - 1] ) );
+      return ( cs[endIndex] - cs[startIndex - 1] ) * ( 1 + log( cw[endIndex] - cw[startIndex - 1] ) - log(double( cs[endIndex] - cs[startIndex - 1] )) );
     }
   }
 }

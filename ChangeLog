@@ -1,0 +1,11 @@
+2015-03-04 Thomas Hotz
+
+	* StepPoisson.cpp, StepBinom.cpp: added explicit casting in log() to ensure compilation under solaris
+
+	* DESCRIPTION: version is 1.0-1
+
+	* new release
+
+2015-02-16 Thomas Hotz
+
+	* first version (1.0) on CRAN

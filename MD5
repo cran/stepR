@@ -1,4 +1,5 @@
-ec7275114b9bd147ade84931f84920d6 *DESCRIPTION
+c88081e2e61b75d32766c5503e7fd896 *ChangeLog
+758a6ff41177e9b54205874e61372230 *DESCRIPTION
 49cca3083376f3f15009a169d3b5af4a *NAMESPACE
 53c7accf7fff3c1c74d9c2e202d642cc *R/MRC.R
 5ae33d3fa4815ed822a32ddd22e1bf94 *R/bessel.R
@@ -52,7 +53,7 @@ e0d51f40c0b1ed2bd5b004fd6f60095c *src/Bounds.h
 8cb58007fd3afb0f66427ffef7738223 *src/Jump.h
 d14d1973451b419a5dc0a550b2a78686 *src/Step.cpp
 1f1e85d0da452bc66c921ae362f88d95 *src/Step.h
-adf49c96339bed15ee3e3b738cca16d4 *src/StepBinom.cpp
+6cc97345df1499483eb19027b0db5e34 *src/StepBinom.cpp
 db4b67fa521b829dc31efd457107e2ce *src/StepBinom.h
 9d91bcb83d8095f1c701747c122f0919 *src/StepGauss.cpp
 8b3aeb23e47644fbbd0b7f3d1cc0bc7b *src/StepGauss.h
@@ -62,7 +63,7 @@ db4b67fa521b829dc31efd457107e2ce *src/StepBinom.h
 44dc7e1d1b118e927eeeec4665034a41 *src/StepGaussInhibit.h
 013dd9f775c6b1845e9343fc1af676c7 *src/StepGaussVar.cpp
 9b335e895e8032ad4ec2f41d9c86ced2 *src/StepGaussVar.h
-08db1b1e0593d56f3eb91914173cdfb4 *src/StepPoisson.cpp
+78b8959fbb056d4a06f623b887977b76 *src/StepPoisson.cpp
 c8b90fd60aea947fa7c5d9e43eb687be *src/StepPoisson.h
 43fc166bbc50e7730ffd6ea91656546d *src/TriArray.h
 380690169bf477bb0e4876f727ae1424 *tests/tests.R
