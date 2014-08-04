@@ -1,0 +1,35 @@
+# C routines that can be ".Call"ed
+useDynLib(stepR, .forwardGauss = forwardGauss, .pathGauss = pathGauss, .boundedGauss = boundedGauss, .forwardGaussVar = forwardGaussVar, .pathGaussVar = pathGaussVar, .boundedGaussVar = boundedGaussVar, .forwardGaussInhibit = forwardGaussInhibit, .pathGaussInhibit = pathGaussInhibit, .forwardGaussCut = forwardGaussCut, .pathGaussCut = pathGaussCut, .forwardPoisson = forwardPoisson, .pathPoisson = pathPoisson, .boundedPoisson = boundedPoisson, .forwardBinom = forwardBinom, .pathBinom = pathBinom, .boundedBinom = boundedBinom, .confBand = confBand)
+
+# specifying all other functions to be exported except ones starting with a .
+exportPattern("^[^\\.]")
+
+# import all functions exported from the specified packages to avoid naming conflicts with other packages
+import(stats)
+
+# register S3 methods
+S3method("[", bounds)
+S3method(print, dfilter)
+S3method(jumpint, stepfit)
+S3method(points, jumpint)
+S3method(confband, stepfit)
+S3method(lines, confband)
+S3method("[", stepblock)
+S3method(print, stepblock)
+S3method(plot, stepblock)
+S3method(lines, stepblock)
+S3method(stepbound, default)
+S3method(stepbound, stepcand)
+S3method("[", stepfit)
+S3method(print, stepfit)
+S3method(plot, stepfit)
+S3method(lines, stepfit)
+S3method(fitted, stepfit)
+S3method(residuals, stepfit)
+S3method(logLik, stepfit)
+S3method(steppath, default)
+S3method(steppath, stepcand)
+S3method("[[", steppath)
+S3method(length, steppath)
+S3method(print, steppath)
+S3method(logLik, steppath)
