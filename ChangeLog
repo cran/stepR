@@ -1,3 +1,23 @@
+2015-05-29 Thomas Hotz
+
+	* family.Rd: corrected explanation of param for family Gauss (reported by Florian Pein)
+
+	* steppath.R, tests.R: accordingly corrected calculation of logLik if that param had been specified and added test for its calculation
+
+	* sdrobnorm.Rd: explained reference (reported by Florian Pein)
+
+	* DESCRIPTION: version is 1.0-2, added Florian Pein as contributor, removed inaccurate date
+
+	* bug-fix release
+
+2015-05-21 Thomas Hotz
+
+	* jumpint.R: corrected plotting of confidence bands (reported and solution suggested by by Florian Pein)
+
+	* stebound.R: corrected R to C style indices for bounds.rev$start (also by Florian Pein)
+
+	* smuceR.R: corrected computation of alpha when MRC.1000 is used (also by Florian Pein)
+
 2015-03-04 Thomas Hotz
 
 	* StepPoisson.cpp, StepBinom.cpp: added explicit casting in log() to ensure compilation under solaris

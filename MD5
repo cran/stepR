@@ -1,5 +1,5 @@
-c88081e2e61b75d32766c5503e7fd896 *ChangeLog
-758a6ff41177e9b54205874e61372230 *DESCRIPTION
+73153ec5f457455f3378acf79c0cdead *ChangeLog
+5fd75a9ba6c13214b9ece7c1ca5af655 *DESCRIPTION
 49cca3083376f3f15009a169d3b5af4a *NAMESPACE
 53c7accf7fff3c1c74d9c2e202d642cc *R/MRC.R
 5ae33d3fa4815ed822a32ddd22e1bf94 *R/bessel.R
@@ -8,15 +8,15 @@ a35a6da9b16b266210d1c2df5894a98e *R/bounds.R
 59e81c89854cbb4c05df672f1605dbd1 *R/contMC.R
 3e0b9a68ef5b21dc09f1f25988ffb1ab *R/dfilter.R
 620bfd800ce229cbda1689824a7d60f8 *R/jsmurf.R
-b5ced6bce66b6eafe33f98238c6a5f9c *R/jumpint.R
+96216352757ea5c1a0b65e59fcf2a68c *R/jumpint.R
 3641c560d4147d509ee1e007fe539513 *R/neighbours.R
 a2550889158e7a418a307ee94e026344 *R/sdrobnorm.R
-f16baa9215b634ec1bc177577a90a826 *R/smuceR.R
+cbe548ef6290be446395605752dedfc3 *R/smuceR.R
 30d7733f62ca3db00f9d7a761616abda *R/stepblock.R
-868817b8d11330629b6046abb864c6d6 *R/stepbound.R
+5f72dd27163dc421eac3c312fcdd2b40 *R/stepbound.R
 9266dde715bf8166f5c2442d4c7c1b16 *R/stepcand.R
 350a3c7db49ccdf484da6a8effb3ead9 *R/stepfit.R
-cb364bec101e8bae10eec8bb14951c49 *R/steppath.R
+63671123c9bc3057895945186cf4fb91 *R/steppath.R
 8b9f7b0c24aa024a348cb9cfdbc874a3 *R/stepsel.R
 443ccdc88b0796d356312417f42df35b *R/sysdata.rda
 d6f91d9a403a51c53d655c788e66ddbf *R/transit.R
@@ -31,11 +31,11 @@ dfebcd5a1a2b049019d0d27fadc58082 *man/MRC1000.Rd
 c103765afcf690ac01cc50477b9b1725 *man/compare.Rd
 c9007d8ecd7048b739e40954dc9fc46b *man/contMC.Rd
 4923b585d03f5c31d1828f0a26e7c2da *man/dfilter.Rd
-207ad491aad80c3dc76c1f5a57edd02e *man/family.Rd
+f85dd43327d01c73c8022b87ab3cee0c *man/family.Rd
 3fcbf8b8cd9e55da1ae1f5883ef0f83e *man/jsmurf.Rd
 589e0ba15c8b30c91af2cd5b491660d9 *man/jumpint.Rd
 b04b56e95bb717bdca3085daf9a80b92 *man/neighbours.Rd
-54cad2fc3b020884b7b5d0d2e45ac7ea *man/sdrobnorm.Rd
+b92c6ef77e01bd4a16c63edfe8abc121 *man/sdrobnorm.Rd
 5636dcdb8da79940d70e4897e50fe9a8 *man/smuceR.Rd
 5b333d693daf372cdddd5704dfb580ae *man/stepR-package.Rd
 be3ea7bc18b0920cfba1bf38994a79af *man/stepblock.Rd
@@ -66,4 +66,4 @@ db4b67fa521b829dc31efd457107e2ce *src/StepBinom.h
 78b8959fbb056d4a06f623b887977b76 *src/StepPoisson.cpp
 c8b90fd60aea947fa7c5d9e43eb687be *src/StepPoisson.h
 43fc166bbc50e7730ffd6ea91656546d *src/TriArray.h
-380690169bf477bb0e4876f727ae1424 *tests/tests.R
+21faa2015b8932e5e7970e0db2c198b5 *tests/tests.R

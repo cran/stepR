@@ -280,6 +280,9 @@ stopifnot(isTRUE(print(all.eq(as.numeric(logLik(sp[[1]])), as.numeric(logLik( lm
 # check RSS of solution with 5 blocks
 stopifnot(isTRUE(print(all.eq(sp$cost[5], 
   sum( apply(rbind(c(0, sp[[5]]$rightEnd[-5]) + 1, sp[[5]]$rightEnd), 2, function(i) sum( (x[i[1]:i[2]] - mean(x[i[1]:i[2]]))^2 ) ) )))))
+# check likelihood if standard deviation is specified
+attr(sp$cand, "param") <- .1
+stopifnot(isTRUE(print(all.eq(as.numeric(logLik(sp)[1]), as.numeric(sum(dnorm(x, mean(x), .1, log = TRUE)))))))
 # check Poisson likelihood of solution with 1 block
 psp <- steppath(pcand)
 psp.const <- sum( lfactorial(y) ) # data dependent constant

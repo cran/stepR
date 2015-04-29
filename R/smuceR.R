@@ -20,7 +20,7 @@ function(y, x = 1:length(y), x0 = 2 * x[1] - x[2], q = thresh.smuceR(length(y)),
     if(missing(r)) {
       if(dyadic)
 	q <- quantile(stepR::MRC.asymptotic.dyadic, 1 - alpha)
-      else{
+      else {
 	if(length(y)<=1000)
 	  q <- quantile(stepR::MRC.1000, 1 - alpha)
 	else
@@ -33,8 +33,12 @@ function(y, x = 1:length(y), x0 = 2 * x[1] - x[2], q = thresh.smuceR(length(y)),
     if(missing(r)) {
       if(dyadic)
 	alpha <- 1 - ecdf(stepR::MRC.asymptotic.dyadic)(q)
-      else
-	alpha <- 1 - ecdf(stepR::MRC.asymptotic)(q)
+      else {
+	if(length(y)<=1000)
+          alpha <- 1 - ecdf(stepR::MRC.1000)(q)
+	else
+          alpha <- 1 - ecdf(stepR::MRC.asymptotic)(q)
+      }
     } else {
       alpha <- 1 - MRC.pvalue(q, length(y), r, lengths, "sqrt")
     }

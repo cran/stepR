@@ -16,6 +16,8 @@ sdrobnorm(x, p = c(0.25, 0.75), lag = 1)
 
 \details{
 Compares the difference between the estimated sample quantile corresponding to \code{p} after taking (\code{lag}ged) differences) with the corresponding theoretical quantiles of Gaussian white noise to determine the standard deviation under a Gaussian assumption; if the data contain (few) jumps, this will (on average) be a slight overestimate of the true standard deviation.
+
+This estimator has been inspired by equation (1.7) in \cite{Davies & Kovac (2001)}.
 }
 
 \value{

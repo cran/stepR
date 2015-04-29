@@ -37,6 +37,6 @@ function (sb, ...)
 "lines.confband" <-
 function(x, ...)
 {
-  lines(c(x$x, x$x[nrow(x)]), c(x$lower[1], pmin(x$lower, c(x$lower[-1], Inf))), type = "s", ...)
-  lines(c(x$x[1], x$x), c(pmax(x$upper, c(-Inf, x$upper[-nrow(x)])), x$upper[nrow(x)]), type = "S", ...)
+  lines(c(x$x, x$x[nrow(x)]), c(x$lower[1], pmin(x$lower, c(x$lower[-1], Inf))), type = "S", ...)
+  lines(c(x$x[1], x$x), c(pmax(x$upper, c(-Inf, x$upper[-nrow(x)])), x$upper[nrow(x)]), type = "s", ...)
 }

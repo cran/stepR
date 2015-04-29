@@ -166,7 +166,7 @@ function(object, df = NULL, nobs = object$cand$rightIndex[nrow(object$cand)], ..
 	df <- df + 1 # variance has also been estimated
 	-nobs / 2 * (1 + log(2 * pi * object$cost / nobs))
       } else {
-	-nobs / 2 * log(2 * pi * param) - object$cost / 2 / param^2
+	-nobs / 2 * log(2 * pi * param^2) - object$cost / 2 / param^2
       }
     },
     gaussKern = stop("family gaussKern not implemented"),

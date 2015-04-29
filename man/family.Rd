@@ -11,11 +11,11 @@ Families of distributions supported by package \code{stepR}.
 Package \code{stepR} supports several families of distributions (mainly exponential) to model the data, some of which require additional (fixed) parameters. In particular, the following families are available:
 
 \describe{
-\item{\code{"gauss"}}{normal distribution with unknown mean but known, fixed variance given as a single \code{\link{numeric}} (will be estimated using \code{\link{sdrobnorm}} if omitted); cf. \code{\link{dnorm}}.}
+\item{\code{"gauss"}}{normal distribution with unknown mean but known, fixed standard deviation given as a single \code{\link{numeric}} (will be estimated using \code{\link{sdrobnorm}} if omitted); cf. \code{\link{dnorm}}.}
 \item{\code{"gaussvar"}}{normal distribution with unknown variance but known, fixed mean assumed to be zero; cf. \code{\link{dnorm}}.}
 \item{\code{"poisson"}}{Poisson distribution with unknown intensity (no additional parameter); cf. \code{\link{dpois}}.}
 \item{\code{"binomial"}}{binomial distribution with unknown success probability but known, fixed size given as a single \code{\link{integer}}; cf. \code{\link{dbinom}}.}
-\item{\code{"gaussKern"}}{normal distribution with unknown mean and unknown, fixed variance (being estimated using \code{\link{sdrobnorm}}), after filtering with a fixed filter which needs to be given as the additional parameter (a \code{\link{dfilter}} object); cf. \code{\link{dfilter}}.}
+\item{\code{"gaussKern"}}{normal distribution with unknown mean and unknown, fixed standard deviation (being estimated using \code{\link{sdrobnorm}}), after filtering with a fixed filter which needs to be given as the additional parameter (a \code{\link{dfilter}} object); cf. \code{\link{dfilter}}.}
 }
 
 The family is selected via the \code{family} argument, providing the corresponding string, while the \code{param} argument contains the parameters if any.

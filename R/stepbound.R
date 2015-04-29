@@ -17,7 +17,7 @@ function (y, bounds, x = 1:length(y), x0 = 2 * x[1] - x[2], max.cand = NULL, fam
     bounds.rev$bounds <- bounds.rev$bounds[order(bounds.rev$bounds$li, bounds.rev$bounds$ri),]
     bounds.rev$start <- rep(NA, length(y))
     w <- which(diff(c(0,bounds.rev$bounds$li)) > 0)
-    bounds.rev$start[bounds.rev$bounds$li[w]] <- w
+    bounds.rev$start[bounds.rev$bounds$li[w]] <- w - 1 # R style to C style indices
     sb.rev <- stepbound.default(rev(y), bounds.rev, max.cand = max.cand, family = family, param = param, weights = weights, jumpint = FALSE, confband = FALSE, ...) # compute for reversed    data
 #     bounds$bounds$ri <- length(y) - bounds$bounds$ri + 1
 #     bounds$bounds$li <- length(y) - bounds$bounds$li + 1
