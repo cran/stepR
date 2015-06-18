@@ -33,9 +33,9 @@ Beware that these criteria compare \emph{blockwise}, i.e. they do \emph{not} com
 
 \encoding{utf8}
 \references{
-Elhaik, E., Graur, D., \enc{Josić}{Josic}, K. (2010). Comparative testing of DNA segmentation algorithms using benchmark simulations. \emph{Molecular Biology and Evolution} 27(5),
-1015-24.
-Futschik, A., Hotz, T., Munk, A. Sieling, H. (2013). Multiresolution DNA partitioning: statistical evidence for segments. \emph{Bioinformatics}, online first: \url{http://bioinformatics.oxfordjournals.org/content/early/2014/05/09/bioinformatics.btu180.full}.
+Elhaik, E., Graur, D., \enc{Josić}{Josic}, K. (2010). Comparative testing of DNA segmentation algorithms using benchmark simulations. \emph{Molecular Biology and Evolution} 27(5), 1015-24.
+
+Futschik, A., Hotz, T., Munk, A. Sieling, H. (2014). Multiresolution DNA partitioning: statistical evidence for segments. \emph{Bioinformatics},  30(16), 2255-2262.
 } 
 
 

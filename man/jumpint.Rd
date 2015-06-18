@@ -18,7 +18,7 @@ jumpint(sb, \dots)
 \method{points}{jumpint}(x, pch.left = NA, pch.right = NA, y.left = NA, y.right = NA, xpd = NA, \dots)
 confband(sb, \dots)
 \method{confband}{stepfit}(sb, \dots)
-\method{lines}{confband}(x, \dots)
+\method{lines}{confband}(x, dataspace = TRUE, \dots)
 }
 
 \arguments{
@@ -27,6 +27,7 @@ confband(sb, \dots)
 \item{pch.left, pch.right}{the plotting character to use for the left/right end of the interval with defaults \code{"("} and \code{"]"} (see parameter \code{pch} of \code{\link{par}})}
 \item{y.left, y.right}{at which height to plot the interval boundaries with default \code{\link{par}()$usr[3]}}
 \item{xpd}{see \code{\link{par}}}
+\item{dataspace}{\code{\link{logical}} determining whether the expected value should be plotted instead of the fitted parameter value, useful e.g. for \code{family = "binomial"}, where it will plot the fitted success probability times the number of trials per observation}
 \item{\dots}{arguments to be passed to generic methods}
 }
 

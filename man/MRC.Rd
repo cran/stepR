@@ -48,7 +48,7 @@ kMRC.quant(p, n, r, kern, lengths = 2^(floor(log2(n)):ceiling(log2(length(kern))
 \item{epsFFT}{a vector containg the FFT of the data set}
 \item{testFFT}{a matrix containing the FFTs of the intervals}
 \item{kern}{a filter kernel}
-\item{penalty}{penalty term in the multiresolution statistic: \code{"none"} for no penalty, \code{"log"} for penalizing the log-length of an interval, and \code{"sqrt"} for penalizing the square root of the MRC, see vignette for details; or a \code{\link{function}} taking two arguments, the first being the multiresolution coefficients, the second the interval lenghts}
+\item{penalty}{penalty term in the multiresolution statistic: \code{"none"} for no penalty, \code{"log"} for penalizing the log-length of an interval, and \code{"sqrt"} for penalizing the square root of the MRC; or a \code{\link{function}} taking two arguments, the first being the multiresolution coefficients, the second the interval lenghts}
 \item{norm}{how the partial sums should be normalised, by default \code{sqrt(lengths)}, so they are normalised to equal variance across all interval lengths}
 \item{p}{p-value}
 \item{\dots}{further arguments passed to function \code{\link{quantile}}}
@@ -66,9 +66,11 @@ kMRC.quant(p, n, r, kern, lengths = 2^(floor(log2(n)):ceiling(log2(length(kern))
 \encoding{utf8}
 \references{
 Davies, P.L., Kovac, A. (2001). Local extremes, runs, strings and multiresolution. \emph{The Annals of Statistics} 29, 1-65.
+
 \enc{Dümbgen}{Duembgen}, L., Spokoiny, V. (2001). Multiscale testing of qualitative hypotheses. \emph{The Annals of Statistics} 29, 124-152.
-Siegmund, D.O., Venkatraman, E.S. (1995). Using the generalized likelihood ratio statistic for sequential detection of a change-point. \emph{The Annals of Statistics}
-23, 255-271.
+
+Siegmund, D.O., Venkatraman, E.S. (1995). Using the generalized likelihood ratio statistic for sequential detection of a change-point. \emph{The Annals of Statistics} 23, 255-271.
+
 Siegmund, D.O., Yakir, B. (2000). Tail probabilities for the null distribution of scanning statistics. \emph{Bernoulli} 6, 191-213.
 }
 

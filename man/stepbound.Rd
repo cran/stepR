@@ -36,8 +36,9 @@ An object of class \code{\link{stepfit}} that contains the fit; if \code{jumpint
 
 \encoding{utf8}
 \references{
-Frick, K., Munk, A., and Sieling, H. (2013). Multiscale Change-Point Inference. \emph{eprint arXiv}:1301.7212 [stat.ME], \url{http://arxiv.org/abs/1301.7212}.
-Hotz, T., \enc{Schütte}{Schuette}, O., Sieling, H., Polupanow, T., Diederichsen, U., Steinem, C., and Munk, A. (2013). Idealizing Ion Channel Recordings by a Jump Segmentation Multiresolution Filter. (submitted)
+Frick, K., Munk, A., and Sieling, H. (2014). Multiscale Change-Point Inference. With discussion and rejoinder by the authors. \emph{Journal of the Royal Statistical Society, Series B} 76(3), 495-580.
+
+Hotz, T., \enc{Schütte}{Schuette}, O., Sieling, H., Polupanow, T., Diederichsen, U., Steinem, C., and Munk, A. (2013). Idealizing Ion Channel Recordings by a Jump Segmentation Multiresolution Filter. \emph{IEEE Transactions on NanoBioscience} 12(4), 376-386.
 }
 
 \examples{

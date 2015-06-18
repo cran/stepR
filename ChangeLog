@@ -1,4 +1,26 @@
-2015-05-29 Thomas Hotz
+2015-06-05 Thomas Hotz
+
+	* jumpint.R, jumpint.Rd: plotting of confidence bands for binomial is now possible for expected values (dataspace = TRUE) as in lines.stepfit.
+
+2015-06-04 Thomas Hotz
+
+	* stepR-package.Rd: added references Boysen et al., Yao
+
+	* stepbound.Rd: updated reference Frick et al.
+
+	* stepbound.Rd: updated reference Hotz, Schütte et al.
+
+	* stepR-package.Rd, compare.Rd, smuceR.Rd: updated reference Futschik et al.
+
+	* stepR-package.Rd, compare.Rd, MRC.Rd, smuceR.Rd, stepbound.Rd, stepsel.Rd: inserted "line breaks" into references
+
+	* bounds.Rd, MRC.Rd: no longer mention vignette (reported by Theresa Schüler)
+
+	* DESCRIPTION: version is 1.0-3, Timo Aspelmeier is new maintainer (and presumably another new author)
+
+	* ChangeLog: corrected dates of last two changes (reported by Timo Aspelmeier)
+
+2015-04-29 Thomas Hotz
 
 	* family.Rd: corrected explanation of param for family Gauss (reported by Florian Pein)
 
@@ -10,7 +32,7 @@
 
 	* bug-fix release
 
-2015-05-21 Thomas Hotz
+2015-04-21 Thomas Hotz
 
 	* jumpint.R: corrected plotting of confidence bands (reported and solution suggested by by Florian Pein)
 

@@ -31,12 +31,15 @@ function (sb, ...) UseMethod("confband")
 function (sb, ...)
 {
   if(is.null(attr(sb, "confband")))  stop("sb does not contain confidence bands")
-  attr(sb, "confband")
+  cb <- attr(sb, "confband")
+  for(a in c("family", "param")) attr(cb, a) <- attr(sb, a)
+  cb
 }
 
 "lines.confband" <-
-function(x, ...)
+function(x, dataspace = TRUE, ...)
 {
-  lines(c(x$x, x$x[nrow(x)]), c(x$lower[1], pmin(x$lower, c(x$lower[-1], Inf))), type = "S", ...)
-  lines(c(x$x[1], x$x), c(pmax(x$upper, c(-Inf, x$upper[-nrow(x)])), x$upper[nrow(x)]), type = "s", ...)
+  scale <- if(attr(x, "family") == "binomial" && dataspace) attr(x, "param") else 1
+  lines(c(x$x, x$x[nrow(x)]), scale * c(x$lower[1], pmin(x$lower, c(x$lower[-1], Inf))), type = "S", ...)
+  lines(c(x$x[1], x$x), scale * c(pmax(x$upper, c(-Inf, x$upper[-nrow(x)])), x$upper[nrow(x)]), type = "s", ...)
 }

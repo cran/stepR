@@ -36,7 +36,8 @@ For \code{thresh.smuceR}, a precomputed threshhold value, see reference.
 
 \references{
 Frick, K., Munk, A., and Sieling, H. (2014). Multiscale Change-Point Inference. With discussion and rejoinder by the authors. \emph{Journal of the Royal Statistical Society, Series B} 76(3), 495-580.
-Futschik, A., Hotz, T., Munk, A. Sieling, H. (2013). Multiresolution DNA partitioning: statistical evidence for segments. \emph{Bioinformatics}, online first: \url{http://bioinformatics.oxfordjournals.org/content/early/2014/05/09/bioinformatics.btu180.full}.
+
+Futschik, A., Hotz, T., Munk, A. Sieling, H. (2014). Multiresolution DNA partitioning: statistical evidence for segments. \emph{Bioinformatics},  30(16), 2255-2262.
 } 
 
 \examples{

@@ -43,6 +43,7 @@ To obtain the threshold described in Boysen et al.~(2009, Theorem~5), set \code{
 
 \references{
 Boysen, L., Kempe, A., Liebscher, V., Munk, A., Wittich, O. (2009). Consistencies and rates of convergence of jump-penalized least squares estimators. \emph{The Annals of Statistics} 37(1), 157-183.
+
 Yao, Y.-C. (1988). Estimating the number of change-points via Schwarz' criterion. \emph{Statistics & Probability Letters} 6, 181-189.
 }
 

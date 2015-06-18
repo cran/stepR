@@ -64,11 +64,18 @@ Maintainer: Thomas Hotz <thomas.hotz@tu-ilmenau.de>
 
 \encoding{utf8}
 \references{
+Boysen, L., Kempe, A., Liebscher, V., Munk, A., Wittich, O. (2009). Consistencies and rates of convergence of jump-penalized least squares estimators. \emph{The Annals of Statistics} 37(1), 157-183.
+
 Davies, P.L., Kovac, A. (2001). Local extremes, runs, strings and multiresolution. \emph{The Annals of Statistics} 29, 1-65.
+
 Frick, K., Munk, A., and Sieling, H. (2014). Multiscale Change-Point Inference. With discussion and rejoinder by the authors. \emph{Journal of the Royal Statistical Society, Series B} 76(3), 495-580.
+
 Friedrich, F., Kempe, A., Liebscher, V., Winkler, G. (2008). Complexity penalized M-estimation: fast computation. \emph{Journal of Computational and Graphical Statistics} 17(1), 201-224.
-Futschik, A., Hotz, T., Munk, A. Sieling, H. (2013). Multiresolution DNA partitioning: statistical evidence for segments. \emph{Bioinformatics}, online first: \url{http://bioinformatics.oxfordjournals.org/content/early/2014/05/09/bioinformatics.btu180.full}.
+
+Futschik, A., Hotz, T., Munk, A. Sieling, H. (2014). Multiresolution DNA partitioning: statistical evidence for segments. \emph{Bioinformatics},  30(16), 2255-2262.
+
 Hotz, T., \enc{Schütte}{Schuette}, O., Sieling, H., Polupanow, T., Diederichsen, U., Steinem, C., and Munk, A. (2013). Idealizing Ion Channel Recordings by a Jump Segmentation Multiresolution Filter. \emph{IEEE Transactions on NanoBioscience} 12(4), 376-386.
+
 VanDongen, A.M.J. (1996). A New Algorithm for Idealizing Single Ion Channel Data Containing Multiple Unknown Conductance Levels. \emph{Biophysical Journal} 70(3), 1303-1315.
 }
 

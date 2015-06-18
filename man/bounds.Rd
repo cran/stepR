@@ -27,7 +27,7 @@ bounds.MRC(y, q, alpha = 0.05, r = ceiling(50 / min(alpha, 1 - alpha)),
 \item{alpha}{level of significance}
 \item{r}{number of simulations to use to obtain quantile of MRC for specified \code{alpha}}
 \item{lengths}{vector of interval lengths to use, dyadic intervals by default}
-\item{penalty}{penalty term in the multiresolution statistic: \code{"none"} for no penalty, \code{"len"} for penalizing the length of an interval, \code{"var"} for penalizing the variance over an interval, and \code{"sqrt"} for penalizing the square root of the MRC, see vignette for details}
+\item{penalty}{penalty term in the multiresolution statistic: \code{"none"} for no penalty, \code{"len"} for penalizing the length of an interval, \code{"var"} for penalizing the variance over an interval, and \code{"sqrt"} for penalizing the square root of the MRC}
 \item{family, param}{specifies distribution of data, see \link{family}}
 \item{subset}{a subset of indices of \code{y} for which bounds should be aggregated}
 \item{name,pos}{under which name and where precomputed results are stored, or retrieved, see \code{\link{assign}}}
