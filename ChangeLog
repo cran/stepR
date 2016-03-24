@@ -1,3 +1,9 @@
+2016-03-24 Florian Pein
+
+	* NAMESPACE: added importFrom("graphics", "lines", "par", "plot", "points") (CRAN notes)
+	
+	* DESCRIPTION: added graphics as a dependency, version is 1.0-4
+
 2015-06-05 Thomas Hotz
 
 	* jumpint.R, jumpint.Rd: plotting of confidence bands for binomial is now possible for expected values (dataspace = TRUE) as in lines.stepfit.

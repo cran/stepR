@@ -4,8 +4,9 @@ useDynLib(stepR, .forwardGauss = forwardGauss, .pathGauss = pathGauss, .boundedG
 # specifying all other functions to be exported except ones starting with a .
 exportPattern("^[^\\.]")
 
-# import all functions exported from the specified packages to avoid naming conflicts with other packages
+# import functions exported from the specified packages to avoid naming conflicts with other packages
 import(stats)
+importFrom("graphics", "lines", "par", "plot", "points")
 
 # register S3 methods
 S3method("[", bounds)
