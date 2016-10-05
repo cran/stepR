@@ -172,7 +172,7 @@ SEXP Step::forward(unsigned int maxBlocks) const {
   SEXP rownames = allocVector(STRSXP, num);
   char buffer [8];
   for(unsigned int i = 0; i < num; i++) {
-    sprintf(buffer, "%d", i + 1);
+    std::sprintf(buffer, "%d", i + 1);
     SET_STRING_ELT(rownames, i, mkChar(buffer));
   }
   setAttrib(ret, R_RowNamesSymbol, rownames);

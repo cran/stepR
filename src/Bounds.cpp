@@ -1,7 +1,14 @@
-#include <R.h>
-#include <Rmath.h>
 
 #include "Bounds.h"
+
+#define NO_C_HEADERS true // disables the including of stdlib.h, stdio.h, limits.h, math.h by R.h
+#include <cstdlib>        // manually loading of cpp versions of disabled headers
+#include <cstdio>
+#include <climits>
+#include <cmath>
+
+#include <R.h>
+#include <Rmath.h>
 
 /***************
 * class LUBound

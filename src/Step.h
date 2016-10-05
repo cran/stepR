@@ -1,12 +1,21 @@
+
+#include "BinTree.h"
+#include "Jump.h"
+#include "TriArray.h"
+#include "Bounds.h"
+
+#include "Debug.h"
+
+#define NO_C_HEADERS true // disables the including of stdlib.h, stdio.h, limits.h, math.h by R.h
+#include <cstdlib>        // manually loading of cpp versions of disabled headers
+#include <cstdio>
+#include <climits>
+#include <cmath>
+
 #include <R.h>
 #include <Rinternals.h>
 #include <Rmath.h>
 
-#include "Debug.h"
-#include "Jump.h"
-#include "BinTree.h"
-#include "TriArray.h"
-#include "Bounds.h"
 
 /***************
 * class Step

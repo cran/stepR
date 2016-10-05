@@ -1,59 +1,76 @@
+2016-09-29 Florian Pein
+
+  * BinTree.h, Bounds.cpp, Jump.h, Step.h: added #define NO_C_HEADERS true to disable C headers;
+                                           replaced them by C++ headers cstdlib, cstdio, climits, cmath;
+                                           changed order of headers (R headers should be the last ones)
+
+  * Step.cpp, StepPoisson.cpp, StepGaussVar.cpp, StepBinom.cpp: added std:: in front of sprintf, log
+    (reported by http://www.stats.ox.ac.uk/pub/bdr/C++Solaris)
+
+  * BinTree.h: changed Stack__H into BINTREE__H
+
+  * Jump.cpp: removed R headers (they are included by Jump.h)
+
+  * CITATION: changed url to canonical format (https://CRAN.R-project.org/package=stepR)
+
+  * DESCRIPTION: version is 1.0-5
+
 2016-03-24 Florian Pein
 
-	* NAMESPACE: added importFrom("graphics", "lines", "par", "plot", "points") (CRAN notes)
-	
-	* DESCRIPTION: added graphics as a dependency, version is 1.0-4
+  * NAMESPACE: added importFrom("graphics", "lines", "par", "plot", "points") (CRAN notes)
+
+  * DESCRIPTION: added graphics as a dependency, version is 1.0-4
 
 2015-06-05 Thomas Hotz
 
-	* jumpint.R, jumpint.Rd: plotting of confidence bands for binomial is now possible for expected values (dataspace = TRUE) as in lines.stepfit.
+  * jumpint.R, jumpint.Rd: plotting of confidence bands for binomial is now possible for expected values (dataspace = TRUE) as in lines.stepfit.
 
 2015-06-04 Thomas Hotz
 
-	* stepR-package.Rd: added references Boysen et al., Yao
+  * stepR-package.Rd: added references Boysen et al., Yao
 
-	* stepbound.Rd: updated reference Frick et al.
+  * stepbound.Rd: updated reference Frick et al.
 
-	* stepbound.Rd: updated reference Hotz, Schütte et al.
+  * stepbound.Rd: updated reference Hotz, Schütte et al.
 
-	* stepR-package.Rd, compare.Rd, smuceR.Rd: updated reference Futschik et al.
+  * stepR-package.Rd, compare.Rd, smuceR.Rd: updated reference Futschik et al.
 
-	* stepR-package.Rd, compare.Rd, MRC.Rd, smuceR.Rd, stepbound.Rd, stepsel.Rd: inserted "line breaks" into references
+  * stepR-package.Rd, compare.Rd, MRC.Rd, smuceR.Rd, stepbound.Rd, stepsel.Rd: inserted "line breaks" into references
 
-	* bounds.Rd, MRC.Rd: no longer mention vignette (reported by Theresa Schüler)
+  * bounds.Rd, MRC.Rd: no longer mention vignette (reported by Theresa Schüler)
 
-	* DESCRIPTION: version is 1.0-3, Timo Aspelmeier is new maintainer (and presumably another new author)
+  * DESCRIPTION: version is 1.0-3, Timo Aspelmeier is new maintainer (and presumably another new author)
 
-	* ChangeLog: corrected dates of last two changes (reported by Timo Aspelmeier)
+  * ChangeLog: corrected dates of last two changes (reported by Timo Aspelmeier)
 
 2015-04-29 Thomas Hotz
 
-	* family.Rd: corrected explanation of param for family Gauss (reported by Florian Pein)
+  * family.Rd: corrected explanation of param for family Gauss (reported by Florian Pein)
 
-	* steppath.R, tests.R: accordingly corrected calculation of logLik if that param had been specified and added test for its calculation
+  * steppath.R, tests.R: accordingly corrected calculation of logLik if that param had been specified and added test for its calculation
 
-	* sdrobnorm.Rd: explained reference (reported by Florian Pein)
+  * sdrobnorm.Rd: explained reference (reported by Florian Pein)
 
-	* DESCRIPTION: version is 1.0-2, added Florian Pein as contributor, removed inaccurate date
+  * DESCRIPTION: version is 1.0-2, added Florian Pein as contributor, removed inaccurate date
 
-	* bug-fix release
+  * bug-fix release
 
 2015-04-21 Thomas Hotz
 
-	* jumpint.R: corrected plotting of confidence bands (reported and solution suggested by by Florian Pein)
+  * jumpint.R: corrected plotting of confidence bands (reported and solution suggested by by Florian Pein)
 
-	* stebound.R: corrected R to C style indices for bounds.rev$start (also by Florian Pein)
+  * stebound.R: corrected R to C style indices for bounds.rev$start (also by Florian Pein)
 
-	* smuceR.R: corrected computation of alpha when MRC.1000 is used (also by Florian Pein)
+  * smuceR.R: corrected computation of alpha when MRC.1000 is used (also by Florian Pein)
 
 2015-03-04 Thomas Hotz
 
-	* StepPoisson.cpp, StepBinom.cpp: added explicit casting in log() to ensure compilation under solaris
+  * StepPoisson.cpp, StepBinom.cpp: added explicit casting in log() to ensure compilation under solaris
 
-	* DESCRIPTION: version is 1.0-1
+  * DESCRIPTION: version is 1.0-1
 
-	* new release
+  * new release
 
 2015-02-16 Thomas Hotz
 
-	* first version (1.0) on CRAN
+  * first version (1.0) on CRAN

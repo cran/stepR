@@ -31,9 +31,9 @@ StepGaussVar::StepGaussVar(unsigned int n, double* xcss, double* xcsv, double* x
 double StepGaussVar::cost(unsigned int startIndex, unsigned int endIndex) const {
   if(startIndex == endIndex) return 0; else
   if(startIndex == 0) {
-    return csv[endIndex] * log( css[endIndex] / csv[endIndex] ); // all data
+    return csv[endIndex] * std::log( css[endIndex] / csv[endIndex] ); // all data
   } else {
-    return ( csv[endIndex] - csv[startIndex - 1] ) *  log( ( css[endIndex] - css[startIndex - 1] ) / ( csv[endIndex] - csv[startIndex - 1] ) );
+    return ( csv[endIndex] - csv[startIndex - 1] ) *  std::log( ( css[endIndex] - css[startIndex - 1] ) / ( csv[endIndex] - csv[startIndex - 1] ) );
   }
 }
 
@@ -55,11 +55,11 @@ double StepGaussVar::costBound(unsigned int startIndex, unsigned int endIndex, c
   if(startIndex == 0) {
     double var = fmax2( fmin2( css[endIndex] / csv[endIndex], bound.upper ), bound.lower );
     if(var == 0) { if(css[endIndex] == 0) return 0; else return R_PosInf; } else // assumes css = 0 implies var = 0
-      return csv[endIndex] * log(var) + css[endIndex] / var;
+      return csv[endIndex] * std::log(var) + css[endIndex] / var;
   } else {
     double var = fmax2( fmin2( ( css[endIndex] - css[startIndex - 1] ) / ( csv[endIndex] - csv[startIndex - 1] ), bound.upper ), bound.lower );
     if(var == 0) { if((css[endIndex] - css[startIndex - 1]) == 0) return 0; else return R_PosInf; } else // assumes css = 0 implies var = 0
-      return ( csv[endIndex] - csv[startIndex - 1] ) * log(var) + ( css[endIndex] - css[startIndex - 1] ) / var;
+      return ( csv[endIndex] - csv[startIndex - 1] ) * std::log(var) + ( css[endIndex] - css[startIndex - 1] ) / var;
   }
 }
 

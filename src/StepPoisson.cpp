@@ -33,13 +33,13 @@ double StepPoisson::cost(unsigned int startIndex, unsigned int endIndex) const {
     if(cs[endIndex] == 0) {
       return 0; // likelihood is 1
     } else {
-      return cs[endIndex] * ( 1 + log(cw[endIndex]) - log(double(cs[endIndex])) );
+      return cs[endIndex] * ( 1 + std::log(cw[endIndex]) - std::log(double(cs[endIndex])) );
     }
   } else {
     if(cs[endIndex] - cs[startIndex - 1] == 0) {
       return 0; // likelihood is 1
     } else {
-      return ( cs[endIndex] - cs[startIndex - 1] ) * ( 1 + log( cw[endIndex] - cw[startIndex - 1] ) - log(double( cs[endIndex] - cs[startIndex - 1] )) );
+      return ( cs[endIndex] - cs[startIndex - 1] ) * ( 1 + std::log( cw[endIndex] - cw[startIndex - 1] ) - std::log(double( cs[endIndex] - cs[startIndex - 1] )) );
     }
   }
 }
@@ -74,7 +74,7 @@ double StepPoisson::costBound(unsigned int startIndex, unsigned int endIndex, co
       return R_PosInf; // impossible
     } else {
       double mu = fmax2( fmin2( S / weight, bound.upper ), bound.lower );
-      return weight * mu - S * log(mu);
+      return weight * mu - S * std::log(mu);
     }
   }
 }

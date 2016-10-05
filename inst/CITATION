@@ -7,4 +7,4 @@ bibentry(bibtype = "Manual",
                     person("Hannes", "Sieling")),
          year = year,
          note = note,
-         url = "http://CRAN.R-project.org/package=stepR")
+         url = "https://CRAN.R-project.org/package=stepR")
