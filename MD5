@@ -1,5 +1,5 @@
 bdd013a41a20d9e866dbd888c3195ca1 *ChangeLog
-d0601bdd66e0ee19b22b608a38c17b83 *DESCRIPTION
+711ddfc0634eb017ebc4daabfb796401 *DESCRIPTION
 1a1a318d56b2cfb6790317c170182789 *NAMESPACE
 53c7accf7fff3c1c74d9c2e202d642cc *R/MRC.R
 5ae33d3fa4815ed822a32ddd22e1bf94 *R/bessel.R
@@ -45,14 +45,14 @@ e548d1face8209e7e9a116191544fe0d *man/stepfit.Rd
 afeb3269c713b8da6bb502a3ad8c21bf *man/steppath.Rd
 5626f03c2ccfee4bca1249f49c793ffe *man/stepsel.Rd
 b84ae77dfb1c0cae7c9d3bdec1abe84e *man/transit.Rd
-03f7ae228768ee3d8629e4bf38d9d124 *src/BinTree.h
-d5e2483b09531fac91feee04b29b0fb8 *src/Bounds.cpp
+d307224050fe28eb61a11bb0ed30cdda *src/BinTree.h
+7dc6450a57903c5d398dc812f214c0da *src/Bounds.cpp
 e0d51f40c0b1ed2bd5b004fd6f60095c *src/Bounds.h
 991798a1441105ad76c2a69c95b6065f *src/Debug.h
 362a638714e4948af0d6d9c481091c75 *src/Jump.cpp
-6f3b2bc4fd6027c1ffb9ee9e29e311a5 *src/Jump.h
+6da8c506d9a5eb8e0a9e7a1b9d8799ed *src/Jump.h
 869dba29c3d799777ef76e89c3938271 *src/Step.cpp
-865ddc4e106bff54b7c393bf61c99a2d *src/Step.h
+93b0c07f374418af5702945636c4df25 *src/Step.h
 56c41bcee89e21c3c86b1895fff90a4a *src/StepBinom.cpp
 db4b67fa521b829dc31efd457107e2ce *src/StepBinom.h
 9d91bcb83d8095f1c701747c122f0919 *src/StepGauss.cpp

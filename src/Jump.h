@@ -3,6 +3,8 @@
 #include <cstdio>
 #include <climits>
 #include <cmath>
+#include <cstddef>
+
 
 #include <R.h>
 #include <Rinternals.h>
