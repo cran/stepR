@@ -3,12 +3,18 @@
 
 #include <stack>
 
-#define NO_C_HEADERS true // disables the including of stdlib.h, stdio.h, limits.h, math.h by R.h
-#include <cstdlib>        // manually loading of cpp versions of disabled headers
-#include <cstdio>
-#include <climits>
-#include <cmath>
-#include <cstddef>
+#include <Rversion.h>
+#if defined(R_VERSION) && R_VERSION >= R_Version(3, 3, 0)
+  /* nothing */
+#else
+  #define NO_C_HEADERS true // disables the including of stdlib.h, stdio.h, limits.h, math.h by R.h
+  #include <cstdlib>        // manually loading of cpp versions of disabled headers
+  #include <cstdio>
+  #include <climits>
+  #include <cmath>
+  #include <cstddef>
+  using std::size_t;
+#endif
 
 #include <R.h>
 #include <Rinternals.h>
@@ -34,7 +40,7 @@ class BinTree {
         Node(T v, bool r) : value(v), left(NULL), right(NULL), isRight(r) {}
         Node(Node* l, Node* r, bool i) : left(l), right(r), isRight(i) {}
     };
-    
+
     mutable std::stack<Node*> s; // the stack records where we are in the tree
     Node *root; // the root
     int numNodes; // number of nodes
@@ -42,16 +48,16 @@ class BinTree {
   public:
 //     BinTree(const T& value); // constructor turning the root into a leaf
     BinTree(T value); // constructor turning the root into a leaf
-    
+
     bool isLeaf(); // is the current node a leaf?
 //     const T& getValue(); // get the current node's value
     T getValue(); // get the current node's value
 //     void setValue(const T& value); // set the current node's value
     void setValue(T value); // set the current node's value
     int size(); // get the number of nodes
-    
+
     int depth(); // get the depth of the current node
-    
+
     void up(); // go up
     void left(); // go down and left
     void right(); // go down and right
@@ -59,12 +65,12 @@ class BinTree {
     bool next(); // go to the next leaf to the right or return false if there is none
     void first(); // go to the first leaf
     void last(); // go to the last leaf
-    
+
 //     void addLeft(const T& left); // add left leaf
     void addLeft(T value); // add left leaf
 //     void addRight(const T& right); // add right leaf
     void addRight(T value); // add right leaf
-    
+
     BinTree(); // default constructor may not be called
 };
 
@@ -147,7 +153,7 @@ bool BinTree<T>::previous() {
       s.pop();
     }
   }
-  
+
   if(s.size() > 1) {
     // turn left
     s.pop();
@@ -172,7 +178,7 @@ bool BinTree<T>::next() {
       s.pop();
     }
   }
-  
+
   if(s.size() > 1) {
     // turn right
     s.pop();
@@ -219,14 +225,14 @@ void BinTree<T>::addLeft(T value) {
   if(isLeaf()) {
     Node *r = s.top(); // current will become right node
     s.pop();
-    
+
     Node *l = (Node*) R_alloc(1, sizeof(Node));
     *l = Node(value, FALSE); // new left node
-    
+
     Node *m = (Node*) R_alloc(1, sizeof(Node));
     *m = Node(l, r, r->isRight); // new middle node
     r->isRight = TRUE;
-    
+
     if(s.size() > 0) { // if we aren't at the top
       Node* top = s.top(); // the node to hold the new middle node
       if(m->isRight) {
@@ -237,7 +243,7 @@ void BinTree<T>::addLeft(T value) {
     } else {
       root = m;
     }
-    
+
     s.push(m);
     numNodes += 1;
   } else {
@@ -251,14 +257,14 @@ void BinTree<T>::addRight(T value) {
   if(isLeaf()) {
     Node *l = s.top(); // current will become left node
     s.pop();
-    
+
     Node *r = (Node*) R_alloc(1, sizeof(Node));
     *r = Node(value, TRUE); // new right node
-    
+
     Node *m = (Node*) R_alloc(1, sizeof(Node));
     *m = Node(l, r, l->isRight); // new middle node
     l->isRight = FALSE;
-    
+
     if(s.size() > 0) { // if we aren't at the top
       Node *top = s.top(); // the node to hold the new middle node
       if(m->isRight) {
@@ -269,7 +275,7 @@ void BinTree<T>::addRight(T value) {
     } else {
       root = m;
     }
-    
+
     s.push(m);
     numNodes += 1;
   } else {

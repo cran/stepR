@@ -1,12 +1,18 @@
 
 #include "Bounds.h"
 
-#define NO_C_HEADERS true // disables the including of stdlib.h, stdio.h, limits.h, math.h by R.h
-#include <cstdlib>        // manually loading of cpp versions of disabled headers
-#include <cstdio>
-#include <climits>
-#include <cmath>
-#include <cstddef>
+#include <Rversion.h>
+#if defined(R_VERSION) && R_VERSION >= R_Version(3, 3, 0)
+  /* nothing */
+#else
+  #define NO_C_HEADERS true // disables the including of stdlib.h, stdio.h, limits.h, math.h by R.h
+  #include <cstdlib>        // manually loading of cpp versions of disabled headers
+  #include <cstdio>
+  #include <climits>
+  #include <cmath>
+  #include <cstddef>
+  using std::size_t;
+#endif
 
 #include <R.h>
 #include <Rmath.h>
@@ -59,12 +65,12 @@ bool LUBound::feasible() {
 Bounds::Bounds(unsigned int n, int* xli, unsigned int ni, int* xri, double* xlb, double * xub) : N(n), li(xli), Ni(ni), ri(xri), lb(xlb), ub(xub) {
   // ensure there are bounds
   if(Ni < 1) error("no bounds specified!");
-  
+
   // allocate arrays
   nexti = (int*) R_alloc(N, sizeof(int));
   cri = (int*) R_alloc(N, sizeof(int));
   cb = (LUBound*) R_alloc(N, sizeof(LUBound));
-  
+
   // initialize ci, cri and cb, and check whether bounds can be fulfilled; corresponds to k = 0
   for(unsigned int i = 0; i < N; i++) {
     // initialize bound to be infinite

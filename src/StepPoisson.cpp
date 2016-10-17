@@ -1,4 +1,5 @@
 #include "StepPoisson.h"
+#include <cmath>
 
 /***************
 * class StepPoisson

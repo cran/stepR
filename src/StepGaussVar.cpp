@@ -1,4 +1,5 @@
 #include "StepGaussVar.h"
+#include <cmath>
 
 /***************
 * class StepGaussVar
