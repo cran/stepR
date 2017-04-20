@@ -1,3 +1,13 @@
+2017-04-18 Florian Pein
+
+  * registration of functions: added src/init.c, library is registered by useDynLib(stepR, .registration = TRUE),
+                               replaced exportPattern by export (CRAN Note),
+                               changed .NAME arguments in .Call statements in steppath.R, stepcand.R, stepbound.R
+
+  * Step.cpp: added missing PROTECT()s (reported by Tomas Kalibera, https://github.com/kalibera/rchk)
+  
+  * DESCRIPTION: version is 2.0-0
+
 2016-10-10 Florian Pein
 
   * BinTree.h, Bounds.cpp, Jump.h, Step.h: define NO_C_HEADERS only for R versions older than 3.3.0

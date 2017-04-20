@@ -1,6 +1,6 @@
-a817e8148a44de83bb3e1e85aba12877 *ChangeLog
-f9d82d5e5b451f6b979f1cc0e94807ac *DESCRIPTION
-1a1a318d56b2cfb6790317c170182789 *NAMESPACE
+64ad32ab14bcc534a3fa520ddc1db6d2 *ChangeLog
+a5a5e3020d4a4fd8eb0bf45c45696c31 *DESCRIPTION
+13ad2c6a9ba9019d558ff7e79af8f860 *NAMESPACE
 53c7accf7fff3c1c74d9c2e202d642cc *R/MRC.R
 5ae33d3fa4815ed822a32ddd22e1bf94 *R/bessel.R
 a35a6da9b16b266210d1c2df5894a98e *R/bounds.R
@@ -13,10 +13,10 @@ ffcf9651271bc57d598eb4f6b3f4b617 *R/jumpint.R
 a2550889158e7a418a307ee94e026344 *R/sdrobnorm.R
 cbe548ef6290be446395605752dedfc3 *R/smuceR.R
 30d7733f62ca3db00f9d7a761616abda *R/stepblock.R
-5f72dd27163dc421eac3c312fcdd2b40 *R/stepbound.R
-9266dde715bf8166f5c2442d4c7c1b16 *R/stepcand.R
+411a4c66411e9b02930b4d90ddc2bf65 *R/stepbound.R
+69c21cb81def4878853375d4ae7cd785 *R/stepcand.R
 350a3c7db49ccdf484da6a8effb3ead9 *R/stepfit.R
-63671123c9bc3057895945186cf4fb91 *R/steppath.R
+ddb80f460a0f5a9f6ef15d48d6c391cc *R/steppath.R
 8b9f7b0c24aa024a348cb9cfdbc874a3 *R/stepsel.R
 443ccdc88b0796d356312417f42df35b *R/sysdata.rda
 d6f91d9a403a51c53d655c788e66ddbf *R/transit.R
@@ -51,7 +51,7 @@ e0d51f40c0b1ed2bd5b004fd6f60095c *src/Bounds.h
 991798a1441105ad76c2a69c95b6065f *src/Debug.h
 362a638714e4948af0d6d9c481091c75 *src/Jump.cpp
 f0d777d526cf785cd638f054f9382134 *src/Jump.h
-980de8fba455ddb0d7e6eb37ca2b3232 *src/Step.cpp
+d5d7a827c294d585dca16b1194ec1333 *src/Step.cpp
 1c8cb606aeebc77077256a982fc77995 *src/Step.h
 a2abfc48c0a780837c7f841deb7621f6 *src/StepBinom.cpp
 db4b67fa521b829dc31efd457107e2ce *src/StepBinom.h
@@ -66,4 +66,5 @@ ba449be5fd59c307ee9b2935461b5a97 *src/StepGaussVar.cpp
 278625ffa2f7f2633a294245455932eb *src/StepPoisson.cpp
 c8b90fd60aea947fa7c5d9e43eb687be *src/StepPoisson.h
 43fc166bbc50e7730ffd6ea91656546d *src/TriArray.h
+a65dccc48f14800a25f4535cd8e382f5 *src/init.c
 21faa2015b8932e5e7970e0db2c198b5 *tests/tests.R

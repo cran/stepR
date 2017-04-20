@@ -67,15 +67,15 @@ Jump Step::findCandidate(const Jump& prev, const Jump& next) const {
         cind = i;
       }
     }
-/*    if(cim <= -1) {
-//       Rprintf(" fullcost = %f, cost(%d:%d) = %f, cost(%d:%d) = %f, pim = %f\n", fullcost, prev.rightIndex + 2, next.rightIndex, cost(prev.rightIndex + 1, next.rightIndex - 1), next.rightIndex + 1, next.rightIndex + 1, cost(next.rightIndex, next.rightIndex), pim);
-      error("No potential candidate found between %d and %d!", prev.rightIndex + 2, next.rightIndex + 1); // R style indices
-    }*/
-  }
-/*  Rprintf("   Found a candidate\n");
+    /*    if(cim <= -1) {
+    //       Rprintf(" fullcost = %f, cost(%d:%d) = %f, cost(%d:%d) = %f, pim = %f\n", fullcost, prev.rightIndex + 2, next.rightIndex, cost(prev.rightIndex + 1, next.rightIndex - 1), next.rightIndex + 1, next.rightIndex + 1, cost(next.rightIndex, next.rightIndex), pim);
+    error("No potential candidate found between %d and %d!", prev.rightIndex + 2, next.rightIndex + 1); // R style indices
+  }*/
+}
+  /*  Rprintf("   Found a candidate\n");
   Rprintf("   rightIndex = %d, improve = %f\n", cind, cim);*/
   return Jump(NA_INTEGER, cind, cim);
-}
+  }
 
 /*************
 * forward
@@ -133,7 +133,7 @@ SEXP Step::forward(unsigned int maxBlocks) const {
       // select best candidate
       cand.number = num;
       bt.setValue(cand);
-//       Rprintf(" num = %d, rightIndex = %d\n", num, cand.rightIndex);
+      //       Rprintf(" num = %d, rightIndex = %d\n", num, cand.rightIndex);
       num++;
       
       // add two more potential candidates (note that there will never be two potential candidates next to each other)
@@ -164,6 +164,7 @@ SEXP Step::forward(unsigned int maxBlocks) const {
   PROTECT(ret);
   
   SEXP names = allocVector(STRSXP, 4);
+  PROTECT(names);
   SET_STRING_ELT(names, 0, mkChar("rightIndex"));
   SET_STRING_ELT(names, 1, mkChar("number"));
   SET_STRING_ELT(names, 2, mkChar("depth"));
@@ -171,14 +172,16 @@ SEXP Step::forward(unsigned int maxBlocks) const {
   ret = namesgets(ret, names);
   
   SEXP rownames = allocVector(STRSXP, num);
+  PROTECT(rownames);
   char buffer [8];
   for(unsigned int i = 0; i < num; i++) {
     std::sprintf(buffer, "%d", i + 1);
     SET_STRING_ELT(rownames, i, mkChar(buffer));
   }
   setAttrib(ret, R_RowNamesSymbol, rownames);
-    
+  
   SEXP sclass = allocVector(STRSXP, 1);
+  PROTECT(sclass);
   SET_STRING_ELT(sclass, 0, mkChar("data.frame"));
   classgets(ret, sclass);
   
@@ -203,17 +206,18 @@ SEXP Step::forward(unsigned int maxBlocks) const {
     xd[i] = depth[i];
     xri[i] = rightIndex[i] + 1;  // turn from C-style index into R-style index
     xim[i] = improve[i];
-//     Rprintf(" number = %d, depth = %d, rightIndex = %d\n", number[i], depth[i], rightIndex[i]);
+    //     Rprintf(" number = %d, depth = %d, rightIndex = %d\n", number[i], depth[i], rightIndex[i]);
   }
   
   SEXP scost = allocVector(REALSXP, 1);
+  PROTECT(scost);
   REAL(scost)[0] = totalcost;
   setAttrib(ret, install("cost"), scost);
   
-  UNPROTECT(1);
+  UNPROTECT(5);
   
   return ret;
-
+  
 }
 
 /*************
@@ -232,11 +236,11 @@ SEXP Step::forward(unsigned int maxBlocks) const {
 * totalcost : the total cost if all candidates were used
 ****************/
 void Step::flattenTree(BinTree<Jump>* bt, int* number, int* depth, int* rightIndex, double* improve, double &totalcost) const {
-//   Rprintf("Flattening Tree\n");
+  //   Rprintf("Flattening Tree\n");
   // go to first leaf
   bt->first();
   Jump value = bt->getValue();
-//   Rprintf(" depth = %d, rightIndex = %d\n", bt->depth(), value.rightIndex);
+  //   Rprintf(" depth = %d, rightIndex = %d\n", bt->depth(), value.rightIndex);
   int i = 0;
   int leftIndex = 0;
   totalcost = 0;
@@ -252,7 +256,7 @@ void Step::flattenTree(BinTree<Jump>* bt, int* number, int* depth, int* rightInd
   
   while(bt->next()) {
     value = bt->getValue();
-//     Rprintf(" number = %d, depth = %d, rightIndex = %d\n", value.number, bt->depth(), value.rightIndex);
+    //     Rprintf(" number = %d, depth = %d, rightIndex = %d\n", value.number, bt->depth(), value.rightIndex);
     if(value.number != NA_INTEGER) { // if indeed selected
       number[i] = value.number;
       depth[i] = bt->depth();
@@ -282,7 +286,7 @@ SEXP Step::path(unsigned int maxBlocks) const {
   // TODO: thus generalising TriArray appropriately allows to save some memory
   TriArray<double> B(N - 1); // the minimal values: B[k, n] is the cost of the optimal fit up to time n+1 using k+1 jumps
   TriArray<int> r(N - 1); // the index of the optimal (last) jump corresponding to B[k, n], i.e.
-                           // B[k, n] = B[k - 1, r[k, n] - 1] + D[r[k, n] + 1, n + 1]
+  // B[k, n] = B[k - 1, r[k, n] - 1] + D[r[k, n] + 1, n + 1]
   TriArrayFF<int> p(N - 1); // the solution path, i.e. p[i, k] is the (i+1)th jump in the solution having k+1 jumps
   
   // check maxBlocks
@@ -346,18 +350,22 @@ SEXP Step::path(unsigned int maxBlocks) const {
   PROTECT(ret);
   
   SEXP names = allocVector(STRSXP, 2);
+  PROTECT(names);
   SET_STRING_ELT(names, 0, mkChar("path")); // contains list of vectors comprising right Indices
   SET_STRING_ELT(names, 1, mkChar("cost"));
   ret = namesgets(ret, names);
   
   SEXP path = allocVector(VECSXP, num);
+  PROTECT(path);
   SET_VECTOR_ELT(ret, 0, path);
   
   SEXP retCost = allocVector(REALSXP, num);
+  PROTECT(retCost);
   SET_VECTOR_ELT(ret, 1, retCost);
   double *xcost = REAL(retCost);
   
   SEXP solutionk = allocVector(INTSXP, 1); // vector of this solution's right indices 
+  PROTECT(solutionk);
   SET_VECTOR_ELT(path, 0, solutionk);
   int *xsolutionk = INTEGER(solutionk);
   
@@ -377,7 +385,7 @@ SEXP Step::path(unsigned int maxBlocks) const {
     xsolutionk[k] = N; // add right end of last block, turn from C-style index into R-style index
   }
   
-  UNPROTECT(1);
+  UNPROTECT(5);
   
   return(ret);
 }
@@ -408,50 +416,50 @@ SEXP Step::bounded(Bounds& B) const {
   K[-2 + Koffset] = 0; K[-1 + Koffset] = 0; // for "negative number of jumps"
   for(k = 0; k < N; k++) { // find constant solution over [0, ..., k]
     J[k] = R_PosInf;
-    #ifdef DEBUGbounded
+#ifdef DEBUGbounded
     Rprintf("s = %d, k = %d\n", 0, k);
-    #endif
+#endif
     for(l = k - 1; l > 0; l--) { // precompute bounds on [l, k] for l > 0
       B.current(l, k);
     }
     curD = costBound(0, k, B.current(0, k));
-    #ifdef DEBUGbounded
+#ifdef DEBUGbounded
     Rprintf("  l = %d, curD = %4.3e, J[l] = %4.3e\n", -1, curD, 0);
-    #endif
+#endif
     if(curD == R_PosInf) break; // no constant solution on [0, ..., k] possible
     curJ = curD;
-    #ifdef DEBUGbounded
+#ifdef DEBUGbounded
     Rprintf("  curJ = %4.3e, curJ < J[k] = %d\n", curJ, curJ < J[k]);
-    #endif
+#endif
     if(curJ < J[k]) { // improvement
       J[k] = curJ;
       L[k] = -1;
       V[k] = estBound(0, k, B.current(0, k));
     }
     K[0 + Koffset] = k;
-    #ifdef DEBUGbounded
+#ifdef DEBUGbounded
     Rprintf("s = %d, k = %d feasible\n", 0, k);
-    #endif
+#endif
   }
   if(K[s + Koffset] != N - 1) { // found no feasible solution on [0, ..., N-1]
     // calculations with at least one jump
     for(s = 1; s < N; s++) { // try to find solution with s jumps
       for(k = K[s - 1 + Koffset] + 1; k < N; k++) { // find solution over [0, ..., k]
         J[k] = R_PosInf;
-        #ifdef DEBUGbounded
+#ifdef DEBUGbounded
         Rprintf("s = %d, k = %d\n", s, k);
-        #endif
+#endif
         for(l = k - 1; l >= (int) K[s - 1 + Koffset] + 1; l--) { // precompute bounds on [l, k] for l > K[s - 1 + Koffset]
           B.current(l, k);
         }
-        #ifdef DEBUGbounded
+#ifdef DEBUGbounded
         Rprintf("K[s - 1 + Koffset] = %d, K[s - 2 + Koffset] = %d\n", K[s - 1 + Koffset], K[s - 2 + Koffset]);
-        #endif
+#endif
         for(l = (int) K[s - 1 + Koffset]; l >= (int) K[s - 2 + Koffset]; l--) { // try for last jump at l, i.e. right index of second but last block
           curD = costBound(l + 1, k, B.current(l + 1, k));
-          #ifdef DEBUGbounded
+#ifdef DEBUGbounded
           Rprintf("  l = %d, curD = %4.3e, J[l] = %4.3e\n", l, curD, J[l]);
-          #endif
+#endif
           if(curD == R_PosInf) break; // no constant solution on [l+1, ..., k] possible
           curJ = J[l] + curD;
           if(curJ < J[k]) { // improvement
@@ -463,9 +471,9 @@ SEXP Step::bounded(Bounds& B) const {
         if(J[k] == R_PosInf) break; // no feasible solution with s jumps on [0, ..., k]
         if(k == K[s - 1 + Koffset] + 1) KL[s + KLoffset] = l + 1;
         K[s + Koffset] = k;
-        #ifdef DEBUGbounded
+#ifdef DEBUGbounded
         Rprintf("s = %d, k = %d feasible\n", s, k);
-        #endif
+#endif
       }
       if(K[s + Koffset] == N - 1) break; // found a feasible solution on [0, ..., N-1]
     }
@@ -483,7 +491,7 @@ SEXP Step::bounded(Bounds& B) const {
   SET_STRING_ELT(names, 2, mkChar("endLeftBound"));
   SET_STRING_ELT(names, 3, mkChar("endRightBound"));
   namesgets(ret, names);
-/*  SEXP clas = allocVector(STRSXP, 1);
+  /*  SEXP clas = allocVector(STRSXP, 1);
   SET_STRING_ELT(clas, 0, mkChar("data.frame"));
   classgets(ret, clas);*/
   
@@ -493,7 +501,11 @@ SEXP Step::bounded(Bounds& B) const {
   int *xrightEnd = INTEGER(rightEnd);
   
   // return cost as attribute
-  setAttrib(ret, install("cost"), ScalarReal(J[N-1]));
+  SEXP xJ = ScalarReal(J[N-1]);
+  PROTECT(xJ);
+  SEXP costString = install("cost");
+  PROTECT(costString);
+  setAttrib(ret, costString, xJ);
   
   SEXP value = allocVector(REALSXP, s + 1);
   PROTECT(value);
@@ -512,9 +524,9 @@ SEXP Step::bounded(Bounds& B) const {
   
   k = N - 1;
   for(int i = s; i >= 0; i--) {
-    #ifdef DEBUGbounded
+#ifdef DEBUGbounded
     Rprintf("i = %d, k = %d\n", i, k);
-    #endif
+#endif
     xrightEnd[i] = k + 1;  // turn from C-style index into R-style index
     xvalue[i] = V[k];
     if(i == (int) s) {
@@ -527,7 +539,7 @@ SEXP Step::bounded(Bounds& B) const {
     k = L[k];
   }
   
-  UNPROTECT(6);
+  UNPROTECT(8);
   
   return(ret);
 }
@@ -535,128 +547,127 @@ SEXP Step::bounded(Bounds& B) const {
 
 // C wrapper
 extern "C" {
-
-/*************
-* confBand
-* function to be called from R
-* computes pointwise confidence band
-*
-* in:
-* confLeft : an integer vector, the (R-style) index of the left end of each jump's confidence interval, ending with n, i.e. one more than number of jumps
-* confRight : an integer vector, the (R-style) index of the left end of each jump's confidence interval, starting with 0, i.e. one more than number of jumps
-* start : for every possible left index where intervals with this left index start in the list of intervals (increasing in left indices), NA if none
-* rightIndex : right indices of the intervals in the list, increasing for each left index
-* lower : the lower bounds for the estimator at the respective interval
-* upper : the upper bounds for the estimator at the respective interval
-*
-* note:
-* confidence intervals for jumps may not overlap
-*
-* out:
-* a list conprimising the lower and upper confidence bands
-****************/
-SEXP confBand(SEXP confLeft, SEXP confRight, SEXP start, SEXP rightIndex, SEXP lower, SEXP upper) {
-  int* cl = INTEGER(confLeft); // R-style indices!
-  int* cr = INTEGER(confRight); // R-style indices!
-  LUBound cb; // current bound
-  int k; // right index for interval
-  int l; // left index for interval
-  int b; // index for block
-  int minl; // minimal left index for this block
   
-  // check lengths
-  if(length(confLeft) < 1) error("there must be at least one block");
-  if(length(confLeft) != length(confRight)) error("confLeft must have same length as confRight (number of blocks)");
-  if(cl[length(confLeft) - 1] != length(start)) error("confLeft must end with n, i.e. length of start");
-  if(cr[0] != 0) error("confRight must start with 0");
-  if(length(lower) != length(upper)) error("lower must have same length as upper");
-  if(length(upper) != length(rightIndex)) error("upper must have same length as rightIndex");
-  
-  Bounds B = Bounds(length(start), INTEGER(start), length(lower), INTEGER(rightIndex), REAL(lower), REAL(upper));
-
-  // allocate result
-  SEXP ret = allocVector(VECSXP, 2); // return list
-  PROTECT(ret);
-  
-  // create list which can be turned into a data.frame
-  SEXP names = allocVector(STRSXP, 2);
-  PROTECT(names);
-  SET_STRING_ELT(names, 0, mkChar("lower")); // contains list of vectors comprising right Indices
-  SET_STRING_ELT(names, 1, mkChar("upper"));
-  namesgets(ret, names);
-
-  SEXP low = allocVector(REALSXP, length(start));
-  PROTECT(low);
-  SET_VECTOR_ELT(ret, 0, low);
-  double *xlow = REAL(low);
-  
-  SEXP up = allocVector(REALSXP, length(start));
-  PROTECT(up);
-  SET_VECTOR_ELT(ret, 1, up);
-  double *xup = REAL(up);
-  
-  // loop over blocks, note that cl, cr are R-style indices!
-  for(b = 0; b < length(confLeft); b++) {
+  /*************
+  * confBand
+  * function to be called from R
+  * computes pointwise confidence band
+  *
+  * in:
+  * confLeft : an integer vector, the (R-style) index of the left end of each jump's confidence interval, ending with n, i.e. one more than number of jumps
+  * confRight : an integer vector, the (R-style) index of the left end of each jump's confidence interval, starting with 0, i.e. one more than number of jumps
+  * start : for every possible left index where intervals with this left index start in the list of intervals (increasing in left indices), NA if none
+  * rightIndex : right indices of the intervals in the list, increasing for each left index
+  * lower : the lower bounds for the estimator at the respective interval
+  * upper : the upper bounds for the estimator at the respective interval
+  *
+  * note:
+  * confidence intervals for jumps may not overlap
+  *
+  * out:
+  * a list conprimising the lower and upper confidence bands
+  ****************/
+  SEXP confBand(SEXP confLeft, SEXP confRight, SEXP start, SEXP rightIndex, SEXP lower, SEXP upper) {
+    int* cl = INTEGER(confLeft); // R-style indices!
+    int* cr = INTEGER(confRight); // R-style indices!
+    LUBound cb; // current bound
+    int k; // right index for interval
+    int l; // left index for interval
+    int b; // index for block
+    int minl; // minimal left index for this block
     
-    // precompute bounds on "interior" of block, i.e. between right end of left jump's confidence interval and left end of right jumps's confidence interval
-    // as well as on left extension if any
-    for(k = cr[b]; k < cl[b]; k++) {
+    // check lengths
+    if(length(confLeft) < 1) error("there must be at least one block");
+    if(length(confLeft) != length(confRight)) error("confLeft must have same length as confRight (number of blocks)");
+    if(cl[length(confLeft) - 1] != length(start)) error("confLeft must end with n, i.e. length of start");
+    if(cr[0] != 0) error("confRight must start with 0");
+    if(length(lower) != length(upper)) error("lower must have same length as upper");
+    if(length(upper) != length(rightIndex)) error("upper must have same length as rightIndex");
+    
+    Bounds B = Bounds(length(start), INTEGER(start), length(lower), INTEGER(rightIndex), REAL(lower), REAL(upper));
+    
+    // allocate result
+    SEXP ret = allocVector(VECSXP, 2); // return list
+    PROTECT(ret);
+    
+    // create list which can be turned into a data.frame
+    SEXP names = allocVector(STRSXP, 2);
+    PROTECT(names);
+    SET_STRING_ELT(names, 0, mkChar("lower")); // contains list of vectors comprising right Indices
+    SET_STRING_ELT(names, 1, mkChar("upper"));
+    namesgets(ret, names);
+    
+    SEXP low = allocVector(REALSXP, length(start));
+    PROTECT(low);
+    SET_VECTOR_ELT(ret, 0, low);
+    double *xlow = REAL(low);
+    
+    SEXP up = allocVector(REALSXP, length(start));
+    PROTECT(up);
+    SET_VECTOR_ELT(ret, 1, up);
+    double *xup = REAL(up);
+    
+    // loop over blocks, note that cl, cr are R-style indices!
+    for(b = 0; b < length(confLeft); b++) {
+      
+      // precompute bounds on "interior" of block, i.e. between right end of left jump's confidence interval and left end of right jumps's confidence interval
+      // as well as on left extension if any
+      for(k = cr[b]; k < cl[b]; k++) {
+        if(b > 0) {
+          minl = cl[b-1];
+        } else {
+          minl = cr[b];
+        }
+        for(l = k - 1; l >= minl; l--) { // precompute bounds on [l, k] for l >= cr[b], note that [k,k] had been computed at inititalization
+#ifdef DEBUGbounded
+          Rprintf("interior: b = %d, l = %d, k = %d\n", b, l, k);
+#endif
+          B.current(l, k);
+        }
+      }
+      // save result on interior
+      cb = B.current(cr[b], cl[b] - 1);
+#ifdef DEBUGbounded
+      Rprintf("saving: b = %d, l = %d, k = %d\n", b, cr[b], cl[b] - 1);
+#endif
+      for(k = cr[b]; k < cl[b]; k++) {
+        xlow[k] = cb.lower;
+        xup[k] = cb.upper;
+      }
+      // extend boundaries from this block into left confidence interval (if any)
       if(b > 0) {
-	minl = cl[b-1];
-      } else {
-	minl = cr[b];
+        for(l = cr[b] - 1; l >= cl[b-1]; l--) {
+          cb = B.current(l, cl[b] - 1);
+#ifdef DEBUGbounded
+          Rprintf("saving: b = %d, l = %d, k = %d\n", b, l, cl[b] - 1);
+#endif
+          xlow[l] = fmin2(xlow[l], cb.lower); // jump either befor or after
+          xup[l] = fmax2(xup[l], cb.upper); // jump either befor or after
+        }
       }
-      for(l = k - 1; l >= minl; l--) { // precompute bounds on [l, k] for l >= cr[b], note that [k,k] had been computed at inititalization
-        #ifdef DEBUGbounded
-        Rprintf("interior: b = %d, l = %d, k = %d\n", b, l, k);
-        #endif
-	B.current(l, k);
-      }
-    }
-    // save result on interior
-    cb = B.current(cr[b], cl[b] - 1);
-    #ifdef DEBUGbounded
-    Rprintf("saving: b = %d, l = %d, k = %d\n", b, cr[b], cl[b] - 1);
-    #endif
-    for(k = cr[b]; k < cl[b]; k++) {
-      xlow[k] = cb.lower;
-      xup[k] = cb.upper;
-    }
-    // extend boundaries from this block into left confidence interval (if any)
-    if(b > 0) {
-      for(l = cr[b] - 1; l >= cl[b-1]; l--) {
-	cb = B.current(l, cl[b] - 1);
-        #ifdef DEBUGbounded
-	Rprintf("saving: b = %d, l = %d, k = %d\n", b, l, cl[b] - 1);
-        #endif
-	xlow[l] = fmin2(xlow[l], cb.lower); // jump either befor or after
-	xup[l] = fmax2(xup[l], cb.upper); // jump either befor or after
+      
+      // extend boundaries from this block into right confidence interval (if any)
+      if(b + 1 < length(confLeft)) {
+        for(k = cl[b]; k < cr[b+1]; k++) {
+          for(l = k - 1; l >= cr[b]; l--) { // precompute bounds on [l, k] for l >= cr[b], note that [k,k] had been computed at inititalization
+#ifdef DEBUGbounded
+            Rprintf("extend right: b = %d, l = %d, k = %d\n", b, l, k);
+#endif
+            B.current(l, k);
+          }
+          cb = B.current(cr[b], k);
+#ifdef DEBUGbounded
+          Rprintf("saving: b = %d, l = %d, k = %d\n", b, cr[b], k);
+#endif
+          xlow[k] = cb.lower; // fmin2(xlow[k], cb.lower);
+          xup[k] = cb.upper; // fmax2(xup[k], cb.upper);
+        }
       }
     }
     
-    // extend boundaries from this block into right confidence interval (if any)
-    if(b + 1 < length(confLeft)) {
-      for(k = cl[b]; k < cr[b+1]; k++) {
-	for(l = k - 1; l >= cr[b]; l--) { // precompute bounds on [l, k] for l >= cr[b], note that [k,k] had been computed at inititalization
-	  #ifdef DEBUGbounded
-	  Rprintf("extend right: b = %d, l = %d, k = %d\n", b, l, k);
-	  #endif
-	  B.current(l, k);
-	}
-	cb = B.current(cr[b], k);
-        #ifdef DEBUGbounded
-	Rprintf("saving: b = %d, l = %d, k = %d\n", b, cr[b], k);
-        #endif
-	xlow[k] = cb.lower; // fmin2(xlow[k], cb.lower);
-	xup[k] = cb.upper; // fmax2(xup[k], cb.upper);
-      }
-    }
+    // return result
+    UNPROTECT(4);
+    return(ret);
   }
   
-  // return result
-  UNPROTECT(4);
-  return(ret);
-}
-
 } // end C wrapper
-
