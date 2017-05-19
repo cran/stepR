@@ -4,10 +4,12 @@
 \alias{bounds.MRC}
 
 \title{Bounds based on MRC}
-\description{Computes two-sided bounds for a collection of intervals based on a multiresolution criterion (MRC).}
+\description{Computes two-sided bounds for a set of intervals based on a multiresolution criterion (MRC).
+
+\bold{Deprecation warning:} This function is deprecated, but still working, however, may be defunct in a future version. Please use instead the function \code{\link{computeBounds}}. An example how to reproduce results (currently only \link{family} \code{"gauss"} is supported) is given below.
+}
 
 \usage{
-
 bounds(y, type = "MRC", \dots)
 bounds.MRC(y, q, alpha = 0.05, r = ceiling(50 / min(alpha, 1 - alpha)),
   lengths = if(family == "gaussKern")
@@ -40,9 +42,18 @@ bounds.MRC(y, q, alpha = 0.05, r = ceiling(50 / min(alpha, 1 - alpha)),
 Returns an object of class \code{bounds}, i.e. a list whose entry \code{bounds} contains two-sided bounds (\code{lower} and \code{upper}) of the considered intervals (with left index \code{li} and right index \code{ri}) in a \code{\link{data.frame}}, along with a vector \code{start} specifying in which row of entry \code{bounds} intervals with corresponding \code{li} start (if any; specified as a C-style index), and a \code{\link{logical}} \code{feasible} telling whether a feasible solution exists for these bounds (always \code{TRUE} for MRC bounds which are not restricted to a \code{subset}).
 }
 
-\seealso{\code{\link{stepbound}}, \link{family}}
+\seealso{\code{\link{computeBounds}}, \code{\link{stepbound}}, \link{family}}
 
 \examples{
+y <- rnorm(100, c(rep(0, 50), rep(1, 50)), 0.5)
+b <- computeBounds(y, q = 4, intervalSystem = "dyaLen", penalty = "none")
+b <- b[order(b$li, b$ri), ]
+attr(b, "row.names") <- seq(along = b$li)
+
+# entries in bounds are recovered by computeBounds
+all.equal(bounds(y, q = 4)$bounds, b) # TRUE
+
+
 # simulate signal of 100 data points
 Y <- rpois(100, 1:100 / 10)
 # compute bounds for intervals of dyadic lengths

@@ -16,6 +16,8 @@
 
 \description{
 Computes multiresolution coefficients, the corresponding criterion, simulates these for Gaussian white or coloured noise, based on which p-values and quantiles are obtained.
+
+\bold{Deprecation warning:} The function \code{MRC.simul} is deprecated, but still working, however, may be defunct in a future version. Please use instead the function \code{\link{monteCarloSimulation}}. An example how to reproduce results is given below. Some other functions are help function and might be removed, too.
 }
 
 \usage{
@@ -61,20 +63,26 @@ kMRC.quant(p, n, r, kern, lengths = 2^(floor(log2(n)):ceiling(log2(length(kern))
 \item{for \code{kMRC.pvalue} / \code{kMRC.simul} / \code{kMRC.simul}}{the corresponding p-value / quantile / vector of simulated values under the assumption of filtered Gaussian white noise}
 }
 
-\seealso{\code{\link{smuceR}}, \code{\link{jsmurf}}, \code{\link{stepbound}}, \code{\link{stepsel}}, \code{\link{quantile}}}
+\seealso{\code{\link{monteCarloSimulation}}, \code{\link{smuceR}}, \code{\link{jsmurf}}, \code{\link{stepbound}}, \code{\link{stepsel}}, \code{\link{quantile}}}
 
 \encoding{utf8}
 \references{
-Davies, P.L., Kovac, A. (2001). Local extremes, runs, strings and multiresolution. \emph{The Annals of Statistics} 29, 1-65.
+Davies, P. L., Kovac, A. (2001) Local extremes, runs, strings and multiresolution. \emph{The Annals of Statistics} \bold{29}, 1--65.
 
-\enc{Dümbgen}{Duembgen}, L., Spokoiny, V. (2001). Multiscale testing of qualitative hypotheses. \emph{The Annals of Statistics} 29, 124-152.
+\enc{Dümbgen}{Duembgen}, L., Spokoiny, V. (2001) Multiscale testing of qualitative hypotheses. \emph{The Annals of Statistics} \bold{29}, 124--152.
 
-Siegmund, D.O., Venkatraman, E.S. (1995). Using the generalized likelihood ratio statistic for sequential detection of a change-point. \emph{The Annals of Statistics} 23, 255-271.
+Siegmund, D. O., Venkatraman, E. S. (1995) Using the generalized likelihood ratio statistic for sequential detection of a change-point. \emph{The Annals of Statistics} \bold{23}, 255--271.
 
-Siegmund, D.O., Yakir, B. (2000). Tail probabilities for the null distribution of scanning statistics. \emph{Bernoulli} 6, 191-213.
+Siegmund, D. O., Yakir, B. (2000) Tail probabilities for the null distribution of scanning statistics. \emph{Bernoulli} \bold{6}, 191--213.
 }
 
 \examples{
+set.seed(100)
+all.equal(MRC.simul(100, r = 100),
+          sort(monteCarloSimulation(n = 100, r = 100, output = "maximum",
+                                    penalty = "none", intervalSystem = "dyaLen")),
+          check.attributes = FALSE)
+
 # simulate signal of 100 data points
 set.seed(100)
 f <- rep(c(0, 2, 0), c(60, 10, 30))

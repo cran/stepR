@@ -9,7 +9,7 @@
 \title{Confidence intervals for jumps and confidence bands for step functions}
 
 \description{
-Extract and plot confidence intervals and bands from fits using \code{\link{stepbound}}.
+Extract and plot confidence intervals and bands from fits given by a \code{\link{stepfit}} object.
 }
 
 \usage{

@@ -5,6 +5,8 @@
 
 \description{
 Families of distributions supported by package \code{stepR}.
+
+\bold{Deprecation warning:} This overviw is deprecated, but still given and up to date for some older, deprecated functions, however, may be removed in a future version. For an overview about the parametric families supported by the new functions see \code{\link{parametricFamily}}.
 }
 
 \details{
@@ -47,6 +49,6 @@ legend("topleft", legend = c("binomial", "gauss", "poisson"), lwd = 2,
   col = c("orange", "green3", "blue"))
 }
 
-\seealso{\link{Distributions}, \code{\link{dnorm}}, \code{\link{dpois}}, \code{\link{dbinom}}, \code{\link{dfilter}}, \code{\link{sdrobnorm}}}
+\seealso{\link{Distributions}, \code{\link{parametricFamily}}, \code{\link{dnorm}}, \code{\link{dpois}}, \code{\link{dbinom}}, \code{\link{dfilter}}, \code{\link{sdrobnorm}}}
 
 \keyword{distribution}

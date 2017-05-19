@@ -4,7 +4,10 @@
 \alias{stepbound.stepcand}
 
 \title{Jump estimation under restrictions}
-\description{Computes piecewise constant maximum likelihood estimators with minimal number of jumps under given restrictions on subintervals.}
+\description{Computes piecewise constant maximum likelihood estimators with minimal number of jumps under given restrictions on subintervals.
+
+\bold{Deprecation warning:} This function is a help function for \code{\link{smuceR}} and \code{\link{jsmurf}} and may be removed when these function will be removed.
+}
 
 \usage{
 stepbound(y, bounds, \dots)
@@ -29,16 +32,16 @@ stepbound(y, bounds, \dots)
 }
 
 \value{
-An object of class \code{\link{stepfit}} that contains the fit; if \code{jumpint = TRUE} function \code{\link{jumpint}} allows to extract the confidence interval for the jumps, if \code{confband = TRUE} function \code{\link{confband}} allows to extract the confidence band.
+An object of class \code{\link{stepfit}} that contains the fit; if \code{jumpint == TRUE} function \code{\link{jumpint}} allows to extract the confidence interval for the jumps, if \code{confband == TRUE} function \code{\link{confband}} allows to extract the confidence band.
 }
 
 \seealso{\code{\link{bounds}}, \code{\link{smuceR}}, \code{\link{jsmurf}}, \code{\link{stepsel}}, \code{\link{stepfit}}, \code{\link{jumpint}}, \code{\link{confband}}}
 
 \encoding{utf8}
 \references{
-Frick, K., Munk, A., and Sieling, H. (2014). Multiscale Change-Point Inference. With discussion and rejoinder by the authors. \emph{Journal of the Royal Statistical Society, Series B} 76(3), 495-580.
+Frick, K., Munk, A., and Sieling, H. (2014) Multiscale change-point inference. With discussion and rejoinder by the authors. \emph{Journal of the Royal Statistical Society, Series B} \bold{76}(3), 495--580.
 
-Hotz, T., \enc{Schütte}{Schuette}, O., Sieling, H., Polupanow, T., Diederichsen, U., Steinem, C., and Munk, A. (2013). Idealizing Ion Channel Recordings by a Jump Segmentation Multiresolution Filter. \emph{IEEE Transactions on NanoBioscience} 12(4), 376-386.
+Hotz, T., \enc{Schütte}{Schuette}, O., Sieling, H., Polupanow, T., Diederichsen, U., Steinem, C., and Munk, A. (2013) Idealizing ion channel recordings by a jump segmentation multiresolution filter. \emph{IEEE Transactions on NanoBioscience} \bold{12}(4), 376--386.
 }
 
 \examples{

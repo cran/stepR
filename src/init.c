@@ -20,6 +20,11 @@ extern SEXP pathGauss(SEXP, SEXP, SEXP, SEXP);
 extern SEXP pathGaussCut(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP pathGaussVar(SEXP, SEXP, SEXP);
 extern SEXP pathPoisson(SEXP, SEXP, SEXP);
+extern SEXP stepR_callRoutines(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+extern SEXP stepR_colMax(SEXP);
+extern SEXP stepR_convolve(SEXP, SEXP);
+extern SEXP stepR_criticalValuesWeights(SEXP, SEXP, SEXP);
+extern SEXP stepR_inOrdered(SEXP, SEXP);
 
 static const R_CallMethodDef CallEntries[] = {
   {"boundedBinom",                (DL_FUNC) &boundedBinom,                7},
@@ -38,6 +43,11 @@ static const R_CallMethodDef CallEntries[] = {
   {"pathGaussCut",                (DL_FUNC) &pathGaussCut,                9},
   {"pathGaussVar",                (DL_FUNC) &pathGaussVar,                3},
   {"pathPoisson",                 (DL_FUNC) &pathPoisson,                 3},
+  {"stepR_callRoutines",          (DL_FUNC) &stepR_callRoutines,          7},
+  {"stepR_colMax",                (DL_FUNC) &stepR_colMax,                1},
+  {"stepR_convolve",              (DL_FUNC) &stepR_convolve,              2},
+  {"stepR_criticalValuesWeights", (DL_FUNC) &stepR_criticalValuesWeights, 3},
+  {"stepR_inOrdered",             (DL_FUNC) &stepR_inOrdered,             2},
   {NULL, NULL, 0}
 };
 

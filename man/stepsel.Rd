@@ -36,15 +36,15 @@ A single integer giving the number of blocks selected, with \code{\link{attr}}ib
 }
 
 \note{
-To obtain the threshold described in Boysen et al.~(2009, Theorem~5), set \code{q=(1+delta) * sdrobnorm(y) * sqrt(2*length(y))} for some positive \code{dela} and \code{penalty="none"}.
+To obtain the threshold described in Boysen et al.~(2009, Theorem~5), set \code{q=(1+delta) * sdrobnorm(y) * sqrt(2*length(y))} for some positive \code{delta} and \code{penalty="none"}.
 }
 
 \seealso{\code{\link{steppath}}, \code{\link{stepfit}}, \link{family}, \code{\link{stepbound}}}
 
 \references{
-Boysen, L., Kempe, A., Liebscher, V., Munk, A., Wittich, O. (2009). Consistencies and rates of convergence of jump-penalized least squares estimators. \emph{The Annals of Statistics} 37(1), 157-183.
+Boysen, L., Kempe, A., Liebscher, V., Munk, A., Wittich, O. (2009) Consistencies and rates of convergence of jump-penalized least squares estimators. \emph{The Annals of Statistics} \bold{37}(1), 157--183.
 
-Yao, Y.-C. (1988). Estimating the number of change-points via Schwarz' criterion. \emph{Statistics & Probability Letters} 6, 181-189.
+Yao, Y.-C. (1988) Estimating the number of change-points via Schwarz' criterion. \emph{Statistics & Probability Letters} \bold{6}, 181--189.
 }
 
 \examples{

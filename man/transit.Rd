@@ -5,6 +5,8 @@
 
 \description{
 Reimplementation of VanDongen's algorithm for detecting jumps in ion channel recordings.
+
+\bold{Deprecation warning:} This function is mainly used for patchlamp recordings and may be transferred to a specialised package.
 }
 
 \usage{
@@ -36,7 +38,7 @@ Only central, no forward differences have been used in this implementation. More
 }
 
 \references{
-VanDongen, A.M.J. (1996). A New Algorithm for Idealizing Single Ion Channel Data Containing Multiple Unknown Conductance Levels. \emph{Biophysical Journal} 70(3), 1303-1315.
+VanDongen, A. M. J. (1996) A new algorithm for idealizing single ion channel data containing multiple unknown conductance levels. \emph{Biophysical Journal} \bold{70}(3), 1303--1315.
 }
 
 \seealso{\code{\link{stepfit}}, \code{\link{sdrobnorm}}, \code{\link{jsmurf}}, \code{\link{stepbound}}, \code{\link{steppath}}}

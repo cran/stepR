@@ -194,7 +194,7 @@ stopifnot(abs(attr(bounded, "cost") + sum(lfactorial(y)) +sum(dpois(y, fitted(bo
 # check BoundGauss
 cand <- stepcand(y, family = "gauss")
 # # call with C-style indices
-# bounded <- with(bounds, .Call(boundedGauss, cand$cumSum, cand$cumSumSq, cand$cumSumWe, as.integer(start), as.integer(ri - 1), as.numeric(lower), as.numeric(upper)))
+# bounded <- with(bounds, .Call('boundedGauss', cand$cumSum, cand$cumSumSq, cand$cumSumWe, as.integer(start), as.integer(ri - 1), as.numeric(lower), as.numeric(upper)))
 bounded <- stepbound(cand, list(bounds = bounds, start = start, feasible = TRUE))
 as.data.frame(bounded)
 stopifnot(all.equal(bounded$rightEnd, c(1, 4)))

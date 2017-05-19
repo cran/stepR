@@ -49,7 +49,7 @@ For \code{steppath} an object of class \code{steppath}, i.e. a \code{\link{list}
 \seealso{\code{\link{stepcand}}, \code{\link{stepfit}}, \link{family}, \code{\link{logLik}}, \code{\link{AIC}}}
 
 \references{
-Friedrich, F., Kempe, A., Liebscher, V., Winkler, G. (2008). Complexity penalized M-estimation: fast computation. \emph{Journal of Computational and Graphical Statistics} 17(1), 201-224.
+Friedrich, F., Kempe, A., Liebscher, V., Winkler, G. (2008) Complexity penalized M-estimation: fast computation. \emph{Journal of Computational and Graphical Statistics} \bold{17}(1), 201--224.
 }
 
 \examples{

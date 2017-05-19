@@ -2,7 +2,10 @@
 \alias{jsmurf}
 
 \title{Reconstruct filtered piecewise constant functions with noise}
-\description{Reconstructs a piecewise constant function to which white noise was added and the sum filtered afterwards.}
+\description{Reconstructs a piecewise constant function to which white noise was added and the sum filtered afterwards.
+
+\bold{Deprecation warning:} This function is mainly used for patchlamp recordings and may be transferred to a specialised package.
+}
 
 \usage{
 jsmurf(y, x = 1:length(y), x0 = 2 * x[1] - x[2], q, alpha = 0.05, r = 4e3,
@@ -26,14 +29,14 @@ jsmurf(y, x = 1:length(y), x0 = 2 * x[1] - x[2], q, alpha = 0.05, r = 4e3,
 }
 
 \value{
-An object object of class \code{\link{stepfit}} that contains the fit; if \code{jumpint = TRUE} function \code{\link{jumpint}} allows to extract the \code{1- alpha} confidence interval for the jumps, if \code{confband = TRUE} function \code{\link{confband}} allows to extract the \code{1- alpha} confidence band.
+An object object of class \code{\link{stepfit}} that contains the fit; if \code{jumpint == TRUE} function \code{\link{jumpint}} allows to extract the \code{1 - alpha} confidence interval for the jumps, if \code{confband == TRUE} function \code{\link{confband}} allows to extract the \code{1 - alpha} confidence band.
 }
 
 \seealso{\code{\link{stepbound}}, \code{\link{bounds}}, \link{family}, \code{\link{MRC.asymptotic}}, \code{\link{sdrobnorm}}, \code{\link{stepfit}}}
 
 \encoding{utf8}
 \references{
-Hotz, T., \enc{Schütte}{Schuette}, O., Sieling, H., Polupanow, T., Diederichsen, U., Steinem, C., and Munk, A. (2013). Idealizing Ion Channel Recordings by a Jump Segmentation Multiresolution Filter. \emph{IEEE Transactions on NanoBioscience} 12(4), 376-386.
+Hotz, T., \enc{Schütte}{Schuette}, O., Sieling, H., Polupanow, T., Diederichsen, U., Steinem, C., and Munk, A. (2013) Idealizing ion channel recordings by a jump segmentation multiresolution filter. \emph{IEEE Transactions on NanoBioscience} \bold{12}(4), 376--386.
 }
 
 \examples{

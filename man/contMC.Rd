@@ -5,12 +5,13 @@
 
 \description{
 Simulate a continuous time Markov chain.
+
+\bold{Deprecation warning:} This function is mainly used for patchlamp recordings and may be transferred to a specialised package.
 }
 
 \usage{
 contMC(n, values, rates, start = 1, sampling = 1, family = c("gauss", "gaussKern"),
   param = NULL)
-
 }
 
 \arguments{
@@ -35,7 +36,7 @@ This follows the description for simulating ion channels given by VanDongen (199
 }
 
 \references{
-VanDongen, A.M.J. (1996). A New Algorithm for Idealizing Single Ion Channel Data Containing Multiple Unknown Conductance Levels. \emph{Biophysical Journal} 70(3), 1303-1315.
+VanDongen, A. M. J. (1996) A new algorithm for idealizing single ion channel data containing multiple unknown conductance levels. \emph{Biophysical Journal} \bold{70}(3), 1303--1315.
 }
 
 \seealso{\code{\link{stepblock}}, \code{\link{jsmurf}}, \code{\link{stepbound}}, \code{\link{steppath}}, \code{\link{family}}, \code{\link{dfilter}}}

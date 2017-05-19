@@ -6,6 +6,8 @@
 
 \description{
 Create digital filters.
+
+\bold{Deprecation warning:} This function is mainly used for patchlamp recordings and may be transferred to a specialised package.
 }
 
 \usage{
