@@ -2,15 +2,15 @@
 % Packages
 \documentclass[a4paper]{article}
 
-\usepackage{floatrow}
-\usepackage{url}
-\usepackage{enumitem}
+% \usepackage{floatrow}
+% \usepackage{url}
+% \usepackage{enumitem}
 \usepackage{authblk}
 
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{amsthm}   
-\usepackage{rotating} 
+% \usepackage{rotating} 
 
 \usepackage[left=2.5cm, right=2.5cm, top=3.5cm, bottom=3cm]{geometry}
 \usepackage{setspace}
@@ -18,34 +18,32 @@
 
 \usepackage[english]{babel}
 
-
-%\usepackage{dsfont}	
-\usepackage{bbold}	
+\usepackage{bbold}
 
 
-\usepackage{graphicx}  
+% \usepackage{graphicx}
 
-\usepackage{algpseudocode}
-\usepackage{algorithm}
-\renewcommand{\algorithmicrequire}{\textbf{Input:}}
-\renewcommand{\algorithmicensure}{\textbf{Output:}}
-\newcommand{\Break}{\State \textbf{break} }
-\renewcommand{\Return}{\State \textbf{return} }
-\algrenewcomment[1]{\(\hfill\backslash\backslash\) #1}
-%\algnewcommand{\LineComment}[1]{\State \(\backslash\backslash\) #1}
-
-\usepackage{caption}[2008/08/24]
-
-\captionsetup{margin=10pt,font=small,tableposition=b}
-\usepackage{subcaption}
-%\captionsetup[subfigure]{labelfont=rm}
+% \usepackage{algpseudocode}
+% \usepackage{algorithm}
+% \renewcommand{\algorithmicrequire}{\textbf{Input:}}
+% \renewcommand{\algorithmicensure}{\textbf{Output:}}
+% \newcommand{\Break}{\State \textbf{break} }
+% \renewcommand{\Return}{\State \textbf{return} }
+% \algrenewcomment[1]{\(\hfill\backslash\backslash\) #1}
+% %\algnewcommand{\LineComment}[1]{\State \(\backslash\backslash\) #1}
+% 
+% \usepackage{caption}[2008/08/24]
+% 
+% \captionsetup{margin=10pt,font=small,tableposition=b}
+% \usepackage{subcaption}
+% %\captionsetup[subfigure]{labelfont=rm}
 
 \usepackage{hyperref}
 
-\usepackage{color}
-\newcommand{\red}{\color{red}}
-\newcommand{\black}{\color{black}}
-\newcommand{\blue}{\color{blue}}
+% \usepackage{color}
+% \newcommand{\red}{\color{red}}
+% \newcommand{\black}{\color{black}}
+% \newcommand{\blue}{\color{blue}}
 
 \usepackage[authoryear,round]{natbib}
 

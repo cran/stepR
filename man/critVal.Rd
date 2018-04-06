@@ -16,7 +16,7 @@ critVal(n, q = NULL, alpha = NULL, nq = 2L^(as.integer(log2(n) + 1e-12) + 1L) - 
 \arguments{
 \item{n}{a positive integer giving the number of observations}
 \item{q}{either \code{NULL}, then the vector of critical values at level \code{alpha} will be computed from a Monte-Carlo simulation, or a numeric giving the global quantile or a numeric vector giving the vector of critical values. For more detailed information, in particular of which length the numeric vector should be, see Section \cite{Computation of critical values / global quantile}. Either \code{q} or \code{alpha} must be given. Otherwise, \code{alpha == 0.5} is chosen with a \code{\link{warning}}. Please note that by default the Monte-Carlo simulation will be saved in the workspace and on the file system, for more details see Section \cite{Simulating, saving and loading of Monte-Carlo simulations} below}
-\item{alpha}{a probability, i.e. a single numeric between 0 and 1, giving the significance level. Its choice is a trade-off between data fit and parsimony of the estimator. In other words, this argument balances the risks of missing change-points and detecting additional artefacts. For more details on this choice see (Frick et al., 2014, section 4) and (Pein et al., 2016, section 3.4). Either \code{q} or \code{alpha} must be given. Otherwise, \code{alpha == 0.5} is chosen with a \code{\link{warning}}}
+\item{alpha}{a probability, i.e. a single numeric between 0 and 1, giving the significance level. Its choice is a trade-off between data fit and parsimony of the estimator. In other words, this argument balances the risks of missing change-points and detecting additional artefacts. For more details on this choice see (Frick et al., 2014, section 4) and (Pein et al., 2017, section 3.4). Either \code{q} or \code{alpha} must be given. Otherwise, \code{alpha == 0.5} is chosen with a \code{\link{warning}}}
 \item{nq}{a positive integer larger than or equal to \code{n} giving the (increased) number of observations for the Monte-Carlo simulation. See Section \cite{Simulating, saving and loading of Monte-Carlo simulations} for more details}
 \item{family}{a string specifying the assumed parametric family, for more details see \link{parametricFamily}, currently \code{"gauss"}, \code{"hsmuce"} and \code{"mDependentPS"} are supported. By default (\code{NULL}) \code{"gauss"} is assumed}
 \item{intervalSystem}{a string giving the used interval system, either \code{"all"} for all intervals, \code{"dyaLen"} for all intervals of dyadic length or \code{"dyaPar"} for the dyadic partition, for more details see \link{intervalSystem}. By default (\code{NULL}) the default interval system of the specified parametric family will be used, which one this will be is described in \code{\link{parametricFamily}}}
@@ -117,9 +117,9 @@ Simulations can be removed from the workspace by removing the variable \code{cri
 \seealso{\code{\link{monteCarloSimulation}}, \code{\link{penalty}}, \code{\link{parametricFamily}}, \code{\link{intervalSystem}}, \code{\link{stepFit}}, \code{\link{computeBounds}}}
 
 \references{
-Frick, K., Munk, A. and Sieling, H. (2014) Multiscale change-point inference. With discussion and rejoinder by the authors. \emph{Journal of the Royal Statistical Society, Series B} \bold{76}(3), 495--580.
+Frick, K., Munk, A., Sieling, H. (2014) Multiscale change-point inference. With discussion and rejoinder by the authors. \emph{Journal of the Royal Statistical Society, Series B} \bold{76}(3), 495--580.
 
-Pein, F., Sieling, H. and Munk, A. (2016) Heterogeneous change point inference. \emph{Journal of the Royal Statistical Society, Series B}, early view.
+Pein, F., Sieling, H., Munk, A. (2017) Heterogeneous change point inference. \emph{Journal of the Royal Statistical Society, Series B}, \bold{79}(4), 1207--1227.
 } 
 
 \examples{

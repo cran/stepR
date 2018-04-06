@@ -29,9 +29,9 @@ If \code{output == list} a list containing in \code{maximum} the penalised multi
 \seealso{\link{parametricFamily}, \link{intervalSystem}, \link{penalty}, \code{\link{monteCarloSimulation}}, \code{\link{stepFit}}, \code{\link{computeBounds}}}
 
 \references{
-Frick, K., Munk, A. and Sieling, H. (2014) Multiscale change-point inference. With discussion and rejoinder by the authors. \emph{Journal of the Royal Statistical Society, Series B} \bold{76}(3), 495--580.
+Frick, K., Munk, A., Sieling, H. (2014) Multiscale change-point inference. With discussion and rejoinder by the authors. \emph{Journal of the Royal Statistical Society, Series B} \bold{76}(3), 495--580.
 
-Pein, F., Sieling, H. and Munk, A. (2016) Heterogeneous change point inference. \emph{Journal of the Royal Statistical Society, Series B}, early view.
+Pein, F., Sieling, H., Munk, A. (2017) Heterogeneous change point inference. \emph{Journal of the Royal Statistical Society, Series B}, \bold{79}(4), 1207--1227.
 }
 
 \examples{

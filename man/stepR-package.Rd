@@ -5,7 +5,7 @@
 
 \title{Multiscale Change-Point Inference}
 
-\description{Allows fitting of step-functions to univariate serial data where neither the number of jumps nor their positions is known by implementing the multiscale regression estimators \acronym{SMUCE} (\cite{Frick et al.}, 2014) and \acronym{HSMUCE} (\cite{Pein et al.}, 2016). In addition, confidence intervals for the change-point locations and bands for the unknown signal can be obtained. This is implemented in the function \code{\link{stepFit}}. Moreover, technical quantities like the statistics itself, bounds or critical values can be computed by other functions of the package. More details can be found in the vignette.}
+\description{Allows fitting of step-functions to univariate serial data where neither the number of jumps nor their positions is known by implementing the multiscale regression estimators \acronym{SMUCE} (\cite{Frick et al.}, 2014) and \acronym{HSMUCE} (\cite{Pein et al.}, 2017). In addition, confidence intervals for the change-point locations and bands for the unknown signal can be obtained. This is implemented in the function \code{\link{stepFit}}. Moreover, technical quantities like the statistics itself, bounds or critical values can be computed by other functions of the package. More details can be found in the vignette.}
 
 \details{
 New in version 2.0-0:
@@ -51,17 +51,17 @@ If \code{q == NULL} in \code{\link{critVal}}, \code{\link{stepFit}} or \code{\li
 
 \encoding{utf8}
 \references{
-Frick, K., Munk, A. and Sieling, H. (2014) Multiscale change-point inference. With discussion and rejoinder by the authors. \emph{Journal of the Royal Statistical Society, Series B} \bold{76}(3), 495--580.
+Frick, K., Munk, A., Sieling, H. (2014) Multiscale change-point inference. With discussion and rejoinder by the authors. \emph{Journal of the Royal Statistical Society, Series B} \bold{76}(3), 495--580.
 
-Pein, F., Sieling, H. and Munk, A. (2016) Heterogeneous change point inference. \emph{Journal of the Royal Statistical Society, Series B}, early view.
+Pein, F., Sieling, H., Munk, A. (2017) Heterogeneous change point inference. \emph{Journal of the Royal Statistical Society, Series B}, \bold{79}(4), 1207--1227.
 
-Pein, F., Tecuapetla-Gómez, I., \enc{Schütte}{Schuette}, O. Steinem, C., and Munk, A. (2017) Fully-automatic multiresolution idealization for filtered ion channel recordings: flickering event detection. In preparation.
+Pein, F., Tecuapetla-Gómez, I., \enc{Schütte}{Schuette}, O., Steinem, C., Munk, A. (2017) Fully-automatic multiresolution idealization for filtered ion channel recordings: flickering event detection. \emph{arXiv}:1706.03671.
 
 Hotz, T., \enc{Schütte}{Schuette}, O., Sieling, H., Polupanow, T., Diederichsen, U., Steinem, C., and Munk, A. (2013) Idealizing ion channel recordings by a jump segmentation multiresolution filter. \emph{IEEE Transactions on NanoBioscience} \bold{12}(4), 376--386.
 
 VanDongen, A. M. J. (1996) A new algorithm for idealizing single ion channel data containing multiple unknown conductance levels. \emph{Biophysical Journal} \bold{70}(3), 1303--1315.
 
-Futschik, A., Hotz, T., Munk, A. Sieling, H. (2014) Multiresolution DNA partitioning: statistical evidence for segments. \emph{Bioinformatics},  \bold{30}(16), 2255--2262.
+Futschik, A., Hotz, T., Munk, A., Sieling, H. (2014) Multiresolution DNA partitioning: statistical evidence for segments. \emph{Bioinformatics},  \bold{30}(16), 2255--2262.
 
 Boysen, L., Kempe, A., Liebscher, V., Munk, A., Wittich, O. (2009) Consistencies and rates of convergence of jump-penalized least squares estimators. \emph{The Annals of Statistics} \bold{37}(1), 157--183.
 

@@ -927,7 +927,8 @@ test_that("argument q is computed correctly", {
   expect_error(stepFit(testy, alpha = 0.1, sd = c(1, 2), options = list(load = list())))
   
   expect_error(supressWarning(stepFit(testy, alpha = 0.1, r = 100L, seed = "s", options = list(load = list()))))
-  expect_warning(stepFit(testy, alpha = 0.1, r = 100L, seed = c(1, 2), options = list(load = list())))
+  expect_identical(stepFit(testy, alpha = 0.1, r = 100L, seed = c(1, 2), options = list(load = list())),
+                   stepFit(testy, alpha = 0.1, r = 100L, seed = 1L, options = list(load = list())))
   
   expect_identical(stepFit(testy, alpha = 0.1, r = 100L, seed = 100.5, options = list(load = list())),
                    stepFit(testy, alpha = 0.1, r = 100L, seed = 100L, options = list(load = list())))

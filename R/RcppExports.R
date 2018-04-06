@@ -2,22 +2,22 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 .callRoutines <- function(observations, routineType, argumentsListRoutine, dataType, argumentsListData, intervalSystemType, argumentsListIntervalSystem) {
-    .Call('stepR_callRoutines', PACKAGE = 'stepR', observations, routineType, argumentsListRoutine, dataType, argumentsListData, intervalSystemType, argumentsListIntervalSystem)
+    .Call(`_stepR_callRoutines`, observations, routineType, argumentsListRoutine, dataType, argumentsListData, intervalSystemType, argumentsListIntervalSystem)
 }
 
 .colMax <- function(stat) {
-    .Call('stepR_colMax', PACKAGE = 'stepR', stat)
+    .Call(`_stepR_colMax`, stat)
 }
 
 .convolve <- function(val, kern) {
-    .Call('stepR_convolve', PACKAGE = 'stepR', val, kern)
+    .Call(`_stepR_convolve`, val, kern)
 }
 
 .criticalValuesWeights <- function(stat, beta, alpha) {
-    .Call('stepR_criticalValuesWeights', PACKAGE = 'stepR', stat, beta, alpha)
+    .Call(`_stepR_criticalValuesWeights`, stat, beta, alpha)
 }
 
 .inOrdered <- function(x, table) {
-    .Call('stepR_inOrdered', PACKAGE = 'stepR', x, table)
+    .Call(`_stepR_inOrdered`, x, table)
 }
 

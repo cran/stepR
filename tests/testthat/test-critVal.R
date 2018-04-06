@@ -2395,7 +2395,8 @@ test_that("... is tested and works", {
                    critVal(12, alpha = 0.1, stat = teststat))
   
   expect_error(supressWarning(critVal(100L, alpha = 0.1, r = 100L, seed = "s", options = list(load = list()))))
-  expect_warning(critVal(100L, alpha = 0.1, r = 100L, seed = c(1, 2), options = list(load = list())))
+  expect_identical(critVal(12, alpha = 0.1, r = 100L, seed = c(1, 2), options = list(load = list())),
+                   critVal(12, alpha = 0.1, r = 100L, seed = 1L, options = list(load = list())))
   
   expect_identical(critVal(12, alpha = 0.1, r = 100L, seed = 100.5, options = list(load = list())),
                    critVal(12, alpha = 0.1, r = 100L, seed = 100L, options = list(load = list())))

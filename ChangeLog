@@ -1,9 +1,25 @@
+2018-04-06 Florian Pein, version 2.0-2
+
+  * new maintainer
+
+  * removed packages in StepR.Rnw that are not required
+  
+  * added length(seed) == 1 to avoid if case with condition of length > 1 in monteCarloSimulation.R,
+    updated tests in test-critVal.R, test-computeBounds.R, test-stepFit.R (reported by Tomas Kalibera)
+    
+  * updated references in stepR-package.Rd, comouteBounds.Rd, computeStat.Rd, critVal.Rd,
+    monteCarloSimulation.Rd, parametricFamily.Rd, penalty.Rd, stepFit.Rd  
+    
+  * added references to description
+  
+  * added \donttest to intervalSystem.Rd
+
 2017-05-19 Florian Pein, version 2.0-1
 
   * small changes in DESCRIPTION and stepR-package.Rd
 
-  * added /donttest to stepR-package.Rd, test-computeBounds.R, test-critVal.R,
-    test-monteCarloSimulation.R, test-stepFit.R because of long execution times
+  * added \donttest to stepR-package.Rd, computeBounds.Rd, critVal.Rs, monteCarloSimulation.Rd,
+    stepFit.Rd because of long execution times
 
 
 2017-05-15 Florian Pein, version 2.0-0
@@ -63,8 +79,6 @@
   
   * man: changed style of the references to suggested form
   
-  * DESCRIPTION: version is 2.0-0
-  
   * ChangeLog: added version numbers of the package
   
   
@@ -83,8 +97,6 @@
                                changed .NAME arguments in .Call statements in steppath.R, stepcand.R, stepbound.R
 
   * Step.cpp: added missing PROTECT()s (reported by Tomas Kalibera, https://github.com/kalibera/rchk)
-  
-  * DESCRIPTION: version is 1.0-7
 
 2016-10-10 Florian Pein, version 1.0-6
 
@@ -94,8 +106,6 @@
   * Step.cpp: added #include <cstdio>
   
   * StepGaussVar.cpp, StepPoisson.cpp, StepBinom.cpp: added #include <cmath>
-  
-  * DESCRIPTION: version is 1.0-6
 
 2016-09-29 Florian Pein, version 1.0-5
 
@@ -112,13 +122,11 @@
 
   * CITATION: changed url to canonical format (https://CRAN.R-project.org/package=stepR)
 
-  * DESCRIPTION: version is 1.0-5
-
 2016-03-24 Florian Pein, version 1.0-4
 
   * NAMESPACE: added importFrom("graphics", "lines", "par", "plot", "points") (CRAN notes)
 
-  * DESCRIPTION: added graphics as a dependency, version is 1.0-4
+  * DESCRIPTION: added graphics as a dependency
 
 2015-06-05 Thomas Hotz
 
@@ -138,7 +146,7 @@
 
   * bounds.Rd, MRC.Rd: no longer mention vignette (reported by Theresa Schüler)
 
-  * DESCRIPTION: version is 1.0-3, Timo Aspelmeier is new maintainer (and presumably another new author)
+  * DESCRIPTION: Timo Aspelmeier is new maintainer (and presumably another new author)
 
   * ChangeLog: corrected dates of last two changes (reported by Timo Aspelmeier)
 
@@ -151,7 +159,7 @@
 
   * sdrobnorm.Rd: explained reference (reported by Florian Pein)
 
-  * DESCRIPTION: version is 1.0-2, added Florian Pein as contributor, removed inaccurate date
+  * DESCRIPTION: added Florian Pein as contributor, removed inaccurate date
 
   * bug-fix release
 
@@ -166,10 +174,6 @@
 2015-03-04 Thomas Hotz, version 1.0-1
 
   * StepPoisson.cpp, StepBinom.cpp: added explicit casting in log() to ensure compilation under solaris
-
-  * DESCRIPTION: version is 1.0-1
-
-  * new release
 
 2015-02-16 Thomas Hotz, version 1.0-0
 

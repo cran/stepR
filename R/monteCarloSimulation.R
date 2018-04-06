@@ -50,7 +50,7 @@ monteCarloSimulation <- function(n, r = 1e4L, family = NULL, intervalSystem = NU
     stop("r must be a single positive integer")
   }
   
-  if (seed == "no") {
+  if (length(seed) == 1 && seed == "no") {
     # set no seed
   } else {
     set.seed(seed)

@@ -7,7 +7,7 @@ using namespace Rcpp;
 
 // callRoutines
 RObject callRoutines(RObject observations, int routineType, List argumentsListRoutine, int dataType, List argumentsListData, int intervalSystemType, List argumentsListIntervalSystem);
-RcppExport SEXP stepR_callRoutines(SEXP observationsSEXP, SEXP routineTypeSEXP, SEXP argumentsListRoutineSEXP, SEXP dataTypeSEXP, SEXP argumentsListDataSEXP, SEXP intervalSystemTypeSEXP, SEXP argumentsListIntervalSystemSEXP) {
+RcppExport SEXP _stepR_callRoutines(SEXP observationsSEXP, SEXP routineTypeSEXP, SEXP argumentsListRoutineSEXP, SEXP dataTypeSEXP, SEXP argumentsListDataSEXP, SEXP intervalSystemTypeSEXP, SEXP argumentsListIntervalSystemSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -24,7 +24,7 @@ END_RCPP
 }
 // colMax
 NumericVector colMax(const NumericMatrix& stat);
-RcppExport SEXP stepR_colMax(SEXP statSEXP) {
+RcppExport SEXP _stepR_colMax(SEXP statSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -35,7 +35,7 @@ END_RCPP
 }
 // convolve
 NumericVector convolve(const NumericVector& val, const NumericVector& kern);
-RcppExport SEXP stepR_convolve(SEXP valSEXP, SEXP kernSEXP) {
+RcppExport SEXP _stepR_convolve(SEXP valSEXP, SEXP kernSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -47,7 +47,7 @@ END_RCPP
 }
 // criticalValuesWeights
 NumericVector criticalValuesWeights(const NumericVector& stat, const NumericVector& beta, const double& alpha);
-RcppExport SEXP stepR_criticalValuesWeights(SEXP statSEXP, SEXP betaSEXP, SEXP alphaSEXP) {
+RcppExport SEXP _stepR_criticalValuesWeights(SEXP statSEXP, SEXP betaSEXP, SEXP alphaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -60,7 +60,7 @@ END_RCPP
 }
 // inOrdered
 LogicalVector inOrdered(const IntegerVector& x, const IntegerVector& table);
-RcppExport SEXP stepR_inOrdered(SEXP xSEXP, SEXP tableSEXP) {
+RcppExport SEXP _stepR_inOrdered(SEXP xSEXP, SEXP tableSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;

@@ -660,7 +660,8 @@ test_that("argument q is computed correctly", {
   expect_error(computeBounds(testy, alpha = 0.1, sd = c(1, 2), options = list(load = list())))
   
   expect_error(supressWarning(computeBounds(testy, alpha = 0.1, r = 100L, seed = "s", options = list(load = list()))))
-  expect_warning(computeBounds(testy, alpha = 0.1, r = 100L, seed = c(1, 2), options = list(load = list())))
+  expect_identical(computeBounds(testy, alpha = 0.1, r = 100L, seed = c(1, 2), options = list(load = list())),
+                   computeBounds(testy, alpha = 0.1, r = 100L, seed = 1, options = list(load = list())))
   
   expect_identical(computeBounds(testy, alpha = 0.1, r = 100L, seed = 100.5, options = list(load = list())),
                    computeBounds(testy, alpha = 0.1, r = 100L, seed = 100L, options = list(load = list())))
