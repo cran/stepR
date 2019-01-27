@@ -424,7 +424,8 @@ critVal <- function(n, q = NULL, alpha = NULL, nq = 2L^(as.integer(log2(n) + 1e-
     weights <- rep(1 / nrow(stat), nrow(stat))
   } else {
     if (!is.numeric(weights) || length(weights) != nrow(stat) || any(!is.finite(weights)) || any(weights <= 0)) {
-      stop("weights must be a finite positive numeric vector of length 'length(lengths)'")
+      stop("weights must be a finite positive numeric vector of length ", nrow(stat),
+           " (equal to length of lengths)")
     }
     
     if (sum(weights) != 1) {

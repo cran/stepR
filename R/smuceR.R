@@ -58,7 +58,9 @@ function(y, x = 1:length(y), x0 = 2 * x[1] - x[2], q = thresh.smuceR(length(y)),
   sb
 }
 
-
 # thresh.smuceR <- function(v) NA
 delayedAssign("thresh.smuceR",
-with(.thresh.smuceR.data, approxfun(lengths, q_opt, yleft = min(q_opt), yright = max(q_opt))))
+              with(.thresh.smuceR.data,
+                   approxfun(lengths, q_opt, yleft = min(q_opt), yright = max(q_opt), ties = mean)
+                   )
+              )

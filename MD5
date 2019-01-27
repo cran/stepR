@@ -1,5 +1,5 @@
-ebc2a017ed41ebc9453655121b7804c4 *ChangeLog
-30d05716ba459a1dfc32fb185229474d *DESCRIPTION
+6512c2c9534f69032a8b4be2eaa61884 *ChangeLog
+21a7c1df0adf53b88b1ee32c4565cc86 *DESCRIPTION
 56dca8a4413ed51306bf43372b6e293a *NAMESPACE
 53c7accf7fff3c1c74d9c2e202d642cc *R/MRC.R
 f3c2272fc33d0bb4491cc75b3cdbf0f0 *R/RcppExports.R
@@ -9,7 +9,7 @@ a35a6da9b16b266210d1c2df5894a98e *R/bounds.R
 942e6ac276e6cfbbe540d764deec1c18 *R/computeBounds.R
 c4db096d584efd9893697fbed89b0a81 *R/computeStat.R
 59e81c89854cbb4c05df672f1605dbd1 *R/contMC.R
-f4b81c0b3e2dfdc4b9b7feed149f79d7 *R/critVal.R
+3519d43698cffbac235b0ccda7b14d95 *R/critVal.R
 3e0b9a68ef5b21dc09f1f25988ffb1ab *R/dfilter.R
 05aedfc5af6637d0016808b9f686fbcd *R/intervalSystem.R
 620bfd800ce229cbda1689824a7d60f8 *R/jsmurf.R
@@ -18,7 +18,7 @@ ffcf9651271bc57d598eb4f6b3f4b617 *R/jumpint.R
 3641c560d4147d509ee1e007fe539513 *R/neighbours.R
 412263e87e788bf2ac210dfec76914c3 *R/parametricFamily.R
 fdecbcd21d394f8baaf015da570f52cd *R/sdrobnorm.R
-cbe548ef6290be446395605752dedfc3 *R/smuceR.R
+b538a0d51ccd05761e2deca080f3193c *R/smuceR.R
 f229f24e1ea09af631d22d7ccbb91ff3 *R/stepFit.R
 30d7733f62ca3db00f9d7a761616abda *R/stepblock.R
 b0a8e4acf6ebfc9c0f499b401dcd8757 *R/stepbound.R
@@ -28,12 +28,12 @@ b40f65f3210f2e0176b6f97d0489ffa2 *R/steppath.R
 443ccdc88b0796d356312417f42df35b *R/sysdata.rda
 d6f91d9a403a51c53d655c788e66ddbf *R/transit.R
 95474dec2662726b433bff8320919c54 *R/zzz.R
-e2f16e0b41f9c1c305d77f0011e7c5e5 *build/vignette.rds
+0f48680fe31b3c04917ccf2c7d1eccc4 *build/vignette.rds
 53300866c4295b5893b3ea98f6c7a79c *data/MRCasymptotic.rda
 918d7a043461f770183b9aa6489071bc *inst/CITATION
 021abea9362231a050ff203045c12867 *inst/doc/StepR.R
 3de4c814dd306131aa39e6dee301ba82 *inst/doc/StepR.Rnw
-734130f27fb9a68c25e84de428667b19 *inst/doc/StepR.pdf
+d62c5bea2669fe69ac7b94346b9a4a19 *inst/doc/StepR.pdf
 69453fea24c441a85530d083c95832e8 *inst/tests/comparisons/indices.R
 b6b9b32d58a89eafe791b04249a5f48c *inst/tests/comparisons/localCost.R
 c69c4e9dce7527d2daaa2f51c01de2bf *inst/tests/comparisons/localEst.R

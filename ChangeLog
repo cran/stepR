@@ -1,3 +1,12 @@
+2019-01-18 Florian Pein, version 2.0-3
+
+  * added ties = mean to call of approxfun in thresh.smuceR to avoid warnings R-devel
+    (reported with suggestion by Martin Maechler)
+  
+  * more informative error message when the length of weights is wrong in critVal.R
+
+  * depends now on >= R-3.1.0 (imported packages have such a dependency)
+
 2018-04-06 Florian Pein, version 2.0-2
 
   * new maintainer
@@ -165,7 +174,7 @@
 
 2015-04-21 Thomas Hotz
 
-  * jumpint.R: corrected plotting of confidence bands (reported and solution suggested by by Florian Pein)
+  * jumpint.R: corrected plotting of confidence bands (reported and solution suggested by Florian Pein)
 
   * stebound.R: corrected R to C style indices for bounds.rev$start (also by Florian Pein)
 
