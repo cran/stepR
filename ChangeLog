@@ -1,3 +1,9 @@
+2019-11-03 Florian Pein, version 2.0-4
+
+  * new maintainer email adress
+
+  * splitted keywords in stepR-package.Rd
+
 2019-01-18 Florian Pein, version 2.0-3
 
   * added ties = mean to call of approxfun in thresh.smuceR to avoid warnings R-devel

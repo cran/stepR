@@ -1,5 +1,5 @@
-6512c2c9534f69032a8b4be2eaa61884 *ChangeLog
-21a7c1df0adf53b88b1ee32c4565cc86 *DESCRIPTION
+dcee38df8837d96a195903a72d208e8c *ChangeLog
+dc18551a9dcd20bca86078551f6b9080 *DESCRIPTION
 56dca8a4413ed51306bf43372b6e293a *NAMESPACE
 53c7accf7fff3c1c74d9c2e202d642cc *R/MRC.R
 f3c2272fc33d0bb4491cc75b3cdbf0f0 *R/RcppExports.R
@@ -28,12 +28,12 @@ b40f65f3210f2e0176b6f97d0489ffa2 *R/steppath.R
 443ccdc88b0796d356312417f42df35b *R/sysdata.rda
 d6f91d9a403a51c53d655c788e66ddbf *R/transit.R
 95474dec2662726b433bff8320919c54 *R/zzz.R
-0f48680fe31b3c04917ccf2c7d1eccc4 *build/vignette.rds
+1f1fe828d440b824b5af02ffd653bdeb *build/vignette.rds
 53300866c4295b5893b3ea98f6c7a79c *data/MRCasymptotic.rda
 918d7a043461f770183b9aa6489071bc *inst/CITATION
 021abea9362231a050ff203045c12867 *inst/doc/StepR.R
 3de4c814dd306131aa39e6dee301ba82 *inst/doc/StepR.Rnw
-d62c5bea2669fe69ac7b94346b9a4a19 *inst/doc/StepR.pdf
+7d9e7a918287e2bed98f7796a99dd42f *inst/doc/StepR.pdf
 69453fea24c441a85530d083c95832e8 *inst/tests/comparisons/indices.R
 b6b9b32d58a89eafe791b04249a5f48c *inst/tests/comparisons/localCost.R
 c69c4e9dce7527d2daaa2f51c01de2bf *inst/tests/comparisons/localEst.R
@@ -63,7 +63,7 @@ b11dcdb936b0ab6ffc4fcd9a5e5444d8 *man/penalty.Rd
 d27b80dc0fa2e136c7189ad9fda16b54 *man/sdrobnorm.Rd
 0cfe6193c1c483f188cd36262774dca4 *man/smuceR.Rd
 9e6d75cd6a19c92890c561ac584c6c19 *man/stepFit.Rd
-0069fc1731ffc259b9f747644e4b1849 *man/stepR-package.Rd
+f4b5b103971522cb988e43bbb0a23e48 *man/stepR-package.Rd
 be3ea7bc18b0920cfba1bf38994a79af *man/stepblock.Rd
 a5391cc3a90eee8770f54b1ab282168f *man/stepbound.Rd
 557ea8e93af2e525915da6284475ca31 *man/stepcand.Rd

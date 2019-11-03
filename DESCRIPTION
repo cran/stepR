@@ -1,7 +1,7 @@
 Package: stepR
 Title: Multiscale Change-Point Inference
-Version: 2.0-3
-Authors@R: c(person("Pein", "Florian", role = c("aut", "cre"), email = "fpein@uni-goettingen.de"),
+Version: 2.0-4
+Authors@R: c(person("Pein", "Florian", role = c("aut", "cre"), email = "fp366@cam.ac.uk"),
     person("Thomas", "Hotz", role = "aut", email = "thomas.hotz@tu-ilmenau.de"),
     person("Hannes", "Sieling", role = "aut", email = "hsielin@uni-goettingen.de"),
     person("Timo", "Aspelmeier", role = "ctb", email = "timo.aspelmeier@mathematik.uni-goettingen.de"))
@@ -16,11 +16,11 @@ License: GPL-3
 Classification/MSC: 62G08, 92C40, 92D20
 LazyData: yes
 NeedsCompilation: yes
-Packaged: 2019-01-27 17:03:14 UTC; fpein
+Packaged: 2019-11-03 18:08:35 UTC; fpein
 Author: Pein Florian [aut, cre],
   Thomas Hotz [aut],
   Hannes Sieling [aut],
   Timo Aspelmeier [ctb]
-Maintainer: Pein Florian <fpein@uni-goettingen.de>
+Maintainer: Pein Florian <fp366@cam.ac.uk>
 Repository: CRAN
-Date/Publication: 2019-01-27 18:30:03 UTC
+Date/Publication: 2019-11-03 21:10:02 UTC

@@ -70,7 +70,8 @@ Davies, P. L., Kovac, A. (2001) Local extremes, runs, strings and multiresolutio
 Friedrich, F., Kempe, A., Liebscher, V., Winkler, G. (2008) Complexity penalized M-estimation: fast computation. \emph{Journal of Computational and Graphical Statistics} \bold{17}(1), 201--224.
 }
 
-\keyword{package,nonparametric}
+\keyword{package}
+\keyword{nonparametric}
 
 \seealso{
 \code{\link{stepFit}}, \code{\link{critVal}}, \code{\link{computeStat}}, \code{\link{computeBounds}},  \code{\link{jsmurf}}, \code{\link{transit}}, \code{\link{sdrobnorm}}, \code{\link{compareBlocks}}, \link{parametricFamily}, \link{intervalSystem}, \link{penalty}
