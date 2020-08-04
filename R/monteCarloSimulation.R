@@ -32,6 +32,8 @@ monteCarloSimulation <- function(n, r = 1e4L, family = NULL, intervalSystem = NU
     penalty <- match.arg(penalty, c("sqrt", "log", "none"))
   }
   
+  data$signal <- data$generateSignal(data = data, intervalSystem = intervalSystem)
+  
   .monteCarloSimulation(data = data, intervalSystem = intervalSystem, penalty = penalty, r = r,
                         seed = seed, rand.gen = rand.gen, messages = messages, output = output)
 }
@@ -77,9 +79,11 @@ monteCarloSimulation <- function(n, r = 1e4L, family = NULL, intervalSystem = NU
         }
         FALSE
       }
+    } else {
+      each <- NULL
     }
   } else {
-    each <- 0
+    each <- NULL
     messages <- function(i, r, each) {FALSE}
   }
   
@@ -95,11 +99,11 @@ monteCarloSimulation <- function(n, r = 1e4L, family = NULL, intervalSystem = NU
   
   if (is.null(rand.gen)) {
     rand.gen <- data$rand.gen
-    save <- TRUE
+    save <- data$save
   } else {
     save <- FALSE
     if (!is.function(rand.gen) || !identical(names(formals(rand.gen)), "data")) {
-      stop(data$errorMessageGeneratedData)
+      stop("rand.gen must be a function with a single argument data")
     }
   }
   
@@ -108,16 +112,13 @@ monteCarloSimulation <- function(n, r = 1e4L, family = NULL, intervalSystem = NU
       stop("User interrupt!")
     }
     
-    data$y <- rand.gen(data = data)
-    if (data$testGeneratedData(data)) {
-      stop(data$errorMessageGeneratedData)
-    }
+    data <- data$addData(rand.gen, data)
 
     if (output == "vector") {
-      stat[, i] <- .computeStat(signal = 0, data = data, intervalSystem = intervalSystem, penalty = penalty,
+      stat[, i] <- .computeStat(signal = data$signal, data = data, intervalSystem = intervalSystem, penalty = penalty,
                                 output = output)
     } else {
-      stat[i] <- .computeStat(signal = 0, data = data, intervalSystem = intervalSystem, penalty = penalty,
+      stat[i] <- .computeStat(signal = data$signal, data = data, intervalSystem = intervalSystem, penalty = penalty,
                               output = output)
     }
   }

@@ -18,6 +18,8 @@ export(stepfit)
 export(jumpint)
 export(confband)
 
+export(.testSmallScales)
+
 export(BesselPolynomial, bounds, bounds.MRC, chi, chi.FFT, compareBlocks, contMC,
        dfilter, jsmurf, kMRC.pvalue, kMRC.quant, kMRC.simul, MRC, MRC.FFT,
        MRC.pvalue, MRC.quant, MRC.simul, MRCoeff, MRCoeff.FFT, neighbours, smuceR,

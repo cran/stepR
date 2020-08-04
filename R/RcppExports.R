@@ -9,10 +9,6 @@
     .Call(`_stepR_colMax`, stat)
 }
 
-.convolve <- function(val, kern) {
-    .Call(`_stepR_convolve`, val, kern)
-}
-
 .criticalValuesWeights <- function(stat, beta, alpha) {
     .Call(`_stepR_criticalValuesWeights`, stat, beta, alpha)
 }

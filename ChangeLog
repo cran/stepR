@@ -1,3 +1,17 @@
+2020-08-03 Florian Pein, version 2.1-0
+
+  * depends now on R-3.3.0 (digest requires it)
+
+  * added import of package lowpassFilter
+
+  * computeStat: added input checks for argument signal
+
+  * removed Convolve.cpp (is not needed anymore because of import of lowpassFilter)
+
+  * new exported function .testSmallScales: for developers only, users should look at the function improveSmallScales in the package clampSeg
+
+  * new parametric families jsmurf, jsmurfPS, jsmurfLR, hjsmurf, hjsmurfSPS, hjsmurfLR, 2Param, LR: for developers only, users should look at the functions jsmurf and hilde in package clampSeg
+
 2019-11-03 Florian Pein, version 2.0-4
 
   * new maintainer email adress
@@ -180,7 +194,7 @@
 
 2015-04-21 Thomas Hotz
 
-  * jumpint.R: corrected plotting of confidence bands (reported and solution suggested by Florian Pein)
+  * jumpint.R: corrected plotting of confidence bands (reported and solution suggested by by Florian Pein)
 
   * stebound.R: corrected R to C style indices for bounds.rev$start (also by Florian Pein)
 

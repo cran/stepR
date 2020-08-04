@@ -2,7 +2,9 @@
 
 #include "SingleBounds.h"
 #include "LocalOptimum.h"
+#include "SmallScales.h"
 
+#include <algorithm>
 #include <vector>
 #include <stack>
 
@@ -561,4 +563,155 @@ List fitBandDynamicProgram(Data * const data, IntervalSystem * const intervalSys
   }
   
   return(ret);
+}
+
+/*************
+ * computeStatistic
+ * comoutes all local test statistics for a given fit
+ ****************/
+NumericVector computeStatistic(Data * data, const List &input) {
+  int n = input["n"];
+  IntegerVector lengths = input["lengths"];
+  IntegerVector left = input["left"];
+  IntegerVector right = input["right"];
+  unsigned int filterLength = input["filterLength"];
+  List argumentsListLocal = input["argumentsListLocal"];
+  
+  NumericVector stat = NumericVector(n, R_NegInf);
+  double computedStat = R_NegInf;
+  
+  for (unsigned int lenIndex = 0u; lenIndex < lengths.size(); ++lenIndex) {
+    checkUserInterrupt();
+    unsigned int len = lengths[lenIndex];
+    SEXP help = argumentsListLocal[lenIndex];
+    data -> setLocal(help);
+    
+    unsigned int segmentIndex = 0u;
+    if (right[segmentIndex] >= static_cast<int>(filterLength + len) - 1) {
+      for (int start = static_cast<int>(left[segmentIndex] + filterLength) - 1;
+           start <= static_cast<int>(right[segmentIndex] - filterLength - len) + 1; ++start) {
+        computedStat = data -> computeSingleStat(start, segmentIndex, segmentIndex);
+        
+        if (computedStat > stat[len - 1u]) {
+          stat[len - 1u] = computedStat;
+        }
+      }
+    }
+    
+    for (segmentIndex = 1u; segmentIndex < left.size(); ++segmentIndex) {
+      checkUserInterrupt();
+      
+      int startSegment = std::max(static_cast<int>(right[segmentIndex - 1u]) - 
+                                  static_cast<int>(filterLength) - static_cast<int>(len) + 2,
+                                  static_cast<int>(left[segmentIndex - 1u] + filterLength) - 1);
+      int endSegment = std::min(static_cast<int>(left[segmentIndex] + filterLength) - 2,
+                                static_cast<int>(right[segmentIndex]) - static_cast<int>(filterLength)
+                                  - static_cast<int>(len) + 1);
+      
+      for (int start = startSegment; start <= endSegment; ++start) {
+        computedStat = data -> computeSingleStat(start, segmentIndex - 1u, segmentIndex);
+        
+        if (computedStat > stat[len - 1u]) {
+          stat[len - 1u] = computedStat;
+        }
+      }
+      
+      if (right[segmentIndex] >= static_cast<int>(filterLength + len) - 1) {
+        for (int start = static_cast<int>(left[segmentIndex] + filterLength) - 1;
+             start <= static_cast<int>(right[segmentIndex] - filterLength - len) + 1; ++start) {
+          computedStat = data -> computeSingleStat(start, segmentIndex, segmentIndex);
+          
+          if (computedStat > stat[len - 1u]) {
+            stat[len - 1u] = computedStat;
+          }
+        }
+      }
+    }
+    
+    data -> cleanUpLocalVariables();
+  }
+  
+  return stat;
+}
+
+/*************
+ * computeStatistic
+ * find small scales on which the local test rejects
+ ****************/
+List findSmallScales(Data * data, const List input) {
+  IntegerVector lengths = input["lengths"];
+  IntegerVector left = input["left"];
+  IntegerVector right = input["right"];
+  unsigned int filterLength = input["filterLength"];
+  NumericVector critVal = input["critVal"];
+  List argumentsListLocal = input["argumentsListLocal"];
+  
+  for (unsigned int lenIndex = 0u; lenIndex < lengths.size(); ++lenIndex) {
+    checkUserInterrupt();
+    unsigned int len = lengths[lenIndex];
+    SEXP help = argumentsListLocal[lenIndex];
+    data -> setLocal(help);
+    SmallScales::it_ = SmallScales::listSmallScales_.begin();
+    
+    unsigned int segmentIndex = 0u;
+    double helpStat;
+    if (right[segmentIndex] >= static_cast<int>(filterLength + len) - 1) {
+      for (int start = static_cast<int>(left[segmentIndex] + filterLength) - 1;
+           start <= static_cast<int>(right[segmentIndex] - filterLength - len) + 1; ++start) {
+        helpStat = data -> computeSingleStat(start, segmentIndex, segmentIndex);
+        if (helpStat > critVal[lenIndex]) {
+          SmallScales::update(start, len, helpStat);
+        }
+      }
+    }
+    
+    for (segmentIndex = 1u; segmentIndex < left.size(); ++segmentIndex) {
+      checkUserInterrupt();
+      
+      int startSegment = std::max(static_cast<int>(right[segmentIndex - 1u]) - 
+                                  static_cast<int>(filterLength) - static_cast<int>(len) + 2,
+                                  static_cast<int>(left[segmentIndex - 1u] + filterLength) - 1);
+      int endSegment = std::min(static_cast<int>(left[segmentIndex] + filterLength) - 2,
+                                static_cast<int>(right[segmentIndex]) - static_cast<int>(filterLength)
+                                  - static_cast<int>(len) + 1);
+      
+      for (int start = startSegment; start <= endSegment; ++start) {
+        helpStat = data -> computeSingleStat(start, segmentIndex, segmentIndex);
+        if (helpStat > critVal[lenIndex]) {
+          SmallScales::update(start, len, helpStat);
+        }
+      }
+      
+      if (right[segmentIndex] >= static_cast<int>(filterLength + len) - 1) {
+        for (int start = static_cast<int>(left[segmentIndex] + filterLength) - 1;
+             start <= static_cast<int>(right[segmentIndex] - filterLength - len) + 1; ++start) {
+          helpStat = data -> computeSingleStat(start, segmentIndex, segmentIndex);
+          if (helpStat > critVal[lenIndex]) {
+            SmallScales::update(start, len, helpStat);
+          }
+        }
+      }
+    }
+    
+    data -> cleanUpLocalVariables();
+  }
+  
+  unsigned int size = SmallScales::listSmallScales_.size();
+  IntegerVector li = IntegerVector(size);
+  IntegerVector ri = IntegerVector(size);
+  LogicalVector noDe = LogicalVector(size);
+  SmallScales current;
+  
+  for (unsigned int i = 0u; i < size; ++i) {
+    current = SmallScales::listSmallScales_.front();
+    SmallScales::listSmallScales_.pop_front();
+    
+    li[i] = current.left();
+    ri[i] = current.right();
+    noDe[i] = current.noDeconvolution();
+  }
+  
+  SmallScales::cleanUpGlobalVariables();
+  
+  return List::create(_["left"]  = li, _["right"]  = ri, _["noDeconvolution"] = noDe);
 }

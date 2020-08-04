@@ -1,4 +1,4 @@
-## ----setup, echo = FALSE, message = FALSE--------------------------------
+## ----setup, echo = FALSE, message = FALSE-------------------------------------
 # fig.width=5.5, 
 library(knitr)
 # opts_chunk$set(fig.align='center', fig.height=5, warning=FALSE,
@@ -32,7 +32,7 @@ points(jumpint(fit), col = "red")
 # confidence band
 lines(confband(fit), lty = "22", col = "darkred", lwd = 2)
 
-## ----critVal-------------------------------------------------------------
+## ----critVal------------------------------------------------------------------
 # was called in stepFit, can be called explicitly,
 # for instance outside of a for loop to save computation time
 qVector <- critVal(length(y), alpha = 0.5)
@@ -41,7 +41,7 @@ identical(stepFit(y, x = x, q = qVector, jumpint = TRUE, confband = TRUE), fit)
 qValue <- critVal(length(y), alpha = 0.5, output = "value")
 identical(stepFit(y, x = x, q = qValue, jumpint = TRUE, confband = TRUE), fit)
 
-## ----computeStat---------------------------------------------------------
+## ----computeStat--------------------------------------------------------------
 # fit satisfies the multiscale contraint, i.e.
 # the computed penalized multiscale statistic is not larger than the global quantile
 computeStat(y, signal = fit, output = "maximum") < qValue
@@ -49,11 +49,11 @@ computeStat(y, signal = fit, output = "maximum") < qValue
 # the vector of critical values
 all(computeStat(y, signal = fit, output = "vector") < qVector)
 
-## ----computeBounds-------------------------------------------------------
+## ----computeBounds------------------------------------------------------------
 # the multiscale contraint
 bounds <- computeBounds(y, alpha = 0.5)
 
-## ----monteCarloSimulation------------------------------------------------
+## ----monteCarloSimulation-----------------------------------------------------
 # monteCarloSimulation will be called in critVal, can be called explicitly
 # object of class MCSimulationVector
 stat <- monteCarloSimulation(n = length(y))

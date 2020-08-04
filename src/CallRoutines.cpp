@@ -6,6 +6,14 @@
 #include "DataGauss.h"
 #include "DataHsmuce.h"
 #include "DataMDependentPS.h"
+#include "DataJsmurf.h"
+#include "DataJsmurfPS.h"
+#include "DataJsmurfLR.h"
+#include "DataHjsmurf.h"
+#include "DataHjsmurfSPS.h"
+#include "DataHjsmurfLR.h"
+#include "DataLR.h"
+#include "Data2Param.h"
 
 #include "IntervalSystem.h"
 #include "IntervalSystemAll.h"
@@ -33,12 +41,65 @@ RObject callRoutines(RObject observations,
     DataMDependentPS::setData(observations, argumentsListData);
     data = new DataMDependentPS();
     break;
+  case 11:
+    DataJsmurf::setData(observations, argumentsListData);
+    data = new DataJsmurf();
+    break;
+  case 12:
+    DataJsmurfPS::setData(observations, argumentsListData);
+    data = new DataJsmurfPS();
+    break;
+  case 13:
+    DataJsmurfLR::setData(observations, argumentsListData);
+    data = new DataJsmurfLR();
+    break;
   case 20:
     DataHsmuce::setData(observations);
     data = new DataHsmuce();
     break;
+  case 21:
+    DataHjsmurf::setData(observations, argumentsListData);
+    data = new DataHjsmurf();
+    break;
+  case 22:
+    DataHjsmurfSPS::setData(observations, argumentsListData);
+    data = new DataHjsmurfSPS();
+    break;
+  case 23:
+    DataHjsmurfLR::setData(observations, argumentsListData);
+    data = new DataHjsmurfLR();
+    break;
+  case 100:
+    Data2Param::setData(observations, argumentsListData);
+    data = new Data2Param();
+    break;
+  case 102:
+    DataLR::setData(observations, argumentsListData);
+    data = new DataLR();
+    break;
   default:
     stop("dataType %d is not defined", dataType);
+  }
+  
+  if (dataType >= 100) {
+    RObject ret;
+    
+    switch (routineType) {
+    case 1:
+      ret = computeStatistic(data, argumentsListRoutine);
+      break;
+    case 10:
+      ret = findSmallScales(data, argumentsListRoutine);
+      break;
+    default:
+      data -> cleanUpStaticVariables();
+      delete data;
+      stop("only computeStat can be called for this parametric family");
+    }
+    data -> cleanUpStaticVariables();
+    delete data;
+    
+    return ret;
   }
 
   IntervalSystem* intervalSystem = NULL;

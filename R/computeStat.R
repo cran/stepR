@@ -15,6 +15,15 @@ computeStat  <- function(y, signal = 0, family = NULL, intervalSystem = NULL, le
   }
   output <- match.arg(output)
   
+  if (data$type == 100L || data$type == 102L) {
+    if (!identical(signal, 0)) {
+      warning("argument 'signal' will be ignored for this parametric family,",
+              " please use the parametric family argument 'fit' instead")
+    }
+    return(.computeStat(signal = data$generateSignal(data = data, intervalSystem = intervalSystem),
+                        data = data, intervalSystem = intervalSystem, penalty = penalty, output = output)) 
+  }
+
   if (is.list(signal)) {
     if (is.null(signal$leftIndex) || is.null(signal$rightIndex) || is.null(signal$value)) {
       stop("if signal is a list it must contain 'leftIndex', 'rightIndex' and 'value'")
@@ -44,13 +53,21 @@ computeStat  <- function(y, signal = 0, family = NULL, intervalSystem = NULL, le
     if (!is.integer(signal$rightIndex)) {
       signal$rightIndex <- as.integer(signal$rightIndex + 1e-6)
     }
+    
+    if (data$n != signal$rightIndex[length(signal$rightIndex)] - signal$leftIndex[1] + 1L) {
+      stop("length of observations must be the same as the length described by the signal")
+    }
+    
+    if (signal$leftIndex[1] != 1L) {
+      stop("signal$leftIndex must start at 1")
+    }
   } else {
     if (!is.numeric(signal) || length(signal) != 1 || !is.finite(signal)) {
       stop("signal must be either a list or a single finite numeric")
     }
     
     if (signal == 0) {
-      return(.computeStat(signal = 0, data = data, intervalSystem = intervalSystem, penalty = penalty,
+      return(.computeStat(signal = signal, data = data, intervalSystem = intervalSystem, penalty = penalty,
                           output = output)) 
     } else {
       signal <- list(leftIndex = 1L, rightIndex = data$n, value = as.numeric(signal))
@@ -81,9 +98,9 @@ computeStat  <- function(y, signal = 0, family = NULL, intervalSystem = NULL, le
   stat <- stat[finiteLengths]
   
   stat <- switch(penalty,
-                 sqrt = sqrt(2 * stat) - sqrt(2 * log(exp(1) * data$nq /
-                                                        intervalSystem$lengths[finiteLengths])),
-                 log = stat - log(exp(1) * data$nq / intervalSystem$lengths[finiteLengths]),
+                 sqrt = sqrt(2 * stat) - 
+                   sqrt(2 * log(exp(1) * data$nq / (intervalSystem$lengths[finiteLengths] + data$penaltyShift))),
+                 log = stat - log(exp(1) * data$nq / (intervalSystem$lengths[finiteLengths] + data$penaltyShift)),
                  none = stat)
   
   if (output == "list") {

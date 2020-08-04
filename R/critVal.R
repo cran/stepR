@@ -9,10 +9,13 @@ critVal <- function(n, q = NULL, alpha = NULL, nq = 2L^(as.integer(log2(n) + 1e-
     .parametricFamily(family = family, n = n, nq = nq, ...)
   data <- .RemoveAdditionalArgsPF(family = family, n = n, nq = nq, ...)
   intervalSystem <- .intervalSystem(intervalSystem = intervalSystem, lengths = lengths, data = data)
+  data$signal <- data$generateSignal(data = data, intervalSystem = intervalSystem)
   output <- match.arg(output)
   
   .RemoveAdditionalArgsCV <- function(q, data, output, intervalSystem, penalty, alpha, stat, r,
-                                      weights, options, ..., sd, covariances, correlations, filter)
+                                      weights, options, ..., sd, covariances, correlations, filter,
+                                      fit, startTime, thresholdLongSegment, localValue, localVar,
+                                      regularization, suppressWarningNoDeconvolution, localList)
     .critVal(q = q, data = data, output = output, intervalSystem = intervalSystem, penalty = penalty,
              alpha = alpha, stat = stat, r = r, weights = weights, options = options, ...)
   .RemoveAdditionalArgsCV(q = q, data = data, output = output, intervalSystem = intervalSystem, penalty = penalty,
@@ -79,14 +82,19 @@ critVal <- function(n, q = NULL, alpha = NULL, nq = 2L^(as.integer(log2(n) + 1e-
   penalty <- match.arg(penalty, c("sqrt", "log", "none", "weights"))
   
   if (is.null(options)) {
-    options <- list(simulation = "matrixIncreased",
-                    save = list(workspace = c("vector", "vectorIncreased"),
-                                fileSystem = c("matrix", "matrixIncreased"),
-                                RDSfile = NULL, variable = NULL),
-                    load = list(workspace = c("vector", "vectorIncreased", "matrix", "matrixIncreased"),
-                                fileSystem = c("vector", "vectorIncreased", "matrix", "matrixIncreased"),
-                                package = TRUE, RDSfile = NULL),
-                    envir = .GlobalEnv, dirs = "stepR")
+    if ((data$type == 100L || data$type == 102L) && !all(intervalSystem$lengths %in% data$defaultLengths)) {
+      options <- list(simulation = "matrixIncreased",
+                      load = list(), save = list(), envir = .GlobalEnv, dirs = "stepR")
+    } else {
+      options <- list(simulation = "matrixIncreased",
+                      save = list(workspace = c("vector", "vectorIncreased"),
+                                  fileSystem = c("matrix", "matrixIncreased"),
+                                  RDSfile = NULL, variable = NULL),
+                      load = list(workspace = c("vector", "vectorIncreased", "matrix", "matrixIncreased"),
+                                  fileSystem = c("vector", "vectorIncreased", "matrix", "matrixIncreased"),
+                                  package = TRUE, RDSfile = NULL),
+                      envir = .GlobalEnv, dirs = "stepR")
+    }
   } else {
     if (!is.list(options) || !all(names(options) %in% c("simulation", "save", "load", "envir", "dirs"))) {
       stop("options must be a list and only entries 'simulation', 'save', 'load', 'envir', 'dirs' are allowed")
@@ -212,6 +220,14 @@ critVal <- function(n, q = NULL, alpha = NULL, nq = 2L^(as.integer(log2(n) + 1e-
         options$dirs <- NULL
       }
     }
+    
+    if ((data$type == 100L || data$type == 102L) && !all(intervalSystem$lengths %in% data$defaultLengths)) {
+      options$save$workspace <- NULL
+      options$save$fileSystem <- NULL
+      options$load$workspace <- NULL
+      options$load$fileSystem <- NULL
+      options$load$package <- FALSE
+    }
   }
   
   if (penalty == "weights") {
@@ -283,6 +299,9 @@ critVal <- function(n, q = NULL, alpha = NULL, nq = 2L^(as.integer(log2(n) + 1e-
     n <- attr(stat, "n")
     keyList <- attr(stat, "keyList")
     save <- attr(stat, "save")
+    if ((data$type == 100L || data$type == 102L) && !all(intervalSystem$lengths %in% attr(stat, "lengths"))) {
+      stop("stat does not contain all required lengths")
+    }
     stat <- stat[.inOrdered(attr(stat, "lengths"), intervalSystem$lengths), , drop = FALSE]
     attr(stat, "n") <- n
     attr(stat, "keyList") <- keyList
@@ -308,10 +327,13 @@ critVal <- function(n, q = NULL, alpha = NULL, nq = 2L^(as.integer(log2(n) + 1e-
     dataKey <- attr(stat, "keyList")[[2]]
     intervalSystemList <- attr(stat, "keyList")[[3]]
     save <- attr(stat, "save")
+    
+    stat[stat == -Inf] <- 0
 
     stat <- switch(penalty,
-                   "sqrt" = .colMax(sqrt(2 * stat) - sqrt(2 * log(exp(1) * n / intervalSystem$lengths))),
-                   "log" = .colMax(stat - log(exp(1) * n / intervalSystem$lengths)),
+                   "sqrt" = .colMax(sqrt(2 * stat) - 
+                                      sqrt(2 * log(exp(1) * n / (intervalSystem$lengths + data$penaltyShift)))),
+                   "log" = .colMax(stat - log(exp(1) * n / (intervalSystem$lengths + data$penaltyShift))),
                    "none" = .colMax(stat),
                    stop("unexpected error: unknown penalty"))
     
@@ -376,9 +398,9 @@ critVal <- function(n, q = NULL, alpha = NULL, nq = 2L^(as.integer(log2(n) + 1e-
       attr(q, "n") <- n
     } else if (length(q) == 1L) {
       if (penalty == "sqrt") {
-        q <- (q + sqrt(2 * log(exp(1) * n / intervalSystem$lengths)))^2 / 2
+        q <- (q + sqrt(2 * log(exp(1) * n / (intervalSystem$lengths + data$penaltyShift))))^2 / 2
       } else if (penalty == "log") {
-        q <- q + log(exp(1) * n / intervalSystem$lengths)
+        q <- q + log(exp(1) * n / (intervalSystem$lengths + data$penaltyShift))
       } else if (penalty == "none") {
         q <- rep(q, length(intervalSystem$lengths))
       } else if (penalty == "weights") {
@@ -420,6 +442,10 @@ critVal <- function(n, q = NULL, alpha = NULL, nq = 2L^(as.integer(log2(n) + 1e-
 # returns a vector of length nrow(stat) (will be intervalSystem$lengths)
 # contaning the scale dependent critical values
 .critValWeights <- function(stat, alpha, weights) {
+  if (nrow(stat) == 0) {
+    return(numeric(0))
+  }
+  
   if (is.null(weights)) {
     weights <- rep(1 / nrow(stat), nrow(stat))
   } else {
@@ -464,24 +490,40 @@ critVal <- function(n, q = NULL, alpha = NULL, nq = 2L^(as.integer(log2(n) + 1e-
         data <- data$MC(data, data$n)
         intervalSystem <- .intervalSystem(intervalSystem = intervalSystem$intervalSystem,
                                           lengths = intervalSystem$lengths, data = data)
+        data$signal <- data$generateSignal(data = data, intervalSystem = intervalSystem)
         stat <- .monteCarloSimulation(r = r, output = "value", data = data, intervalSystem = intervalSystem,
                                       penalty = penalty, ...)
       } else if (options$simulation == "vectorIncreased") {
         data <- data$MC(data, data$nq)
         intervalSystem <- .intervalSystem(intervalSystem = intervalSystem$intervalSystem,
                                           lengths = intervalSystem$lengths, data = data)
+        data$signal <- data$generateSignal(data = data, intervalSystem = intervalSystem)
         stat <- .monteCarloSimulation(r = r, output = "value", data = data, intervalSystem = intervalSystem,
                                       penalty = penalty, ...)
       } else if (options$simulation == "matrix") {
         data <- data$MC(data, data$n)
+        lengths <- intervalSystem$lengths
         intervalSystem <- .intervalSystem(intervalSystem = intervalSystem$intervalSystem,
                                           lengths = NULL, data = data)
+        if (!all(lengths %in% intervalSystem$lengths)) {
+          data$save <- FALSE
+          intervalSystem <- .intervalSystem(intervalSystem = intervalSystem$intervalSystem,
+                                            lengths = lengths, data = data)
+        }
+        data$signal <- data$generateSignal(data = data, intervalSystem = intervalSystem)
         stat <- .monteCarloSimulation(r = r, output = "vector", data = data, intervalSystem = intervalSystem,
                                       penalty = "none", ...)
       } else if (options$simulation == "matrixIncreased") {
         data <- data$MC(data, data$nq)
+        lengths <- intervalSystem$lengths
         intervalSystem <- .intervalSystem(intervalSystem = intervalSystem$intervalSystem,
                                           lengths = NULL, data = data)
+        if (!all(lengths %in% intervalSystem$lengths)) {
+          data$save <- FALSE
+          intervalSystem <- .intervalSystem(intervalSystem = intervalSystem$intervalSystem,
+                                            lengths = lengths, data = data)
+        }
+        data$signal <- data$generateSignal(data = data, intervalSystem = intervalSystem)
         stat <- .monteCarloSimulation(r = r, output = "vector", data = data, intervalSystem = intervalSystem,
                                       penalty = "none", ...)
       }
@@ -509,14 +551,28 @@ critVal <- function(n, q = NULL, alpha = NULL, nq = 2L^(as.integer(log2(n) + 1e-
     if (is.null(stat)) {
       if (options$simulation == "matrix") {
         data <- data$MC(data, data$n)
+        lengths <- intervalSystem$lengths
         intervalSystem <- .intervalSystem(intervalSystem = intervalSystem$intervalSystem,
                                           lengths = NULL, data = data)
+        if (!all(lengths %in% intervalSystem$lengths)) {
+          data$save <- FALSE
+          intervalSystem <- .intervalSystem(intervalSystem = intervalSystem$intervalSystem,
+                                            lengths = lengths, data = data)
+        }
+        data$signal <- data$generateSignal(data = data, intervalSystem = intervalSystem)
         stat <- .monteCarloSimulation(r = r, output = "vector", data = data, intervalSystem = intervalSystem,
                                       penalty = "none", ...)
       } else if (options$simulation == "matrixIncreased") {
         data <- data$MC(data, data$nq)
+        lengths <- intervalSystem$lengths
         intervalSystem <- .intervalSystem(intervalSystem = intervalSystem$intervalSystem,
                                           lengths = NULL, data = data)
+        if (!all(lengths %in% intervalSystem$lengths)) {
+          data$save <- FALSE
+          intervalSystem <- .intervalSystem(intervalSystem = intervalSystem$intervalSystem,
+                                            lengths = lengths, data = data)
+        }
+        data$signal <- data$generateSignal(data = data, intervalSystem = intervalSystem)
         stat <- .monteCarloSimulation(r = r, output = "vector", data = data, intervalSystem = intervalSystem,
                                       penalty = "none", ...)
       }

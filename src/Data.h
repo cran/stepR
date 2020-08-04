@@ -47,6 +47,12 @@ class Data {
     virtual void addRight(const unsigned int &index) = 0;
     virtual void add(Data * const data) = 0;
     virtual void reset() = 0;
+    
+    // required for local tests for given fits
+    // clean and set of local variables and computes single stat for given start index and segments
+    virtual void cleanUpLocalVariables();
+    virtual void setLocal(const List &input);
+    virtual double computeSingleStat(unsigned int startIndex, unsigned int leftSegment, unsigned int rightSegment) const;
 };
 
 #endif

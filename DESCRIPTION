@@ -1,13 +1,13 @@
 Package: stepR
 Title: Multiscale Change-Point Inference
-Version: 2.0-4
+Version: 2.1-0
 Authors@R: c(person("Pein", "Florian", role = c("aut", "cre"), email = "fp366@cam.ac.uk"),
     person("Thomas", "Hotz", role = "aut", email = "thomas.hotz@tu-ilmenau.de"),
     person("Hannes", "Sieling", role = "aut", email = "hsielin@uni-goettingen.de"),
     person("Timo", "Aspelmeier", role = "ctb", email = "timo.aspelmeier@mathematik.uni-goettingen.de"))
-Depends: R (>= 3.1.0)
-Imports: Rcpp (>= 0.12.3), R.cache (>= 0.10.0), digest (>= 0.6.10),
-        stats, graphics, methods
+Depends: R (>= 3.3.0)
+Imports: Rcpp (>= 0.12.3), lowpassFilter (>= 1.0.0), R.cache (>=
+        0.10.0), digest (>= 0.6.10), stats, graphics, methods
 LinkingTo: Rcpp
 Suggests: testthat (>= 1.0.0), knitr
 VignetteBuilder: knitr
@@ -16,11 +16,11 @@ License: GPL-3
 Classification/MSC: 62G08, 92C40, 92D20
 LazyData: yes
 NeedsCompilation: yes
-Packaged: 2019-11-03 18:08:35 UTC; fpein
+Packaged: 2020-08-04 16:40:40 UTC; fpein
 Author: Pein Florian [aut, cre],
   Thomas Hotz [aut],
   Hannes Sieling [aut],
   Timo Aspelmeier [ctb]
 Maintainer: Pein Florian <fp366@cam.ac.uk>
 Repository: CRAN
-Date/Publication: 2019-11-03 21:10:02 UTC
+Date/Publication: 2020-08-04 18:40:03 UTC

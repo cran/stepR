@@ -33,18 +33,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// convolve
-NumericVector convolve(const NumericVector& val, const NumericVector& kern);
-RcppExport SEXP _stepR_convolve(SEXP valSEXP, SEXP kernSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const NumericVector& >::type val(valSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type kern(kernSEXP);
-    rcpp_result_gen = Rcpp::wrap(convolve(val, kern));
-    return rcpp_result_gen;
-END_RCPP
-}
 // criticalValuesWeights
 NumericVector criticalValuesWeights(const NumericVector& stat, const NumericVector& beta, const double& alpha);
 RcppExport SEXP _stepR_criticalValuesWeights(SEXP statSEXP, SEXP betaSEXP, SEXP alphaSEXP) {
