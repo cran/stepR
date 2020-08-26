@@ -1,3 +1,9 @@
+2020-08-23 Florian Pein, version 2.1-1
+
+  * DataLR.cpp: replaced delete by delete [] (indictated by CRAN tests)
+  
+  * testComputeStat.R: expect_equal instead of expect_identical in line 1466 (indictated by CRAN tests on Mac OS)
+
 2020-08-03 Florian Pein, version 2.1-0
 
   * depends now on R-3.3.0 (digest requires it)

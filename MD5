@@ -1,5 +1,5 @@
-7892b7af3eff22f451e376292e7338d5 *ChangeLog
-9fff401b974d8e531b430528f093e433 *DESCRIPTION
+d017a7dfe9273270ef9a6e441a763e14 *ChangeLog
+02a2f9831e42290d56c970a78f9fa706 *DESCRIPTION
 2a21d063c9f36ad608225d05670e23c5 *NAMESPACE
 53c7accf7fff3c1c74d9c2e202d642cc *R/MRC.R
 bbdc53ee2a6e853b11783fcac45dc236 *R/RcppExports.R
@@ -34,7 +34,7 @@ d6f91d9a403a51c53d655c788e66ddbf *R/transit.R
 918d7a043461f770183b9aa6489071bc *inst/CITATION
 47440cc6141ed9435e8afde9ed1c32fa *inst/doc/StepR.R
 3de4c814dd306131aa39e6dee301ba82 *inst/doc/StepR.Rnw
-c23e6d6282d43e6817e3ad9325a89846 *inst/doc/StepR.pdf
+07557aa7247bf2bcd055e3f67ee6773a *inst/doc/StepR.pdf
 69453fea24c441a85530d083c95832e8 *inst/tests/comparisons/indices.R
 b6b9b32d58a89eafe791b04249a5f48c *inst/tests/comparisons/localCost.R
 c69c4e9dce7527d2daaa2f51c01de2bf *inst/tests/comparisons/localEst.R
@@ -101,7 +101,7 @@ d77430260d8bca3e03b98b4fea8616c9 *src/DataJsmurf.h
 af269a5c7fee17041108bd8bbbd661f8 *src/DataJsmurfLR.h
 998b1d826e73743143d8016d8aae3e74 *src/DataJsmurfPS.cpp
 50537374ca55e97269f1c22906300bc4 *src/DataJsmurfPS.h
-b37ba028668916869bcc71ccf08aee5f *src/DataLR.cpp
+c874b52b1864ffafbbbd413e246ccb25 *src/DataLR.cpp
 9e16b54ee8424d2f0010411ef4483bc9 *src/DataLR.h
 703ef3cf01208b508809b6c52602b6ab *src/DataMDependentPS.cpp
 64d13f9e66c34fa6a407930a1d1534e7 *src/DataMDependentPS.h
@@ -153,7 +153,7 @@ c8b90fd60aea947fa7c5d9e43eb687be *src/StepPoisson.h
 51fe0bf9e2ee6391631f227b90ddf73c *src/init.c
 bb3499a63c5a663d29323d7424f1160b *tests/tests.R
 e48ba29e9f2dd552765548ce668927a1 *tests/testthat.R
-7bf9b20c472d5695e80690675bc35c95 *tests/testthat/test-computeBounds.R
+fb34c49a14bdfe8914bf013ccd3d551b *tests/testthat/test-computeBounds.R
 51c4dff30fcafb1bd45564cd12f2626a *tests/testthat/test-computeStat.R
 0c31baa441e44628cdde64078feeebac *tests/testthat/test-critVal.R
 8a00e9bbdd71d79ac503ad95e3622ee8 *tests/testthat/test-monteCarloSimulation.R

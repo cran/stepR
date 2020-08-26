@@ -1463,15 +1463,15 @@ test_that("argument q is tested and works for family 'jsmurf'", {
                                          filter = testfilter, output = "maximum",
                                          lengths = c(16, 32))
 
-  expect_identical(computeBounds(testy, alpha = 0.1, r = 100L, lengths = 13:17, penalty = "log", nq = 100,
-                                 family = "jsmurfPS", filter = testfilter, intervalSystem = "all",
-                                 options = list(simulation = "vectorIncreased", save = list(), load = list())),
-                   computeBounds(testy, lengths = 13:17, family = "jsmurfPS", filter = testfilter,
-                                 intervalSystem = "all",
-                                 q = critVal(n = 100, alpha = 0.1, r = 100L, lengths = 13:17, intervalSystem = "all",
-                                             penalty = "log", family = "jsmurfPS", filter = testfilter,
-                                             options = list(simulation = "vector", save = list(),
-                                                            load = list()))))
+  expect_equal(computeBounds(testy, alpha = 0.1, r = 100L, lengths = 13:17, penalty = "log", nq = 100,
+                             family = "jsmurfPS", filter = testfilter, intervalSystem = "all",
+                             options = list(simulation = "vectorIncreased", save = list(), load = list())),
+               computeBounds(testy, lengths = 13:17, family = "jsmurfPS", filter = testfilter,
+                             intervalSystem = "all",
+                             q = critVal(n = 100, alpha = 0.1, r = 100L, lengths = 13:17, intervalSystem = "all",
+                                         penalty = "log", family = "jsmurfPS", filter = testfilter,
+                                         options = list(simulation = "vector", save = list(),
+                                                        load = list()))))
 
   testStepR <- new.env()
   teststat <- monteCarloSimulation(36L, r = 100L, family = "jsmurf",

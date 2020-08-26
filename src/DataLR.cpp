@@ -79,7 +79,7 @@ void DataLR::reset() {
 }
 
 void DataLR::cleanUpLocalVariables() {
-  delete chol_;
+  delete [] chol_;
 }
 
 void DataLR::setLocal(const List &input) {
@@ -128,8 +128,8 @@ double DataLR::computeSingleStat(unsigned int startIndex, unsigned int leftSegme
     stat += obs0[i] * obs0[i] - obsEst[i] * obsEst[i];
   }
   
-  delete obs0;
-  delete obsEst;
+  delete [] obs0;
+  delete [] obsEst;
   
   return stat;
 }
