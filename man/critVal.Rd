@@ -138,7 +138,7 @@ critVal(100L, alpha = 0.05, output = "value")
 # higher significance level for larger detection power, but less confidence
 critVal(100L, alpha = 0.99)
 critVal(100L, alpha = 0.99, output = "value")
-\donttest{
+\dontrun{
 # different parametric family, different intervalSystem, a subset of lengths,
 # different penalty and given weights
 q <- critVal(100L, alpha = 0.05, family = "hsmuce", intervalSystem = "dyaLen",

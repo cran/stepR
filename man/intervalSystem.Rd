@@ -33,7 +33,7 @@ fit <- stepFit(y, alpha = 0.5, intervalSystem = "all", lengths = 1:100,
 identical(stepFit(y, alpha = 0.5, jumpint = TRUE, confband = TRUE), fit)
 
 # intervalSystem "dyaLen" and a subset of lengths
-\donttest{!identical(stepFit(y, alpha = 0.5, intervalSystem = "dyaLen", lengths = c(2, 4, 16),
+\dontrun{!identical(stepFit(y, alpha = 0.5, intervalSystem = "dyaLen", lengths = c(2, 4, 16),
                    jumpint = TRUE, confband = TRUE), fit)
 
 # default for lengths are all possible lengths of the interval system

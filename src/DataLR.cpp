@@ -120,8 +120,8 @@ double DataLR::computeSingleStat(unsigned int startIndex, unsigned int leftSegme
     obsEst[i] = obs[i] - v_[i] * estMean;
   }
   
-  F77_CALL(dtbsv)(&uplo_, &trans_, &diag_, &size, &bands, chol_, &ldA, obs0, &incx_);
-  F77_CALL(dtbsv)(&uplo_, &trans_, &diag_, &size, &bands, chol_, &ldA, obsEst, &incx_);
+  F77_CALL(dtbsv)(&uplo_, &trans_, &diag_, &size, &bands, chol_, &ldA, obs0, &incx_ FCONE FCONE FCONE);
+  F77_CALL(dtbsv)(&uplo_, &trans_, &diag_, &size, &bands, chol_, &ldA, obsEst, &incx_ FCONE FCONE FCONE);
   
   double stat = 0.0;
   for (unsigned int i = 0u; i < len_ + filterLength_ - 1u; ++i) {

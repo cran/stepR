@@ -5,6 +5,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // callRoutines
 RObject callRoutines(RObject observations, int routineType, List argumentsListRoutine, int dataType, List argumentsListData, int intervalSystemType, List argumentsListIntervalSystem);
 RcppExport SEXP _stepR_callRoutines(SEXP observationsSEXP, SEXP routineTypeSEXP, SEXP argumentsListRoutineSEXP, SEXP dataTypeSEXP, SEXP argumentsListDataSEXP, SEXP intervalSystemTypeSEXP, SEXP argumentsListIntervalSystemSEXP) {

@@ -110,7 +110,7 @@ stepFit(y, x = x, alpha = 0.9, jumpint = TRUE, confband = TRUE)
 # change-points is overestimated with probability not more than 5%,
 # but smaller detection power
 stepFit(y, x = x, alpha = 0.05, jumpint = TRUE, confband = TRUE)
-\donttest{
+\dontrun{
 # different interval system, lengths, penalty and given parameter sd
 stepFit(y, x = x, alpha = 0.5, intervalSystem = "dyaLen",
         lengths = c(1L, 2L, 4L, 8L), penalty = "weights",
@@ -134,7 +134,7 @@ identical(stepFit(y, x = x, q = qValue, jumpint = TRUE, confband = TRUE), fit)
 
 # computeBounds gives the multiscale contraint
 computeBounds(y, alpha = 0.5)
-\donttest{
+\dontrun{
 # monteCarloSimulation will be called in critVal if required
 # can be called explicitly
 stat <- monteCarloSimulation(n = 100L)
@@ -160,7 +160,7 @@ computeStat(y, signal = fit, output = "maximum") <= qValue
 # the vector of critical values
 all(computeStat(y, signal = fit, output = "vector") <= qVector)
 
-\donttest{
+\dontrun{
 # family "hsmuce"
 set.seed(1)
 y <- c(rnorm(50, 0, 1), rnorm(50, 1, 0.2))

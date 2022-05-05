@@ -41,8 +41,8 @@ void DataHjsmurfLR::compute(const int &size) {
   
   std::fill(x, x + size, 1.0);
   
-  F77_CALL(dtbsv)(&uplo_, &trans1_, &diag_, &size, &bands, A, &ldA, x, &incx_);
-  F77_CALL(dtbsv)(&uplo_, &trans2_, &diag_, &size, &bands, A, &ldA, x, &incx_);
+  F77_CALL(dtbsv)(&uplo_, &trans1_, &diag_, &size, &bands, A, &ldA, x, &incx_ FCONE FCONE FCONE);
+  F77_CALL(dtbsv)(&uplo_, &trans2_, &diag_, &size, &bands, A, &ldA, x, &incx_ FCONE FCONE FCONE);
   
   sigmaInverseOne_[size - 1u] = x;
   for (int i = 0; i < size; i++) {
@@ -112,7 +112,7 @@ SingleBounds DataHjsmurfLR::computeSingleBounds() const {
   const int ldA = bands + 1;
   
   F77_CALL(dtbsv)(&uplo_, &trans1_, &diag_, &size, &bands,
-           cholesky_[shortendIntervalLength_ - 1u], &ldA, x, &incx_);
+           cholesky_[shortendIntervalLength_ - 1u], &ldA, x, &incx_ FCONE FCONE FCONE);
   
   double ySigmaInverseY = 0;
   double oneSigmaInverseY = 0;
@@ -172,7 +172,7 @@ double DataHjsmurfLR::computeSingleStatNull() const {
   const int ldA = bands + 1;
   
   F77_CALL(dtbsv)(&uplo_, &trans1_, &diag_, &size, &bands,
-           cholesky_[shortendIntervalLength_ - 1u], &ldA, x, &incx_);
+           cholesky_[shortendIntervalLength_ - 1u], &ldA, x, &incx_ FCONE FCONE FCONE);
   
   double ySigmaInverseY = 0;
   double oneSigmaInverseY = 0;
@@ -205,7 +205,7 @@ double DataHjsmurfLR::computeSingleStat(const double &value) const {
   const int ldA = bands + 1;
   
   F77_CALL(dtbsv)(&uplo_, &trans1_, &diag_, &size, &bands,
-           cholesky_[shortendIntervalLength_ - 1u], &ldA, x, &incx_);
+           cholesky_[shortendIntervalLength_ - 1u], &ldA, x, &incx_ FCONE FCONE FCONE);
   
   double ySigmaInverseY = 0;
   double oneSigmaInverseY = 0;

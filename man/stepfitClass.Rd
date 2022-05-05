@@ -48,12 +48,12 @@ stepfit(cost, family, value, param = NULL, leftEnd, rightEnd, x0,
 }
 
 \value{
-\item{for \code{stepfit}}{an object of class \code{stepfit} which extends \code{\link{stepblock}}, additionally containing \code{\link{attr}}ibutes \code{cost}, \code{family} and \code{param}, as well as columns \code{leftIndex} and \code{rightIndex}}
-\item{for \code{[.stepfit}}{an object of class \code{stepfit} which contains the selected subset}
-\item{for \code{fitted.stepfit}}{a numeric vector of length \code{rightIndex[length(rightIndex)]} giving the fit at the original sample points}
-\item{for \code{residuals.stepfit}}{a numeric vector of length \code{rightIndex[length(rightIndex)]} giving the residuals at the original sample points}
-\item{for \code{logLik.stepfit}}{an object of class \code{\link{logLik}} giving the likelihood of the data given this fit, e.g. for use with \code{\link{AIC}} and \code{\link{stepsel}}; this will (incorrectly) treat \code{family = "gaussKern"} as if it were fitted with \code{family = "gauss"}}
-\item{for \code{plot.stepfit}, \code{plot.stepfit}}{the corresponding functions for \code{\link{stepblock}} are called}
+\item{stepfit}{an object of class \code{stepfit} which extends \code{\link{stepblock}}, additionally containing \code{\link{attr}}ibutes \code{cost}, \code{family} and \code{param}, as well as columns \code{leftIndex} and \code{rightIndex}}
+\item{[.stepfit}{an object of class \code{stepfit} which contains the selected subset}
+\item{fitted.stepfit}{a numeric vector of length \code{rightIndex[length(rightIndex)]} giving the fit at the original sample points}
+\item{residuals.stepfit}{a numeric vector of length \code{rightIndex[length(rightIndex)]} giving the residuals at the original sample points}
+\item{logLik.stepfit}{an object of class \code{\link{logLik}} giving the likelihood of the data given this fit, e.g. for use with \code{\link{AIC}} and \code{\link{stepsel}}; this will (incorrectly) treat \code{family = "gaussKern"} as if it were fitted with \code{family = "gauss"}}
+\item{plot.stepfit, plot.stepfit}{the corresponding functions for \code{\link{stepblock}} are called}
 }
 
 \seealso{\code{\link{stepblock}}, \code{\link{stepbound}}, \code{\link{steppath}}, \code{\link{stepsel}}, \link{family}, \code{"\link{[.data.frame}"}, \code{\link{fitted}}, \code{\link{residuals}}, \code{\link{logLik}}, \code{\link{AIC}}}

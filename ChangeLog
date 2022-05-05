@@ -1,3 +1,15 @@
+2022-05-05 Florian Pein, version 2.1-3
+
+  * added FCONE's in choleskyDecomposition.cpp, DataLR.cpp, DataJsmurfLR.cpp, DataHjsmurfLR.cpp to deal with  USE_FC_LEN_T being set (required for R-4.2.0)
+  
+  * added skip_on_cran and dontrun for faster tests and examples
+  
+  * removed \code in first argument of \item in \value in MRC.Rd and stepfitClass.Rd (CRAN note)
+
+2022-01-27 Florian Pein, version 2.1-2
+
+  * new maintainer email adress
+
 2020-08-23 Florian Pein, version 2.1-1
 
   * DataLR.cpp: replaced delete by delete [] (indictated by CRAN tests)

@@ -2784,6 +2784,7 @@ test_that("family 'hsmuce' works", {
 })
 
 test_that("family 'mDependentPS' works", {
+  testthat::skip_on_cran()
   testCovariances <- seq(1, 0.2, -0.2)
   teststat <- monteCarloSimulation(n = 16L, r = 100L, family = "mDependentPS", covariances = testCovariances)
 
@@ -3060,6 +3061,7 @@ test_that("family 'mDependentPS' works", {
 })
 
 test_that("family 'jsmurf' works", {
+  testthat::skip_on_cran()
   testfilter <- lowpassFilter::lowpassFilter(type = "bessel", param = list(pole = 4L, cutoff = 0.1), sr = 1e4)
   teststat <- monteCarloSimulation(n = 64L, r = 100L, family = "jsmurf", filter = testfilter)
 
@@ -3259,6 +3261,7 @@ test_that("family 'jsmurf' works", {
 })
 
 test_that("family 'hjsmurf' works", {
+  testthat::skip_on_cran()
   testfilter <- lowpassFilter::lowpassFilter(type = "bessel", param = list(pole = 4L, cutoff = 0.1), sr = 1e4)
   teststat <- monteCarloSimulation(n = 64L, r = 100L, family = "hjsmurf", filter = testfilter)
 
@@ -3316,6 +3319,7 @@ test_that("family 'hjsmurf' works", {
 })
 
 test_that("family 'LR' works", {
+  testthat::skip_on_cran()
   testfilter <- lowpassFilter::lowpassFilter(type = "bessel", param = list(pole = 4L, cutoff = 0.1), sr = 1e4)
   teststat <- monteCarloSimulation(n = 64L, r = 100L, family = "LR", filter = testfilter)
 

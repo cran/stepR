@@ -40,8 +40,8 @@ void DataJsmurfLR::compute(const int &size) {
   
   std::fill(x, x + size, 1.0);
 
-  F77_CALL(dtbsv)(&uplo_, &trans1_, &diag_, &size, &bands, A, &ldA, x, &incx_);
-  F77_CALL(dtbsv)(&uplo_, &trans2_, &diag_, &size, &bands, A, &ldA, x, &incx_);
+  F77_CALL(dtbsv)(&uplo_, &trans1_, &diag_, &size, &bands, A, &ldA, x, &incx_ FCONE FCONE FCONE);
+  F77_CALL(dtbsv)(&uplo_, &trans2_, &diag_, &size, &bands, A, &ldA, x, &incx_ FCONE FCONE FCONE);
   
   DataJsmurfLR::sigmaInverseOne_[size - 1u] = x;
   for (int i = 0; i < size; ++i) {

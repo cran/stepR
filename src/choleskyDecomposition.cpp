@@ -20,7 +20,7 @@ double* choleskyDecomposition(const int size, const NumericVector &covariances) 
   }
   
   int info;  
-  F77_CALL(dpbtf2)(&uplo, &size, &bands, A, &ldA, &info);
+  F77_CALL(dpbtf2)(&uplo, &size, &bands, A, &ldA, &info FCONE);
   
   if (info != 0) {
     if (info < 0) {

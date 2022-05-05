@@ -514,6 +514,7 @@ test_that("argument n is tested and works", {
 })
 
 test_that("argument r is tested and works", {
+  testthat::skip_on_cran()
   expect_error(monteCarloSimulation(n = 32L, r = "s"))
   expect_error(monteCarloSimulation(n = 32L, r = c(1L, 2L)))
   expect_error(monteCarloSimulation(n = 32L, r = NA))
@@ -526,6 +527,7 @@ test_that("argument r is tested and works", {
 })
 
 test_that("argument seed is tested and works", {
+  testthat::skip_on_cran()
   expect_error(suppressWarnings(monteCarloSimulation(n = 32L, seed = "s")))
   expect_error(suppressWarnings(monteCarloSimulation(n = 32L, seed = NA)))
   expect_error(suppressWarnings(monteCarloSimulation(n = 32L, seed = Inf)))
@@ -544,6 +546,7 @@ test_that("argument seed is tested and works", {
 })
 
 test_that("argument rand.gen is tested and works", {
+  testthat::skip_on_cran()
   expect_error(monteCarloSimulation(n = 32L, rand.gen = "s"))
   expect_error(monteCarloSimulation(n = 32L, rand.gen = function() {}))
   expect_error(monteCarloSimulation(n = 32L, rand.gen = function(test) {rnorm(32)}))
@@ -560,6 +563,7 @@ test_that("argument rand.gen is tested and works", {
 })
 
 test_that("argument messages is tested and works", {
+  testthat::skip_on_cran()
   expect_error(monteCarloSimulation(n = 32L, messages = "s"))
   expect_error(monteCarloSimulation(n = 32L, messages = c(1L, 2L)))
   expect_error(monteCarloSimulation(n = 32L, messages = NA))
@@ -575,6 +579,7 @@ test_that("argument messages is tested and works", {
 })
 
 test_that("argument family is tested and works in the default case", { # other families below
+  testthat::skip_on_cran()
   expect_error(monteCarloSimulation(n = 32L, family = ""))
   expect_error(monteCarloSimulation(n = 32L, family = c("gauss", "hsmuce")))
   expect_identical(monteCarloSimulation(n = 32L, r = 10L),
@@ -582,6 +587,7 @@ test_that("argument family is tested and works in the default case", { # other f
 })
 
 test_that("argument intervalSystem is tested and works", {
+  testthat::skip_on_cran()
   expect_error(monteCarloSimulation(n = 32L, intervalSystem = ""))
   expect_error(monteCarloSimulation(n = 32L, intervalSystem = "dya"))
   expect_error(monteCarloSimulation(n = 32L, intervalSystem = "dyalen"))
@@ -596,6 +602,7 @@ test_that("argument intervalSystem is tested and works", {
 })
 
 test_that("argument lengths is tested and works", {
+  testthat::skip_on_cran()
   expect_warning(ret <- monteCarloSimulation(n = 32L, r = 10L, lengths = 1:10))
   expect_identical(ret, monteCarloSimulation(n = 32L, r = 10L))
 
@@ -645,6 +652,7 @@ test_that("argument lengths is tested and works", {
 })
 
 test_that("argument penalty is tested and works in the default case", {
+  testthat::skip_on_cran()
   expect_warning(ret <- monteCarloSimulation(n = 32L, r = 10L, penalty = "log"))
   expect_identical(ret, monteCarloSimulation(n = 32L, r = 10L))
 
@@ -679,6 +687,7 @@ test_that("argument penalty is tested and works in the default case", {
 })
 
 test_that("argument output is tested and works in the default case", {
+  testthat::skip_on_cran()
   expect_error(monteCarloSimulation(n = 32L, output = 1))
   expect_error(monteCarloSimulation(n = 32L, output = "mu"))
   expect_identical(monteCarloSimulation(n = 32L, r = 10L),
@@ -686,6 +695,7 @@ test_that("argument output is tested and works in the default case", {
 })
 
 test_that("... is tested and works", {
+  testthat::skip_on_cran()
   expect_error(monteCarloSimulation(n = 32L, familty = "hsmuce"))
   expect_error(monteCarloSimulation(n = 32L, sd = "s"))
   expect_identical(monteCarloSimulation(n = 32L, r = 1e2),

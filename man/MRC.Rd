@@ -57,10 +57,10 @@ kMRC.quant(p, n, r, kern, lengths = 2^(floor(log2(n)):ceiling(log2(length(kern))
 }
 
 \value{
-\item{for \code{MRC}}{a vector giving the maximum as well as the indices of the corresponding interval's start and length}
-\item{for \code{MRCoeff}}{a matrix giving the multiresolution coefficients for all test intervals}
-\item{for \code{MRC.pvalue} / \code{MRC.quant} / \code{MRC.simul}}{the corresponding p-value / quantile / vector of simulated values under the assumption of standard Gaussian white noise}
-\item{for \code{kMRC.pvalue} / \code{kMRC.simul} / \code{kMRC.simul}}{the corresponding p-value / quantile / vector of simulated values under the assumption of filtered Gaussian white noise}
+\item{MRC}{a vector giving the maximum as well as the indices of the corresponding interval's start and length}
+\item{MRCoeff}{a matrix giving the multiresolution coefficients for all test intervals}
+\item{MRC.pvalue, MRC.quant, MRC.simul}{the corresponding p-value / quantile / vector of simulated values under the assumption of standard Gaussian white noise}
+\item{kMRC.pvalue, kMRC.simul, kMRC.simul}{the corresponding p-value / quantile / vector of simulated values under the assumption of filtered Gaussian white noise}
 }
 
 \seealso{\code{\link{monteCarloSimulation}}, \code{\link{smuceR}}, \code{\link{jsmurf}}, \code{\link{stepbound}}, \code{\link{stepsel}}, \code{\link{quantile}}}
