@@ -1,5 +1,5 @@
-f962e328de5a45d094e616e3dcfef245 *ChangeLog
-8d04eee64a2ccd894d53395c00fc32e1 *DESCRIPTION
+6b8b8eb58226d6db62dc65bafceef07d *ChangeLog
+4d951876f79eb5c3d22aad28b3e7fac0 *DESCRIPTION
 2a21d063c9f36ad608225d05670e23c5 *NAMESPACE
 53c7accf7fff3c1c74d9c2e202d642cc *R/MRC.R
 bbdc53ee2a6e853b11783fcac45dc236 *R/RcppExports.R
@@ -29,12 +29,12 @@ b40f65f3210f2e0176b6f97d0489ffa2 *R/steppath.R
 f4fd826eea1ecf1e388f69ca167770ae *R/testSmallScales.R
 d6f91d9a403a51c53d655c788e66ddbf *R/transit.R
 95474dec2662726b433bff8320919c54 *R/zzz.R
-92634ed68fbe3fe7ad2e88b1bb0bd0ca *build/vignette.rds
+6773f67b5a24988adfa83fe7af320cec *build/vignette.rds
 53300866c4295b5893b3ea98f6c7a79c *data/MRCasymptotic.rda
 918d7a043461f770183b9aa6489071bc *inst/CITATION
 47440cc6141ed9435e8afde9ed1c32fa *inst/doc/StepR.R
 3de4c814dd306131aa39e6dee301ba82 *inst/doc/StepR.Rnw
-91883de94e07d4341b36e12a789f0a9a *inst/doc/StepR.pdf
+d929b529e72576c57dcfebce2287098c *inst/doc/StepR.pdf
 69453fea24c441a85530d083c95832e8 *inst/tests/comparisons/indices.R
 b6b9b32d58a89eafe791b04249a5f48c *inst/tests/comparisons/localCost.R
 c69c4e9dce7527d2daaa2f51c01de2bf *inst/tests/comparisons/localEst.R
@@ -133,7 +133,7 @@ eceaf9c4ac0bc220b2f10f4989d7f875 *src/LocalOptimum.h
 950cc4674557f1bdd02fc07c0f68710f *src/SingleBounds.h
 fa03ee3afbd1a73ab86f56ad2cbcb795 *src/SmallScales.cpp
 136d918ee36c09610be97434eae3a92f *src/SmallScales.h
-d80767fcc5b805eb4029b5fea63d0a59 *src/Step.cpp
+40cb0dadfb82cd82be6512386581589d *src/Step.cpp
 1c8cb606aeebc77077256a982fc77995 *src/Step.h
 a2abfc48c0a780837c7f841deb7621f6 *src/StepBinom.cpp
 db4b67fa521b829dc31efd457107e2ce *src/StepBinom.h
