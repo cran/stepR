@@ -35,6 +35,12 @@ Pein, F., Sieling, H., Munk, A. (2017) Heterogeneous change point inference. \em
 }
 
 \examples{
+\dontshow{
+savePathRcache <- R.cache::getCacheRootPath()
+
+R.cache::setCacheRootPath(path = file.path(R.cache::getCacheRootPath(), "test"))
+}
+
 y <- rnorm(100)
 # for the default signal = 0 a signal constant 0 is assumed
 identical(computeStat(y), computeStat(y,
@@ -71,6 +77,12 @@ y <- c(rep(0, 13), rep(-1, 4)) +
   as.numeric(arima.sim(n = 17, list(ar = c(), ma = c(0.8, 0.5, 0.3)), sd = 1))
 covariances <- as.numeric(ARMAacf(ar = c(), ma = c(0.8, 0.5, 0.3), lag.max = 3))
 computeStat(y, signal = signal, family = "mDependentPS", covariances = covariances)
+
+\dontshow{
+unlink(R.cache::getCacheRootPath(), force = TRUE, recursive = TRUE)
+
+R.cache::setCacheRootPath(savePathRcache)
+}
 }
 
 \keyword{nonparametric}

@@ -11,10 +11,12 @@ testComputeLevel <- function(q, stat) {
   }
 
   rejected <- matrix(FALSE, M, d)
-  alpha <- numeric(M)
-
+  alpha <- integer(M)
+  
   for (i in 1:d) {
-    rejected[, i] <- stat[i, ] > q[i] + 1e-12
+    statVec <- stat[i, ]
+    tol <- 2 * .Machine$double.eps * max(statVec[is.finite(statVec)])
+    rejected[, i] <- statVec > q[i] + tol
   }
 
   for (i in 1:M) {
@@ -24,7 +26,7 @@ testComputeLevel <- function(q, stat) {
 
   ret <- list(alpha = alpha)
 
-  beta <- numeric(d)
+  beta <- integer(d)
   for (i in 1:d) {
     beta[i] <- sum(rejected[, i])
   }
@@ -33,11 +35,53 @@ testComputeLevel <- function(q, stat) {
   ret
 }
 
+testDetailedHSMUCE <- function(testq = NULL, testalpha = NULL, testn,
+                               testnq = 2L^(as.integer(ceiling(log2(testn)) + 1e-12)), testweights = NULL,
+                               testfamily = NULL, testintervalsystem = NULL, testlengths = NULL, teststat = NULL,
+                               testr = 1e4, defaultPenalty, compareStat = teststat, compareLengths = testlengths,
+                               compareWeights = testweights, tolerance = 1e-12, toleranceInt = 0.5, 
+                               nstat = testn, shift = 0, ...) {
+  # sqrt
+  ret <- critVal(penalty = "sqrt", output = "vector", q = testq, alpha = testalpha, n = testn, nq = testnq,
+                 family = testfamily, intervalSystem = testintervalsystem, lengths = testlengths,
+                 stat = teststat, r = testr, ...)
+  
+  rejected <- matrix(FALSE, ncol(teststat), nrow(teststat))
+  compare <- integer(ncol(teststat))
+  
+  for (i in 1:nrow(teststat)) {
+    statVec <- teststat[i, ]
+    tol <- 2 * .Machine$double.eps * max(statVec[is.finite(statVec)])
+    rejected[, i] <- statVec > ret[i] + tol
+  }
+  
+  for (i in 1:100) {
+    for (j in 2:10) {
+      expect_false(rejected[i, j], info = paste0("i = ", i, ", j = ", j, ": ", teststat[j, i], ", ", ret[j]))
+    }
+  }
+  
+  for (i in (1:100)[-c(2, 21, 24, 30, 34)]) {
+    expect_false(rejected[i, 1], info = paste0("i = ", i, ", j = ", 1, ": ", teststat[1, i], ", ", ret[1]))
+  }
+  
+  for (i in c(2, 21, 24, 30, 34)) {
+    expect_true(rejected[i, 1], info = paste0("i = ", i, ", j = ", 1, ": ", teststat[1, i], ", ", ret[1]))
+  }
+  
+  for (i in 1:ncol(teststat)) {
+    compare[i] <- max(rejected[i, ])
+  }
+  compare <- sum(compare)
+  expect_lte(compare, as.integer(ncol(teststat) * testalpha + tolerance), label = compare, expected.label = as.integer(ncol(teststat) * testalpha + tolerance))
+}
+
 testVector <- function(testq = NULL, testalpha = NULL, testn,
                        testnq = 2L^(as.integer(ceiling(log2(testn)) + 1e-12)), testweights = NULL,
                        testfamily = NULL, testintervalsystem = NULL, testlengths = NULL, teststat = NULL,
                        testr = 1e4, defaultPenalty, compareStat = teststat, compareLengths = testlengths,
-                       compareWeights = testweights, tolerance = 1e-12, nstat = testn, shift = 0, ...) {
+                       compareWeights = testweights, tolerance = 1e-12, toleranceInt = 0.5, 
+                       nstat = testn, shift = 0, ...) {
   # sqrt
   ret <- critVal(penalty = "sqrt", output = "vector", q = testq, alpha = testalpha, n = testn, nq = testnq,
                  family = testfamily, intervalSystem = testintervalsystem, lengths = testlengths,
@@ -83,7 +127,7 @@ testVector <- function(testq = NULL, testalpha = NULL, testn,
   compare <- testComputeLevel(q = ret, stat = compareStat)$alpha
   expect_true(compare <= as.integer(ncol(compareStat) * testalpha + tolerance), info = "none")
   expect_true(compare > as.integer(ncol(compareStat) * testalpha + tolerance) - 1L, info = "none")
-
+  
   expect_equal(ret, rep(ret[1], length(ret)), check.attributes = FALSE, tolerance = tolerance, info = "none")
 
 
@@ -98,7 +142,7 @@ testVector <- function(testq = NULL, testalpha = NULL, testn,
   compare <- testComputeLevel(q = ret, stat = compareStat)
   expect_true(compare$alpha <= as.integer(ncol(compareStat) * testalpha + tolerance), info = "weights")
   expect_true(compare$alpha > as.integer(ncol(compareStat) * testalpha + tolerance) - 1L, info = "weights")
-
+  
   expect_true(max(compare$beta / compareWeights) - min((compare$beta + 1) / compareWeights) <= 0.5,
               info = "weights")
 
@@ -2221,7 +2265,10 @@ test_that("stat can be loaded from the stepRdata package", {
                        options = list(simulation = "vector", save = list(),
                                       load = list(package = c(TRUE, FALSE)))))
 
-  if ("stepRdata" %in% rownames(installed.packages())) {
+  pathStepRdata <- NULL
+  try(pathStepRdata  <- find.package("stepRdata"), silent = TRUE)
+  
+  if (!is.null(pathStepRdata)) {
     teststat <- monteCarloSimulation(31L)
     expect_equal(critVal(31L, alpha = 0.1, r = 100L, output = "value",
                          options = list(simulation = "matrixIncreased", load = list(package = TRUE))),
@@ -2459,10 +2506,14 @@ test_that("family 'hsmuce' works", {
   teststat <- monteCarloSimulation(n = 1024L, r = 100L, family = "hsmuce")
 
   expect_error(critVal(alpha = 0, n = 2^testn, stat = teststat, family = "hsmuce"))
+  
+  testDetailedHSMUCE(teststat = teststat, testn = as.integer(2^testn), testnq = 2^testn, testfamily = "hsmuce",
+                     testlengths = 2^(1:testn), testalpha = 0.0567, testweights = rep(0.1, 10),
+                     defaultPenalty = "weights")
 
-  testVector(teststat = teststat, testn = as.integer(2^testn), testnq = 2^testn, testfamily = "hsmuce",
-             testlengths = 2^(1:testn), testalpha = 0.0567, testweights = rep(0.1, 10),
-             defaultPenalty = "weights")
+  # testVector(teststat = teststat, testn = as.integer(2^testn), testnq = 2^testn, testfamily = "hsmuce",
+  #            testlengths = 2^(1:testn), testalpha = 0.0567, testweights = rep(0.1, 10),
+  #            defaultPenalty = "weights")
   testValue(teststat = teststat, testn = 2^testn, testnq = 2^testn, testfamily = "hsmuce",
             testlengths = 2^(1:testn), testalpha = 0.0567, testweights = rep(0.1, 10),
             defaultPenalty = "weights")
@@ -2765,7 +2816,10 @@ test_that("family 'hsmuce' works", {
                            family = "hsmuce"))
   remove(critValStepRTab, envir = testStepR)
 
-  if ("stepRdata" %in% rownames(installed.packages())) {
+  pathStepRdata <- NULL
+  try(pathStepRdata  <- find.package("stepRdata"), silent = TRUE)
+  
+  if (!is.null(pathStepRdata)) {
     teststat <- monteCarloSimulation(31L, family = "hsmuce", intervalSystem = "all")
     expect_equal(critVal(31L, alpha = 0.1, r = 100L, family = "hsmuce", intervalSystem = "all",
                          options = list(simulation = "matrixIncreased", load = list(package = TRUE))),

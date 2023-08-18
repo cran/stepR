@@ -84,7 +84,7 @@ critVal <- function(n, q = NULL, alpha = NULL, nq = 2L^(as.integer(log2(n) + 1e-
   if (is.null(options)) {
     if ((data$type == 100L || data$type == 102L) && !all(intervalSystem$lengths %in% data$defaultLengths)) {
       options <- list(simulation = "matrixIncreased",
-                      load = list(), save = list(), envir = .GlobalEnv, dirs = "stepR")
+                      load = list(), save = list(), envir = .MCstepR, dirs = "stepR")
     } else {
       options <- list(simulation = "matrixIncreased",
                       save = list(workspace = c("vector", "vectorIncreased"),
@@ -93,7 +93,7 @@ critVal <- function(n, q = NULL, alpha = NULL, nq = 2L^(as.integer(log2(n) + 1e-
                       load = list(workspace = c("vector", "vectorIncreased", "matrix", "matrixIncreased"),
                                   fileSystem = c("vector", "vectorIncreased", "matrix", "matrixIncreased"),
                                   package = TRUE, RDSfile = NULL),
-                      envir = .GlobalEnv, dirs = "stepR")
+                      envir = .MCstepR, dirs = "stepR")
     }
   } else {
     if (!is.list(options) || !all(names(options) %in% c("simulation", "save", "load", "envir", "dirs"))) {
@@ -202,11 +202,7 @@ critVal <- function(n, q = NULL, alpha = NULL, nq = 2L^(as.integer(log2(n) + 1e-
     }
     
     if (is.null(options$envir)) {
-      options$envir <- .GlobalEnv
-    } else {
-      if (!is.environment(options$envir)) {
-        stop("options$envir must be an environment")
-      }
+      options$envir <- .MCstepR
     }
     
     if (is.null(options$dirs)) {

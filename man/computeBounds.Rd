@@ -47,6 +47,12 @@ Pein, F., Sieling, H., Munk, A. (2017) Heterogeneous change point inference. \em
 } 
 
 \examples{
+\dontshow{
+savePathRcache <- R.cache::getCacheRootPath()
+
+R.cache::setCacheRootPath(path = file.path(R.cache::getCacheRootPath(), "test"))
+}
+
 y <- c(rnorm(50), rnorm(50, 1))
 
 # the multiscale contraint
@@ -65,7 +71,7 @@ computeBounds(y, alpha = 0.99)
 # smaller significance level for stronger confidence statements, but at
 # the risk of missing change-points
 computeBounds(y, alpha = 0.05)
-\dontrun{
+\donttest{
 # different interval system, lengths, penalty and given parameter sd
 computeBounds(y, alpha = 0.5, intervalSystem = "dyaLen",
               lengths = c(1L, 2L, 4L, 8L), penalty = "weights",
@@ -75,7 +81,7 @@ computeBounds(y, alpha = 0.5, intervalSystem = "dyaLen",
 identical(computeBounds(y, q = critVal(100L, alpha = 0.5)), bounds)
 identical(computeBounds(y, q = critVal(100L, alpha = 0.5, output = "value")),
           bounds)
-\dontrun{
+\donttest{
 # the above calls saved and (attempted to) load Monte-Carlo simulations and
 # simulated them for nq = 128 observations
 # in the following call no saving, no loading and simulation for n = 100
@@ -88,6 +94,13 @@ computeBounds(y, alpha = 0.5, messages = 1000L,
 stat <- monteCarloSimulation(n = 128L)
 identical(computeBounds(y, alpha = 0.5, stat = stat),
           computeBounds(y, alpha = 0.5, options = list(load = list())))
-}}
+}
+
+\dontshow{
+unlink(R.cache::getCacheRootPath(), force = TRUE, recursive = TRUE)
+
+R.cache::setCacheRootPath(savePathRcache)
+}
+}
 
 \keyword{nonparametric}

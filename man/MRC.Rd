@@ -26,16 +26,16 @@ MRC(x, lengths = 2^(floor(log2(length(x))):0), norm = sqrt(lengths),
 MRCoeff(x, lengths = 2^(floor(log2(length(x))):0), norm = sqrt(lengths), signed = FALSE)
 MRC.simul(n, r, lengths = 2^(floor(log2(n)):0), penalty = c("none", "log", "sqrt"))
 MRC.pvalue(q, n, r, lengths = 2^(floor(log2(n)):0), penalty = c("none", "log", "sqrt"),
-  name = ".MRC.table", pos = .GlobalEnv, inherits = TRUE)
+  name = ".MRC.table", pos = .MCstepR, inherits = TRUE)
 MRC.FFT(epsFFT, testFFT, K = matrix(TRUE, nrow(testFFT), ncol(testFFT)), lengths,
   penalty = c("none", "log", "sqrt"))
 MRC.quant(p, n, r, lengths = 2^(floor(log2(n)):0), penalty = c("none", "log", "sqrt"),
-  name = ".MRC.table", pos = .GlobalEnv, inherits = TRUE, \dots)
+  name = ".MRC.table", pos = .MCstepR, inherits = TRUE, \dots)
 kMRC.simul(n, r, kern, lengths = 2^(floor(log2(n)):ceiling(log2(length(kern)))))
 kMRC.pvalue(q, n, r, kern, lengths = 2^(floor(log2(n)):ceiling(log2(length(kern)))),
-  name = ".MRC.ktable", pos = .GlobalEnv, inherits = TRUE)
+  name = ".MRC.ktable", pos = .MCstepR, inherits = TRUE)
 kMRC.quant(p, n, r, kern, lengths = 2^(floor(log2(n)):ceiling(log2(length(kern)))),
-  name = ".MRC.ktable", pos = .GlobalEnv, inherits = TRUE, \dots)
+  name = ".MRC.ktable", pos = .MCstepR, inherits = TRUE, \dots)
 }
 
 \arguments{
@@ -94,6 +94,7 @@ m <- MRC(x)
 MRC.pvalue(m["max"], length(x), 100)
 # compute multiresolution coefficients
 M <- MRCoeff(x)
+\donttest{
 # plot multiresolution coefficients, colours show p-values below 5% in 1% steps
 op <- par(mar = c(5, 4, 2, 4) + 0.1)
 image(1:length(x), seq(min(x), max(x), length = ncol(M)), apply(M[,ncol(M):1], 1:2,
@@ -110,6 +111,7 @@ points(x)
 lines(f, lty = 2)
 abline(h = mean(x))
 par(op)
+}
 }
 
 \keyword{nonparametric}

@@ -18,7 +18,7 @@ stepsel.MRC(path, y, q, alpha = 0.05, r = ceiling(50 / min(alpha, 1 - alpha)),
     2^(floor(log2(length(y))):0),
   penalty = c("none", "log", "sqrt"), name = if(attr(path$cand, "family") == "gaussKern")
     ".MRC.ktable" else ".MRC.table",
-  pos = .GlobalEnv)
+  pos = .MCstepR)
 stepsel.AIC(path, \dots)
 stepsel.BIC(path, \dots)
 }

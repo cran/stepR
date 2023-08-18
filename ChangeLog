@@ -1,3 +1,33 @@
+2023-07-27 Florian Pein, version 2.1-8
+
+  * DESCRIPTION: added explanation of SMUCE and HSMUCE (CRAN request)
+  
+  * Rd files: replaced \dontrun by \donttest (CRAN request)
+  
+  * tests: replaced installed.packages by find.package (CRAN request, faster run time)
+  
+  * critVal.R, stepsel.R, MRC.R, bounds.R: stores MC simulations in package enviroment
+    and not in the global enviroment (CRAN request)
+
+2023-07-18 Florian Pein, version 2.1-7
+
+  * test-critVal.R: changed tolerance when identifying tests that reject;
+                    added more informative tests for failed test
+  
+  * made sure that no chache files remain when testing the package (CRAN request)
+
+2023-05-16 Florian Pein, version 2.1-6
+
+  * test-critVal.R: added a tolerance (suggested by CRAN Team)
+  
+  2023-05-16 Florian Pein, version 2.1-6
+
+  * test-critVal.R: ensured that alpha is an integer in l. 16 (CRAN error on M1mac)
+
+2023-05-12 Florian Pein, version 2.1-5
+
+  * test-critVal.R: correct tolerance in l. 19 (CRAN error on M1mac)
+
 2022-01-30 Florian Pein, version 2.1-4
 
   * Step.cpp: replaced std::sprintf by std::snprintf (CRAN warning)

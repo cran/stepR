@@ -643,7 +643,10 @@ test_that("argument q is computed correctly", {
   expect_identical(R.cache::loadCache(attr(teststat6b, "keyList"), dirs = "testStepR"), teststat6b)
   unlink(file.path(R.cache::getCacheRootPath(), "testStepR"), recursive = TRUE)
 
-  if ("stepRdata" %in% rownames(installed.packages())) {
+  pathStepRdata <- NULL
+  try(pathStepRdata  <- find.package("stepRdata"), silent = TRUE)
+
+  if (!is.null(pathStepRdata)) {
     teststat <- monteCarloSimulation(63L, intervalSystem = "dyaLen")
     expect_equal(computeBounds(testy, alpha = 0.1, r = 100L, intervalSystem = "dyaLen",
                                options = list(simulation = "vector", save = list(),

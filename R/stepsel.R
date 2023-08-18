@@ -11,7 +11,7 @@ function(path, y, type = c("MRC", "AIC", "BIC"), ...)
 }
 
 "stepsel.MRC" <-
-function(path, y, q, alpha = 0.05, r = ceiling(50 / min(alpha, 1 - alpha)), lengths = if(attr(path$cand, "family") == "gaussKern") 2^(floor(log2(length(y))):ceiling(log2(length(attr(path$cand, "param")$kern)))) else 2^(floor(log2(length(y))):0), penalty = c("none", "log", "sqrt"), name = if(attr(path$cand, "family") == "gaussKern") ".MRC.ktable" else ".MRC.table", pos = .GlobalEnv)
+function(path, y, q, alpha = 0.05, r = ceiling(50 / min(alpha, 1 - alpha)), lengths = if(attr(path$cand, "family") == "gaussKern") 2^(floor(log2(length(y))):ceiling(log2(length(attr(path$cand, "param")$kern)))) else 2^(floor(log2(length(y))):0), penalty = c("none", "log", "sqrt"), name = if(attr(path$cand, "family") == "gaussKern") ".MRC.ktable" else ".MRC.table", pos = .MCstepR)
 {
   family <- attr(path$cand, "family")
   stopifnot(family %in% c("gauss", "gaussKern"))

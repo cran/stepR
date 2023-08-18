@@ -15,7 +15,7 @@ bounds.MRC(y, q, alpha = 0.05, r = ceiling(50 / min(alpha, 1 - alpha)),
   lengths = if(family == "gaussKern")
     2^(floor(log2(length(y))):ceiling(log2(length(param$kern)))) else
     2^(floor(log2(length(y))):0), penalty = c("none", "len", "var", "sqrt"),
-  name = if(family == "gaussKern") ".MRC.ktable" else ".MRC.table", pos = .GlobalEnv,
+  name = if(family == "gaussKern") ".MRC.ktable" else ".MRC.table", pos = .MCstepR,
   family = c("gauss", "gaussvar", "poisson", "binomial","gaussKern"), param = NULL,
   subset, max.iter = 1e2, eps = 1e-3)
 \method{[}{bounds}(x, subset)

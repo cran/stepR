@@ -32,6 +32,12 @@ Pein, F., Sieling, H., Munk, A. (2017) Heterogeneous change point inference. \em
 } 
 
 \examples{
+\dontshow{
+savePathRcache <- R.cache::getCacheRootPath()
+
+R.cache::setCacheRootPath(path = file.path(R.cache::getCacheRootPath(), "test"))
+}
+
 set.seed(1)
 y <- c(rnorm(50), rnorm(50, 2))
 
@@ -64,4 +70,9 @@ identical(stepFit(y, alpha = 0.5, family = "mDependentPS", covariances = c(1, 0.
           stepFit(y, alpha = 0.5, family = "mDependentPS", covariances = c(1, 0.5),
                   penalty = "sqrt", jumpint = TRUE, confband = TRUE))
 
+\dontshow{
+unlink(R.cache::getCacheRootPath(), force = TRUE, recursive = TRUE)
+
+R.cache::setCacheRootPath(savePathRcache)
+}
 }

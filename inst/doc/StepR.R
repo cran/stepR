@@ -5,6 +5,10 @@ library(knitr)
 #                dev='pdf', prompt=TRUE, comment=NA, highlight=FALSE, tidy=FALSE)
 library(stepR)
 
+savePathRcache <- R.cache::getCacheRootPath()
+
+R.cache::setCacheRootPath(path = file.path(R.cache::getCacheRootPath(), "test"))
+
 ## ----plotgauss, fig.lp="fig:1", fig.cap = 'Observations (grey points) and underlying function (black line).'----
 set.seed(1)
 n <- 100L
@@ -66,4 +70,9 @@ stat <- monteCarloSimulation(n = length(y), output = "maximum")
 identical(critVal(n = length(y), alpha = 0.5, stat = stat),
           critVal(n = length(y), alpha = 0.5,
                   options = list(load = list(), simulation = "vector")))
+
+## ----cleanup, echo = FALSE, message = FALSE-----------------------------------
+unlink(R.cache::getCacheRootPath(), force = TRUE, recursive = TRUE)
+
+R.cache::setCacheRootPath(savePathRcache)
 

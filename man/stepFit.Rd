@@ -48,6 +48,12 @@ Pein, F., Sieling, H., Munk, A. (2017) Heterogeneous change point inference. \em
 }
 
 \examples{
+\dontshow{
+savePathRcache <- R.cache::getCacheRootPath()
+
+R.cache::setCacheRootPath(path = file.path(R.cache::getCacheRootPath(), "test"))
+}
+
 # generate random observations
 y <- c(rnorm(50), rnorm(50, 1))
 x <- seq(0.01, 1, 0.01)
@@ -69,7 +75,7 @@ stepFit(y, x = x, alpha = 0.99, jumpint = TRUE, confband = TRUE)
 # change-points is overestimated with probability not more than 5%,
 # but smaller detection power
 stepFit(y, x = x, alpha = 0.05, jumpint = TRUE, confband = TRUE)
-\dontrun{
+\donttest{
 # different interval system, lengths, penalty and given parameter sd
 stepFit(y, x = x, alpha = 0.5, intervalSystem = "dyaLen",
         lengths = c(1L, 2L, 4L, 8L), penalty = "weights",
@@ -81,7 +87,7 @@ identical(stepFit(y, x = x, q = critVal(100L, alpha = 0.5),
                   jumpint = TRUE, confband = TRUE), fit)
 identical(stepFit(y, x = x, q = critVal(100L, alpha = 0.5, output = "value"),
                   jumpint = TRUE, confband = TRUE), fit)
-\dontrun{
+\donttest{
 # the above calls saved and (attempted to) load Monte-Carlo simulations and
 # simulated them for nq = 128 observations
 # in the following call no saving, no loading and simulation for n = 100
@@ -96,6 +102,13 @@ identical(stepFit(y, x = x, alpha = 0.5, stat = stat,
                   jumpint = TRUE, confband = TRUE),
           stepFit(y, x = x, alpha = 0.5, jumpint = TRUE, confband = TRUE,
                   options = list(load = list())))
-}}
+}
+
+\dontshow{
+unlink(R.cache::getCacheRootPath(), force = TRUE, recursive = TRUE)
+
+R.cache::setCacheRootPath(savePathRcache)
+}
+}
 
 \keyword{nonparametric}

@@ -45,10 +45,16 @@ Pein, F., Sieling, H., Munk, A. (2017) Heterogeneous change point inference. \em
 }
 
 \examples{
+\dontshow{
+savePathRcache <- R.cache::getCacheRootPath()
+
+R.cache::setCacheRootPath(path = file.path(R.cache::getCacheRootPath(), "test"))
+}
+
 # monteCarloSimulation will be called in critVal, can be called explicitly
 # object of class MCSimulationVector
 stat <- monteCarloSimulation(n = 100L)
-\dontrun{
+\donttest{
 identical(critVal(n = 100L, alpha = 0.5, stat = stat),
           critVal(n = 100L, alpha = 0.5,
                   options = list(load = list(), simulation = "matrix")))
@@ -84,6 +90,12 @@ stat <- monteCarloSimulation(n = 100L, family = "mDependentPS",
 # output might be on some systems even identical
 all.equal(monteCarloSimulation(n = 100L, family = "mDependentPS",
                                covariances = c(2, 1, 0.6)), stat)
-}}
+}
+\dontshow{
+unlink(R.cache::getCacheRootPath(), force = TRUE, recursive = TRUE)
+
+R.cache::setCacheRootPath(savePathRcache)
+}
+}
 
 \keyword{nonparametric}

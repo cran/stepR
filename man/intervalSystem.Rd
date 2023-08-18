@@ -23,6 +23,12 @@ The interval system is selected via the \code{intervalSystem} argument, providin
 \seealso{\link{parametricFamily}}
 
 \examples{
+\dontshow{
+savePathRcache <- R.cache::getCacheRootPath()
+
+R.cache::setCacheRootPath(path = file.path(R.cache::getCacheRootPath(), "test"))
+}
+
 y <- c(rnorm(50), rnorm(50, 2))
 
 # interval system of all intervals and all lengths
@@ -33,7 +39,7 @@ fit <- stepFit(y, alpha = 0.5, intervalSystem = "all", lengths = 1:100,
 identical(stepFit(y, alpha = 0.5, jumpint = TRUE, confband = TRUE), fit)
 
 # intervalSystem "dyaLen" and a subset of lengths
-\dontrun{!identical(stepFit(y, alpha = 0.5, intervalSystem = "dyaLen", lengths = c(2, 4, 16),
+\donttest{!identical(stepFit(y, alpha = 0.5, intervalSystem = "dyaLen", lengths = c(2, 4, 16),
                    jumpint = TRUE, confband = TRUE), fit)
 
 # default for lengths are all possible lengths of the interval system
@@ -56,4 +62,11 @@ identical(stepFit(y, alpha = 0.5, family = "mDependentPS", covariances = c(1, 0.
           stepFit(y, alpha = 0.5, family = "mDependentPS", covariances = c(1, 0.5),
                   intervalSystem = "dyaLen", lengths = 2^(0:6),
                   jumpint = TRUE, confband = TRUE))
-}}
+}
+
+\dontshow{
+unlink(R.cache::getCacheRootPath(), force = TRUE, recursive = TRUE)
+
+R.cache::setCacheRootPath(savePathRcache)
+}
+}

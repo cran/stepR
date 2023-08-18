@@ -99,7 +99,7 @@ MRC.simul <- function(n, r, lengths = 2^(floor(log2(n)):0), penalty = c("none", 
 }
 
 # compute MRC p-value(s) for sequence of length n evaluated at lengths based on at least r repetitions, first checking in a table whether this has been simulated before
-MRC.pvalue <- function(q, n, r, lengths = 2^(floor(log2(n)):0), penalty = c("none", "log", "sqrt"), name = ".MRC.table", pos = .GlobalEnv, inherits = TRUE) {
+MRC.pvalue <- function(q, n, r, lengths = 2^(floor(log2(n)):0), penalty = c("none", "log", "sqrt"), name = ".MRC.table", pos = .MCstepR, inherits = TRUE) {
   if(is.character(penalty)) {
     penalty <- match.arg(penalty)
     pen <- penalty
@@ -146,7 +146,7 @@ MRC.pvalue <- function(q, n, r, lengths = 2^(floor(log2(n)):0), penalty = c("non
 }
 
 # compute MRC quantile for sequence of length n evaluated at lengths based on at least r repetitions, first checking in a table whether this has been simulated before
-MRC.quant <- function(p, n, r, lengths = 2^(floor(log2(n)):0), penalty = c("none", "log", "sqrt"), name = ".MRC.table", pos = .GlobalEnv, inherits = TRUE, ...) {
+MRC.quant <- function(p, n, r, lengths = 2^(floor(log2(n)):0), penalty = c("none", "log", "sqrt"), name = ".MRC.table", pos = .MCstepR, inherits = TRUE, ...) {
   if(is.character(penalty)) {
     penalty <- match.arg(penalty)
     pen <- penalty
@@ -221,7 +221,7 @@ kMRC.simul <- function(n, r, kern, lengths = 2^(floor(log2(n)):ceiling(log2(leng
 }
 # compute MRC p-value(s) for sequence of length n evaluated at lengths based on at least r repetitions, first checking in a table whether this has been simulated before
 # lengths start at kernel k's length
-kMRC.pvalue <- function(q, n, r, kern, lengths = 2^(floor(log2(n)):ceiling(log2(length(kern)))), name = ".MRC.ktable", pos = .GlobalEnv, inherits = TRUE) {
+kMRC.pvalue <- function(q, n, r, kern, lengths = 2^(floor(log2(n)):ceiling(log2(length(kern)))), name = ".MRC.ktable", pos = .MCstepR, inherits = TRUE) {
   index <- 0
   if(exists(name, where = pos, inherits = inherits)) {
     tab <- get(name, pos = pos, inherits = inherits)
@@ -260,7 +260,7 @@ kMRC.pvalue <- function(q, n, r, kern, lengths = 2^(floor(log2(n)):ceiling(log2(
 }
 # compute MRC quantile(s) for sequence of length n evaluated at lengths based on at least r repetitions, first checking in a table whether this has been simulated before
 # lengths start at kernel k's length
-kMRC.quant <- function(p, n, r, kern, lengths = 2^(floor(log2(n)):ceiling(log2(length(kern)))), name = ".MRC.ktable", pos = .GlobalEnv, inherits = TRUE, ...) {
+kMRC.quant <- function(p, n, r, kern, lengths = 2^(floor(log2(n)):ceiling(log2(length(kern)))), name = ".MRC.ktable", pos = .MCstepR, inherits = TRUE, ...) {
   index <- 0
   if(exists(name, where = pos, inherits = inherits)) {
     tab <- get(name, pos = pos, inherits = inherits)

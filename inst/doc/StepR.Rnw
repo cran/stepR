@@ -151,6 +151,10 @@ library(knitr)
 # opts_chunk$set(fig.align='center', fig.height=5, warning=FALSE,
 #                dev='pdf', prompt=TRUE, comment=NA, highlight=FALSE, tidy=FALSE)
 library(stepR)
+
+savePathRcache <- R.cache::getCacheRootPath()
+
+R.cache::setCacheRootPath(path = file.path(R.cache::getCacheRootPath(), "test"))
 @
 
 \section{Introduction}
@@ -339,6 +343,13 @@ stat <- monteCarloSimulation(n = length(y), output = "maximum")
 identical(critVal(n = length(y), alpha = 0.5, stat = stat),
           critVal(n = length(y), alpha = 0.5,
                   options = list(load = list(), simulation = "vector")))
+@
+
+
+<<cleanup, echo = FALSE, message = FALSE>>=
+unlink(R.cache::getCacheRootPath(), force = TRUE, recursive = TRUE)
+
+R.cache::setCacheRootPath(savePathRcache)
 @
 
 

@@ -72,7 +72,7 @@ We refer to the different types as follow:
 The simulations can either be saved in the workspace in the variable \code{critValStepRTab} or persistently on the file system for which the package \code{\link{R.cache}} is used. Loading from the workspace is faster, but either the user has to store the workspace manually or in a new session simulations have to be performed again. Moreover, storing in and loading from variables and \link[=readRDS]{RDS} files is supported. Finally, a pre-computed collection of simulations of type \code{"matrixIncreased"} for parametric families \code{"gauss"} and \code{"hsmuce"} can be accessed by installing the package \code{stepRdata} available from \url{http://www.stochastik.math.uni-goettingen.de/stepRdata_1.0-0.tar.gz}.\cr
 
 \subsection{options$envir and options$dirs}{
-For loading from / saving in the workspace the variable \code{critValStepRTab} in the \code{\link{environment}} \code{options$envir} will be looked for and if missing in case of saving also created there. Moreover, the variable(s) specified in \code{options$save$variable} (explained in the Subsection \cite{Saving: options$save}) will be assigned to this \code{\link{environment}}. By default, the \link[=.GlobalEnv]{global environment} \code{.GlobalEnv} is used, i.e. \code{options$envir == .GlobalEnv}.\cr
+For loading from / saving in the workspace the variable \code{critValStepRTab} in the \code{\link{environment}} \code{options$envir} will be looked for and if missing in case of saving also created there. Moreover, the variable(s) specified in \code{options$save$variable} (explained in the Subsection \cite{Saving: options$save}) will be assigned to this \code{\link{environment}}. \code{options$envir} will be passed to the arguments \code{pos} and \code{where} in the functions \code{\link{assign}}, \code{\link{get}}, and \code{\link{exists}}, respectively. By default, a local enviroment in the package is used.\cr
 For loading from / saving on the file system \code{\link{loadCache}(key = keyList, dirs = options$dirs)} and \code{\link{saveCache}(stat, key = attr(stat, "keyList"), dirs = options$dirs)} are called, respectively. In other words, \code{options$dirs} has to be a \code{\link{character}} \code{\link{vector}} constituting the path to the cache subdirectory relative to the cache root directory as returned by \code{\link{getCacheRootPath}}(). If \code{options$dirs == ""} the path will be the cache root path. By default the subdirectory \code{"stepR"} is used, i.e. \code{options$dirs == "stepR"}. Missing directories will be created.
 }
 
@@ -123,6 +123,12 @@ Pein, F., Sieling, H., Munk, A. (2017) Heterogeneous change point inference. \em
 } 
 
 \examples{
+\dontshow{
+savePathRcache <- R.cache::getCacheRootPath()
+
+R.cache::setCacheRootPath(path = file.path(R.cache::getCacheRootPath(), "test"))
+}
+
 # vector of critical values
 qVector <- critVal(100L, alpha = 0.5)
 # global quantile
@@ -138,7 +144,7 @@ critVal(100L, alpha = 0.05, output = "value")
 # higher significance level for larger detection power, but less confidence
 critVal(100L, alpha = 0.99)
 critVal(100L, alpha = 0.99, output = "value")
-\dontrun{
+\donttest{
 # different parametric family, different intervalSystem, a subset of lengths,
 # different penalty and given weights
 q <- critVal(100L, alpha = 0.05, family = "hsmuce", intervalSystem = "dyaLen",
@@ -168,16 +174,22 @@ critVal(n = 100L, alpha = 0.05, messages = 1000L,
         options = list(simulation = "vector", load = list(workspace = "vector"),
                        save = list(workspace = "vector")))
 
-# simulation of type "matrix" will be saved in a RDS file and in a variable
+# simulation of type "matrix" will be saved in a RDS file
 # saving of type "vector" is disabled by passing "",
 # different seed is set and number of simulations is reduced to r = 1e3
 # to allow faster computation at the price of a less precise result
 file <- tempfile(pattern = "file", tmpdir = tempdir(), fileext = ".RDS")
 critVal(n = 100L, alpha = 0.05, seed = 1, r = 1e3,
         options = list(simulation = "matrix", load = list(),
-          save = list(variable = c("", "test"), RDSfile = c("", file))))
-identical(test, monteCarloSimulation(100L, seed = 1, r = 1e3))
+                       save = list(RDSfile = c("", file))))
 identical(readRDS(file), monteCarloSimulation(100L, seed = 1, r = 1e3))
-}}
+}
+
+\dontshow{
+unlink(R.cache::getCacheRootPath(), force = TRUE, recursive = TRUE)
+
+R.cache::setCacheRootPath(savePathRcache)
+}
+}
 
 \keyword{nonparametric}

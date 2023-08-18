@@ -34,6 +34,12 @@ Pein, F., Tecuapetla-Gómez, I., \enc{Schütte}{Schuette}, O., Steinem, C., Munk
 \seealso{\link{Distributions}, \code{\link{sdrobnorm}}, \code{\link{rnorm}}}
 
 \examples{
+\dontshow{
+savePathRcache <- R.cache::getCacheRootPath()
+
+R.cache::setCacheRootPath(path = file.path(R.cache::getCacheRootPath(), "test"))
+}
+
 # parametric family "gauss": independent gaussian errors with constant variance
 set.seed(1)
 x <- seq(1 / 100, 1, 1 / 100)
@@ -113,6 +119,12 @@ identical(stepFit(y, x = x, alpha = 0.5,family = "mDependentPS",
                   correlations = correlations,
                   sd = sdrobnorm(y, lag = length(correlations)),
                   jumpint = TRUE, confband = TRUE))
+                  
+\dontshow{
+unlink(R.cache::getCacheRootPath(), force = TRUE, recursive = TRUE)
+
+R.cache::setCacheRootPath(savePathRcache)
+}                  
 }
 
 \keyword{distribution}
