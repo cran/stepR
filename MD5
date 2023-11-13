@@ -1,5 +1,5 @@
-fbcefe01a4edef3c9d710b82796cd347 *ChangeLog
-a70edd55c4237515227ebc276a5669bd *DESCRIPTION
+8494dd8b29e5bf8a45692dd75b363b1f *ChangeLog
+c53508922fe7b194cc744f062f695edf *DESCRIPTION
 2a21d063c9f36ad608225d05670e23c5 *NAMESPACE
 a81711ab7bd30e1a3082da4fc8b86550 *R/AAA.R
 0f41e96c36d724499c08299cb5636fe0 *R/MRC.R
@@ -35,7 +35,7 @@ d6f91d9a403a51c53d655c788e66ddbf *R/transit.R
 918d7a043461f770183b9aa6489071bc *inst/CITATION
 c76dd41ab122f2ffa6833d7049ae1680 *inst/doc/StepR.R
 4d48b33ef9b1f90506e7710ffa28d38b *inst/doc/StepR.Rnw
-e0a541e6096c852f1cca64e2a7727506 *inst/doc/StepR.pdf
+27f37e7b88b4276b34980e6701869ef5 *inst/doc/StepR.pdf
 69453fea24c441a85530d083c95832e8 *inst/tests/comparisons/indices.R
 b6b9b32d58a89eafe791b04249a5f48c *inst/tests/comparisons/localCost.R
 c69c4e9dce7527d2daaa2f51c01de2bf *inst/tests/comparisons/localEst.R
@@ -152,7 +152,7 @@ c8b90fd60aea947fa7c5d9e43eb687be *src/StepPoisson.h
 f09842827deb59b784fc948c55c489be *src/choleskyDecomposition.cpp
 91318fdd57e6ff4590524ea2f0323fe9 *src/choleskyDecomposition.h
 51fe0bf9e2ee6391631f227b90ddf73c *src/init.c
-b1bee1e26311ae4e64b5acb625213ec4 *tests/tests.R
+341484f60e687367ad46338209eb83bd *tests/tests.R
 90c8473b8d0d08152b89301fd82f53d8 *tests/testthat.R
 165a71cea15cbcb158b9381be4f156e6 *tests/testthat/test-computeBounds.R
 51c4dff30fcafb1bd45564cd12f2626a *tests/testthat/test-computeStat.R

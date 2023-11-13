@@ -423,5 +423,5 @@ stopifnot(round(attr(sb,"conf.band")$upper - c(
 
 
 # check if any warnings were produced
-if(!is.null(warnings())) warnings()
-stopifnot(is.null(warnings()))
+warnings()
+stopifnot(length(warnings()) == 0)

@@ -1,3 +1,7 @@
+2023-11-13 Florian Pein, version 2.1-9
+
+  * tests.R: replaced is.null(warnings()) by length(warnings()) == 0  (reported with suggestion by Martin Maechler)
+
 2023-07-27 Florian Pein, version 2.1-8
 
   * DESCRIPTION: added explanation of SMUCE and HSMUCE (CRAN request)
