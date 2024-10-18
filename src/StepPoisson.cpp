@@ -74,7 +74,7 @@ double StepPoisson::costBound(unsigned int startIndex, unsigned int endIndex, co
     } else if( (S != 0) & (bound.upper == 0) ) {
       return R_PosInf; // impossible
     } else {
-      double mu = fmax2( fmin2( S / weight, bound.upper ), bound.lower );
+      double mu = Rf_fmax2( Rf_fmin2( S / weight, bound.upper ), bound.lower );
       return weight * mu - S * std::log(mu);
     }
   }
@@ -100,14 +100,14 @@ double StepPoisson::estBound(unsigned int startIndex, unsigned int endIndex, con
       #ifdef DEBUGbounded
       Rprintf("  si = %d, ei = %d, mean = %4.2e, lower = %4.2e, upper = %4.2e\n", startIndex, endIndex, mean, bound.lower, bound.upper);
       #endif
-      return fmax2( fmin2( mean, bound.upper ), bound.lower );
+      return Rf_fmax2( Rf_fmin2( mean, bound.upper ), bound.lower );
     } else {
       double weight = cw[endIndex] - cw[startIndex - 1];
       double mean = ( cs[endIndex] - cs[startIndex - 1] ) / weight;
       #ifdef DEBUGbounded
       Rprintf("  si = %d, ei = %d, mean = %4.2e, lower = %4.2e, upper = %4.2e\n", startIndex, endIndex, mean, bound.lower, bound.upper);
       #endif
-      return fmax2( fmin2( mean, bound.upper ), bound.lower );
+      return Rf_fmax2( Rf_fmin2( mean, bound.upper ), bound.lower );
     }
 }
 
@@ -129,15 +129,15 @@ extern "C" {
 ****************/
 SEXP forwardPoisson(SEXP cumSum, SEXP cumSumWe, SEXP maxBlocks) {
   // initialise object
-  StepPoisson data = StepPoisson(length(cumSum), INTEGER(cumSum), REAL(cumSumWe));
+  StepPoisson data = StepPoisson(Rf_length(cumSum), INTEGER(cumSum), REAL(cumSumWe));
   
   // check lengths
-  if(data.N < 1) error("cumSum must have at least one element");
-  if(length(cumSumWe) != (int) data.N) error("cumSumWe must have same length as cumSum");
-  if(length(maxBlocks) != 1) error("maxBlocks must be a single integer");
+  if(data.N < 1) Rf_error("cumSum must have at least one element");
+  if(Rf_length(cumSumWe) != (int) data.N) Rf_error("cumSumWe must have same length as cumSum");
+  if(Rf_length(maxBlocks) != 1) Rf_error("maxBlocks must be a single integer");
   
   // run algorithm
-  return data.forward(asInteger(maxBlocks));
+  return data.forward(Rf_asInteger(maxBlocks));
 }
 
 /*************
@@ -155,15 +155,15 @@ SEXP forwardPoisson(SEXP cumSum, SEXP cumSumWe, SEXP maxBlocks) {
 ****************/
 SEXP pathPoisson(SEXP cumSum, SEXP cumSumWe, SEXP maxBlocks) {
   // initialise object
-  StepPoisson data = StepPoisson(length(cumSum), INTEGER(cumSum), REAL(cumSumWe));
+  StepPoisson data = StepPoisson(Rf_length(cumSum), INTEGER(cumSum), REAL(cumSumWe));
   
   // check lengths
-  if(data.N <= 1) error("there must be more than one block");
-  if(length(cumSumWe) != (int) data.N) error("cumSumWe must have same length as cumSum");
-  if(length(maxBlocks) != 1) error("maxBlocks must be a single integer");
+  if(data.N <= 1) Rf_error("there must be more than one block");
+  if(Rf_length(cumSumWe) != (int) data.N) Rf_error("cumSumWe must have same length as cumSum");
+  if(Rf_length(maxBlocks) != 1) Rf_error("maxBlocks must be a single integer");
   
   // run algorithm
-  return data.path(asInteger(maxBlocks)); // the solution path, i.e. p[i, k] is the (i+1)th jump in the solution having k+1 jumps
+  return data.path(Rf_asInteger(maxBlocks)); // the solution path, i.e. p[i, k] is the (i+1)th jump in the solution having k+1 jumps
 }
 
 /*************
@@ -184,16 +184,16 @@ SEXP pathPoisson(SEXP cumSum, SEXP cumSumWe, SEXP maxBlocks) {
 ****************/
 SEXP boundedPoisson(SEXP cumSum, SEXP cumSumWe, SEXP start, SEXP rightIndex, SEXP lower, SEXP upper) {
   // initialise object
-  StepPoisson data = StepPoisson(length(cumSum), INTEGER(cumSum), REAL(cumSumWe), REAL(lower), REAL(upper));
+  StepPoisson data = StepPoisson(Rf_length(cumSum), INTEGER(cumSum), REAL(cumSumWe), REAL(lower), REAL(upper));
   
   // check lengths
-  if(data.N <= 1) error("there must be more than one block");
-  if(length(cumSumWe) != (int) data.N) error("length of cumSumWe must match cumSum's");
-  if(length(start) != (int) data.N) error("length of start must match cumSum's");
-  if(length(lower) != length(upper)) error("lower must have same length as upper");
-  if(length(upper) != length(rightIndex)) error("upper must have same length as rightIndex");
+  if(data.N <= 1) Rf_error("there must be more than one block");
+  if(Rf_length(cumSumWe) != (int) data.N) Rf_error("length of cumSumWe must match cumSum's");
+  if(Rf_length(start) != (int) data.N) Rf_error("length of start must match cumSum's");
+  if(Rf_length(lower) != Rf_length(upper)) Rf_error("lower must have same length as upper");
+  if(Rf_length(upper) != Rf_length(rightIndex)) Rf_error("upper must have same length as rightIndex");
   
-  Bounds B = Bounds(data.N, INTEGER(start), length(lower), INTEGER(rightIndex), REAL(lower), REAL(upper));
+  Bounds B = Bounds(data.N, INTEGER(start), Rf_length(lower), INTEGER(rightIndex), REAL(lower), REAL(upper));
   
   // run algorithm
   return data.bounded(B); // the optimal feasible solution using minimal number of jumps

@@ -26,7 +26,7 @@ Step::Step(unsigned int n, double* xlb, double* xub) : N(n), lb(xlb), ub(xub) {}
 * calculate cost of a block with boundary conditions, needs to be implemented for each derived class
 ****************/
 double Step::costBound(unsigned int startIndex, unsigned int endIndex, const LUBound& bound) const {
-  error("Step::costBound has to be overwritten!");
+  Rf_error("Step::costBound has to be overwritten!");
   return R_NaReal;
 }
 
@@ -35,7 +35,7 @@ double Step::costBound(unsigned int startIndex, unsigned int endIndex, const LUB
 * calculate eatimate of a block with boundary conditions, needs to be implemented for each derived class
 ****************/
 double Step::estBound(unsigned int startIndex, unsigned int endIndex, const LUBound& bound) const {
-  error("Step::estBound has to be overwritten!");
+  Rf_error("Step::estBound has to be overwritten!");
   return R_NaReal;
 }
 
@@ -57,7 +57,7 @@ Jump Step::findCandidate(const Jump& prev, const Jump& next) const {
   double fullcost = cost(prev.rightIndex + 1, next.rightIndex); // the cost of the entire block
   
   if(next.rightIndex - prev.rightIndex < 2) {
-    error("No room left for candidate!");
+    Rf_error("No room left for candidate!");
   } else {
     for(int i = prev.rightIndex + 1; i < next.rightIndex; i++) {
       pim = fullcost - ( cost(prev.rightIndex + 1, i) + cost(i + 1, next.rightIndex) );
@@ -89,8 +89,8 @@ Jump Step::findCandidate(const Jump& prev, const Jump& next) const {
 ****************/
 SEXP Step::forward(unsigned int maxBlocks) const {
   // check maxNum
-  if(maxBlocks < 1) error("there must be at least one block allowed");
-  if(maxBlocks > N) error("there may not be more than N blocks");
+  if(maxBlocks < 1) Rf_error("there must be at least one block allowed");
+  if(maxBlocks > N) Rf_error("there may not be more than N blocks");
   
   // initialize computation
   Jump before = Jump(); // "before" the observed data
@@ -127,7 +127,7 @@ SEXP Step::forward(unsigned int maxBlocks) const {
       // find best candidate again
       bt.first();
       while(bt.getValue().rightIndex != cand.rightIndex) {
-        if(!bt.next()) error("Could not find candidate %d again!", cand.rightIndex);
+        if(!bt.next()) Rf_error("Could not find candidate %d again!", cand.rightIndex);
       }
       
       // select best candidate
@@ -160,45 +160,45 @@ SEXP Step::forward(unsigned int maxBlocks) const {
   flattenTree(&bt, number, depth, rightIndex, improve, totalcost);
   
   // return data.frame
-  SEXP ret = allocVector(VECSXP, 4);
+  SEXP ret = Rf_allocVector(VECSXP, 4);
   PROTECT(ret);
   
-  SEXP names = allocVector(STRSXP, 4);
+  SEXP names = Rf_allocVector(STRSXP, 4);
   PROTECT(names);
-  SET_STRING_ELT(names, 0, mkChar("rightIndex"));
-  SET_STRING_ELT(names, 1, mkChar("number"));
-  SET_STRING_ELT(names, 2, mkChar("depth"));
-  SET_STRING_ELT(names, 3, mkChar("improve"));
-  ret = namesgets(ret, names);
+  SET_STRING_ELT(names, 0, Rf_mkChar("rightIndex"));
+  SET_STRING_ELT(names, 1, Rf_mkChar("number"));
+  SET_STRING_ELT(names, 2, Rf_mkChar("depth"));
+  SET_STRING_ELT(names, 3, Rf_mkChar("improve"));
+  ret = Rf_namesgets(ret, names);
   
-  SEXP rownames = allocVector(STRSXP, num);
+  SEXP rownames = Rf_allocVector(STRSXP, num);
   PROTECT(rownames);
   char buffer [8];
   for(unsigned int i = 0; i < num; i++) {
     // std::sprintf(buffer, "%d", i + 1);
     std::snprintf(buffer, sizeof(buffer), "%d", i + 1);
-    SET_STRING_ELT(rownames, i, mkChar(buffer));
+    SET_STRING_ELT(rownames, i, Rf_mkChar(buffer));
   }
-  setAttrib(ret, R_RowNamesSymbol, rownames);
+  Rf_setAttrib(ret, R_RowNamesSymbol, rownames);
     
-  SEXP sclass = allocVector(STRSXP, 1);
+  SEXP sclass = Rf_allocVector(STRSXP, 1);
   PROTECT(sclass);
-  SET_STRING_ELT(sclass, 0, mkChar("data.frame"));
-  classgets(ret, sclass);
+  SET_STRING_ELT(sclass, 0, Rf_mkChar("data.frame"));
+  Rf_classgets(ret, sclass);
   
-  SEXP ri = allocVector(INTSXP, num);
+  SEXP ri = Rf_allocVector(INTSXP, num);
   SET_VECTOR_ELT(ret, 0, ri);
   int *xri = INTEGER(ri);
   
-  SEXP n = allocVector(INTSXP, num);
+  SEXP n = Rf_allocVector(INTSXP, num);
   SET_VECTOR_ELT(ret, 1, n);
   int *xn = INTEGER(n);
   
-  SEXP d = allocVector(INTSXP, num);
+  SEXP d = Rf_allocVector(INTSXP, num);
   SET_VECTOR_ELT(ret, 2, d);
   int *xd = INTEGER(d);
   
-  SEXP im = allocVector(REALSXP, num);
+  SEXP im = Rf_allocVector(REALSXP, num);
   SET_VECTOR_ELT(ret, 3, im);
   double *xim = REAL(im);
   
@@ -210,10 +210,10 @@ SEXP Step::forward(unsigned int maxBlocks) const {
 //     Rprintf(" number = %d, depth = %d, rightIndex = %d\n", number[i], depth[i], rightIndex[i]);
   }
   
-  SEXP scost = allocVector(REALSXP, 1);
+  SEXP scost = Rf_allocVector(REALSXP, 1);
   PROTECT(scost);
   REAL(scost)[0] = totalcost;
-  setAttrib(ret, install("cost"), scost);
+  Rf_setAttrib(ret, Rf_install("cost"), scost);
   
   UNPROTECT(5);
   
@@ -289,8 +289,8 @@ SEXP Step::path(unsigned int maxBlocks) const {
   TriArrayFF<int> p(N - 1); // the solution path, i.e. p[i, k] is the (i+1)th jump in the solution having k+1 jumps
   
   // check maxBlocks
-  if(maxBlocks < 1) error("there must be at least one block allowed");
-  if(maxBlocks > N) error("there may not be more than N blocks");
+  if(maxBlocks < 1) Rf_error("there must be at least one block allowed");
+  if(maxBlocks > N) Rf_error("there may not be more than N blocks");
   
   // compute D
   for(unsigned int n = 0; n < N; n++) {
@@ -345,25 +345,25 @@ SEXP Step::path(unsigned int maxBlocks) const {
   }
   
   // return result
-  SEXP ret = allocVector(VECSXP, 2); // return list
+  SEXP ret = Rf_allocVector(VECSXP, 2); // return list
   PROTECT(ret);
   
-  SEXP names = allocVector(STRSXP, 2);
+  SEXP names = Rf_allocVector(STRSXP, 2);
   PROTECT(names);
-  SET_STRING_ELT(names, 0, mkChar("path")); // contains list of vectors comprising right Indices
-  SET_STRING_ELT(names, 1, mkChar("cost"));
-  ret = namesgets(ret, names);
+  SET_STRING_ELT(names, 0, Rf_mkChar("path")); // contains list of vectors comprising right Indices
+  SET_STRING_ELT(names, 1, Rf_mkChar("cost"));
+  ret = Rf_namesgets(ret, names);
   
-  SEXP path = allocVector(VECSXP, num);
+  SEXP path = Rf_allocVector(VECSXP, num);
   PROTECT(path);
   SET_VECTOR_ELT(ret, 0, path);
   
-  SEXP retCost = allocVector(REALSXP, num);
+  SEXP retCost = Rf_allocVector(REALSXP, num);
   PROTECT(retCost);
   SET_VECTOR_ELT(ret, 1, retCost);
   double *xcost = REAL(retCost);
   
-  SEXP solutionk = allocVector(INTSXP, 1); // vector of this solution's right indices 
+  SEXP solutionk = Rf_allocVector(INTSXP, 1); // vector of this solution's right indices 
   PROTECT(solutionk);
   SET_VECTOR_ELT(path, 0, solutionk);
   int *xsolutionk = INTEGER(solutionk);
@@ -372,7 +372,7 @@ SEXP Step::path(unsigned int maxBlocks) const {
   xsolutionk[0] = N; // only jump in this case is at the end
   
   for(unsigned int k = 1; k < num; k++){
-    solutionk = allocVector(INTSXP, k + 1); // vector of this solution's right indices 
+    solutionk = Rf_allocVector(INTSXP, k + 1); // vector of this solution's right indices 
     SET_VECTOR_ELT(path, k, solutionk);
     xsolutionk = INTEGER(solutionk);
     
@@ -479,44 +479,44 @@ SEXP Step::bounded(Bounds& B) const {
   }
   
   // return result
-  SEXP ret = allocVector(VECSXP, 4); // return list
+  SEXP ret = Rf_allocVector(VECSXP, 4); // return list
   PROTECT(ret);
   
   // create list which can be turned into a data.frame
-  SEXP names = allocVector(STRSXP, 4);
+  SEXP names = Rf_allocVector(STRSXP, 4);
   PROTECT(names);
-  SET_STRING_ELT(names, 0, mkChar("rightEnd")); // contains list of vectors comprising right Indices
-  SET_STRING_ELT(names, 1, mkChar("value"));
-  SET_STRING_ELT(names, 2, mkChar("endLeftBound"));
-  SET_STRING_ELT(names, 3, mkChar("endRightBound"));
-  namesgets(ret, names);
+  SET_STRING_ELT(names, 0, Rf_mkChar("rightEnd")); // contains list of vectors comprising right Indices
+  SET_STRING_ELT(names, 1, Rf_mkChar("value"));
+  SET_STRING_ELT(names, 2, Rf_mkChar("endLeftBound"));
+  SET_STRING_ELT(names, 3, Rf_mkChar("endRightBound"));
+  Rf_namesgets(ret, names);
 /*  SEXP clas = allocVector(STRSXP, 1);
   SET_STRING_ELT(clas, 0, mkChar("data.frame"));
   classgets(ret, clas);*/
   
-  SEXP rightEnd = allocVector(INTSXP, s + 1);
+  SEXP rightEnd = Rf_allocVector(INTSXP, s + 1);
   PROTECT(rightEnd);
   SET_VECTOR_ELT(ret, 0, rightEnd);
   int *xrightEnd = INTEGER(rightEnd);
   
   // return cost as attribute
-  SEXP xJ = ScalarReal(J[N-1]);
+  SEXP xJ = Rf_ScalarReal(J[N-1]);
   PROTECT(xJ);
-  SEXP costString = install("cost");
+  SEXP costString = Rf_install("cost");
   PROTECT(costString);
-  setAttrib(ret, costString, xJ);
+  Rf_setAttrib(ret, costString, xJ);
   
-  SEXP value = allocVector(REALSXP, s + 1);
+  SEXP value = Rf_allocVector(REALSXP, s + 1);
   PROTECT(value);
   SET_VECTOR_ELT(ret, 1, value);
   double *xvalue = REAL(value);
   
-  SEXP jumpLeftBound = allocVector(INTSXP, s + 1);
+  SEXP jumpLeftBound = Rf_allocVector(INTSXP, s + 1);
   PROTECT(jumpLeftBound);
   SET_VECTOR_ELT(ret, 2, jumpLeftBound);
   int *xjumpLeftBound = INTEGER(jumpLeftBound);
   
-  SEXP jumpRightBound = allocVector(INTSXP, s + 1);
+  SEXP jumpRightBound = Rf_allocVector(INTSXP, s + 1);
   PROTECT(jumpRightBound);
   SET_VECTOR_ELT(ret, 3, jumpRightBound);
   int *xjumpRightBound = INTEGER(jumpRightBound);
@@ -576,38 +576,38 @@ SEXP confBand(SEXP confLeft, SEXP confRight, SEXP start, SEXP rightIndex, SEXP l
   int minl; // minimal left index for this block
   
   // check lengths
-  if(length(confLeft) < 1) error("there must be at least one block");
-  if(length(confLeft) != length(confRight)) error("confLeft must have same length as confRight (number of blocks)");
-  if(cl[length(confLeft) - 1] != length(start)) error("confLeft must end with n, i.e. length of start");
-  if(cr[0] != 0) error("confRight must start with 0");
-  if(length(lower) != length(upper)) error("lower must have same length as upper");
-  if(length(upper) != length(rightIndex)) error("upper must have same length as rightIndex");
+  if(Rf_length(confLeft) < 1) Rf_error("there must be at least one block");
+  if(Rf_length(confLeft) != Rf_length(confRight)) Rf_error("confLeft must have same length as confRight (number of blocks)");
+  if(cl[Rf_length(confLeft) - 1] != Rf_length(start)) Rf_error("confLeft must end with n, i.e. length of start");
+  if(cr[0] != 0) Rf_error("confRight must start with 0");
+  if(Rf_length(lower) != Rf_length(upper)) Rf_error("lower must have same length as upper");
+  if(Rf_length(upper) != Rf_length(rightIndex)) Rf_error("upper must have same length as rightIndex");
   
-  Bounds B = Bounds(length(start), INTEGER(start), length(lower), INTEGER(rightIndex), REAL(lower), REAL(upper));
+  Bounds B = Bounds(Rf_length(start), INTEGER(start), Rf_length(lower), INTEGER(rightIndex), REAL(lower), REAL(upper));
 
   // allocate result
-  SEXP ret = allocVector(VECSXP, 2); // return list
+  SEXP ret = Rf_allocVector(VECSXP, 2); // return list
   PROTECT(ret);
   
   // create list which can be turned into a data.frame
-  SEXP names = allocVector(STRSXP, 2);
+  SEXP names = Rf_allocVector(STRSXP, 2);
   PROTECT(names);
-  SET_STRING_ELT(names, 0, mkChar("lower")); // contains list of vectors comprising right Indices
-  SET_STRING_ELT(names, 1, mkChar("upper"));
-  namesgets(ret, names);
+  SET_STRING_ELT(names, 0, Rf_mkChar("lower")); // contains list of vectors comprising right Indices
+  SET_STRING_ELT(names, 1, Rf_mkChar("upper"));
+  Rf_namesgets(ret, names);
 
-  SEXP low = allocVector(REALSXP, length(start));
+  SEXP low = Rf_allocVector(REALSXP, Rf_length(start));
   PROTECT(low);
   SET_VECTOR_ELT(ret, 0, low);
   double *xlow = REAL(low);
   
-  SEXP up = allocVector(REALSXP, length(start));
+  SEXP up = Rf_allocVector(REALSXP, Rf_length(start));
   PROTECT(up);
   SET_VECTOR_ELT(ret, 1, up);
   double *xup = REAL(up);
   
   // loop over blocks, note that cl, cr are R-style indices!
-  for(b = 0; b < length(confLeft); b++) {
+  for(b = 0; b < Rf_length(confLeft); b++) {
     
     // precompute bounds on "interior" of block, i.e. between right end of left jump's confidence interval and left end of right jumps's confidence interval
     // as well as on left extension if any
@@ -640,13 +640,13 @@ SEXP confBand(SEXP confLeft, SEXP confRight, SEXP start, SEXP rightIndex, SEXP l
         #ifdef DEBUGbounded
 	Rprintf("saving: b = %d, l = %d, k = %d\n", b, l, cl[b] - 1);
         #endif
-	xlow[l] = fmin2(xlow[l], cb.lower); // jump either befor or after
-	xup[l] = fmax2(xup[l], cb.upper); // jump either befor or after
+	xlow[l] = Rf_fmin2(xlow[l], cb.lower); // jump either befor or after
+	xup[l] = Rf_fmax2(xup[l], cb.upper); // jump either befor or after
       }
     }
     
     // extend boundaries from this block into right confidence interval (if any)
-    if(b + 1 < length(confLeft)) {
+    if(b + 1 < Rf_length(confLeft)) {
       for(k = cl[b]; k < cr[b+1]; k++) {
 	for(l = k - 1; l >= cr[b]; l--) { // precompute bounds on [l, k] for l >= cr[b], note that [k,k] had been computed at inititalization
 	  #ifdef DEBUGbounded

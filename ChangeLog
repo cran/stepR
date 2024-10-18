@@ -1,3 +1,9 @@
+2024-10-18 Florian Pein, version 2.1-10
+
+  * In multiple .cpp and .h files: set R_NO_REMAP and added Rf_ before all functions (error in the new CRAN version)
+  
+  * In computeBounds.Rd, critVal.Rd, stepFit.Rd, stepR-package.Rd: added package anchors for Rd \links
+  
 2023-11-13 Florian Pein, version 2.1-9
 
   * tests.R: replaced is.null(warnings()) by length(warnings()) == 0  (reported with suggestion by Martin Maechler)

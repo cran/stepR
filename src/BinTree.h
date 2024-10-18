@@ -15,6 +15,8 @@
   #include <cstddef>
   using std::size_t;
 #endif
+  
+#define R_NO_REMAP true  
 
 #include <R.h>
 #include <Rinternals.h>
@@ -76,7 +78,7 @@ class BinTree {
 
 template <class T>
 BinTree<T>::BinTree() {
-  error("BinTree needs to contain at least one node!");
+  Rf_error("BinTree needs to contain at least one node!");
 }
 
 template <class T>
@@ -121,7 +123,7 @@ int BinTree<T>::depth() {
 template <class T>
 void BinTree<T>::up() {
   if(s.size() == 1) {
-    error("There is no element above the root!");
+    Rf_error("There is no element above the root!");
   } else {
     s.pop();
   }
@@ -130,7 +132,7 @@ void BinTree<T>::up() {
 template <class T>
 void BinTree<T>::left() {
   if(isLeaf()) {
-    error("There is no element below a leaf!");
+    Rf_error("There is no element below a leaf!");
   } else {
     s.push(s.top()->left);
   }
@@ -139,7 +141,7 @@ void BinTree<T>::left() {
 template <class T>
 void BinTree<T>::right() {
   if(isLeaf()) {
-    error("There is no element below a leaf!");
+    Rf_error("There is no element below a leaf!");
   } else {
     s.push(s.top()->right);
   }
@@ -247,7 +249,7 @@ void BinTree<T>::addLeft(T value) {
     s.push(m);
     numNodes += 1;
   } else {
-    error("Cannot add element to non-leaf!");
+    Rf_error("Cannot add element to non-leaf!");
   }
 }
 
@@ -279,7 +281,7 @@ void BinTree<T>::addRight(T value) {
     s.push(m);
     numNodes += 1;
   } else {
-    error("Cannot add element to non-leaf!");
+    Rf_error("Cannot add element to non-leaf!");
   }
 }
 

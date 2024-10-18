@@ -1,5 +1,5 @@
 
-
+#define R_NO_REMAP true
 
 #include <R.h>
 #include <Rinternals.h>

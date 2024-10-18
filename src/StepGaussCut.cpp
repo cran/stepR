@@ -61,19 +61,19 @@ extern "C" {
 ****************/
 SEXP forwardGaussCut(SEXP bcumSum, SEXP bcumSumSq, SEXP bcumSumVar, SEXP acumSum, SEXP acumSumSq, SEXP acumSumVar, SEXP maxBlocks, SEXP cbefore, SEXP cafter) {
   // initialise object
-  StepGaussCut data = StepGaussCut(length(bcumSum), REAL(bcumSum), REAL(bcumSumSq), REAL(bcumSumVar), REAL(acumSum), REAL(acumSumSq), REAL(acumSumVar), asInteger(cbefore), asInteger(cafter));
+  StepGaussCut data = StepGaussCut(Rf_length(bcumSum), REAL(bcumSum), REAL(bcumSumSq), REAL(bcumSumVar), REAL(acumSum), REAL(acumSumSq), REAL(acumSumVar), Rf_asInteger(cbefore), Rf_asInteger(cafter));
   
   // check lengths
-  if(data.N < 1) error("bcumSum must have at least one element");
-  if(length(bcumSumSq) != (int) data.N) error("bcumSumSq must have same length as bcumSum");
-  if(length(bcumSumVar) != (int) data.N) error("bcumSumVar must have same length as bcumSum");
-  if(length(acumSum) != (int) data.N) error("acumSum must have same length as bcumSum");
-  if(length(acumSumSq) != (int) data.N) error("acumSumSq must have same length as bcumSum");
-  if(length(acumSumVar) != (int) data.N) error("acumSumVar must have same length as bcumSum");
-  if(length(maxBlocks) != 1) error("maxBlocks must be a single integer");
+  if(data.N < 1) Rf_error("bcumSum must have at least one element");
+  if(Rf_length(bcumSumSq) != (int) data.N) Rf_error("bcumSumSq must have same length as bcumSum");
+  if(Rf_length(bcumSumVar) != (int) data.N) Rf_error("bcumSumVar must have same length as bcumSum");
+  if(Rf_length(acumSum) != (int) data.N) Rf_error("acumSum must have same length as bcumSum");
+  if(Rf_length(acumSumSq) != (int) data.N) Rf_error("acumSumSq must have same length as bcumSum");
+  if(Rf_length(acumSumVar) != (int) data.N) Rf_error("acumSumVar must have same length as bcumSum");
+  if(Rf_length(maxBlocks) != 1) Rf_error("maxBlocks must be a single integer");
   
   // run algorithm
-  return data.forward(asInteger(maxBlocks));
+  return data.forward(Rf_asInteger(maxBlocks));
 }
 
 /*************
@@ -92,19 +92,19 @@ SEXP forwardGaussCut(SEXP bcumSum, SEXP bcumSumSq, SEXP bcumSumVar, SEXP acumSum
 ****************/
 SEXP pathGaussCut(SEXP bcumSum, SEXP bcumSumSq, SEXP bcumSumVar, SEXP acumSum, SEXP acumSumSq, SEXP acumSumVar, SEXP maxBlocks, SEXP cbefore, SEXP cafter) {
   // initialise object
-  StepGaussCut data = StepGaussCut(length(bcumSum), REAL(bcumSum), REAL(bcumSumSq), REAL(bcumSumVar), REAL(acumSum), REAL(acumSumSq), REAL(acumSumVar), asInteger(cbefore), asInteger(cafter));
+  StepGaussCut data = StepGaussCut(Rf_length(bcumSum), REAL(bcumSum), REAL(bcumSumSq), REAL(bcumSumVar), REAL(acumSum), REAL(acumSumSq), REAL(acumSumVar), Rf_asInteger(cbefore), Rf_asInteger(cafter));
   
   // check lengths
-  if(data.N < 1) error("cumSum must have at least one element");
-  if(length(bcumSumSq) != (int) data.N) error("bcumSumSq must have same length as bcumSum");
-  if(length(bcumSumVar) != (int) data.N) error("bcumSumVar must have same length as bcumSum");
-  if(length(acumSum) != (int) data.N) error("acumSum must have same length as bcumSum");
-  if(length(acumSumSq) != (int) data.N) error("acumSumSq must have same length as bcumSum");
-  if(length(acumSumVar) != (int) data.N) error("acumSumVar must have same length as bcumSum");
-  if(length(maxBlocks) != 1) error("maxBlocks must be a single integer");
+  if(data.N < 1) Rf_error("cumSum must have at least one element");
+  if(Rf_length(bcumSumSq) != (int) data.N) Rf_error("bcumSumSq must have same length as bcumSum");
+  if(Rf_length(bcumSumVar) != (int) data.N) Rf_error("bcumSumVar must have same length as bcumSum");
+  if(Rf_length(acumSum) != (int) data.N) Rf_error("acumSum must have same length as bcumSum");
+  if(Rf_length(acumSumSq) != (int) data.N) Rf_error("acumSumSq must have same length as bcumSum");
+  if(Rf_length(acumSumVar) != (int) data.N) Rf_error("acumSumVar must have same length as bcumSum");
+  if(Rf_length(maxBlocks) != 1) Rf_error("maxBlocks must be a single integer");
   
   // run algorithm
-  return data.path(asInteger(maxBlocks)); // the solution path, i.e. p[i, k] is the (i+1)th jump in the solution having k+1 jumps
+  return data.path(Rf_asInteger(maxBlocks)); // the solution path, i.e. p[i, k] is the (i+1)th jump in the solution having k+1 jumps
 }
 
 } // end C wrapper

@@ -54,12 +54,12 @@ double StepGauss::costBound(unsigned int startIndex, unsigned int endIndex, cons
   if(bound.lower > bound.upper) return R_PosInf; else
   if(startIndex == 0) {
     double mean = cs[endIndex] / csv[endIndex];
-    double bias = fmax2( fmin2( mean, bound.upper ), bound.lower ) - mean;
+    double bias = Rf_fmax2( Rf_fmin2( mean, bound.upper ), bound.lower ) - mean;
     return css[endIndex] + ( bias * bias - mean * mean ) * csv[endIndex] ; // all data
   } else {
     double weight = csv[endIndex] - csv[startIndex - 1];
     double mean = ( cs[endIndex] - cs[startIndex - 1] ) / weight;
-    double bias = fmax2( fmin2( mean, bound.upper ), bound.lower ) - mean;
+    double bias = Rf_fmax2( Rf_fmin2( mean, bound.upper ), bound.lower ) - mean;
     return css[endIndex] - css[startIndex - 1] + ( bias * bias - mean * mean ) * weight;
   }
 }
@@ -84,14 +84,14 @@ double StepGauss::estBound(unsigned int startIndex, unsigned int endIndex, const
     #ifdef DEBUGbounded
     Rprintf("  si = %d, ei = %d, mean = %4.2e, lower = %4.2e, upper = %4.2e\n", startIndex, endIndex, mean, bound.lower, bound.upper);
     #endif
-    return fmax2( fmin2( mean, bound.upper ), bound.lower );
+    return Rf_fmax2( Rf_fmin2( mean, bound.upper ), bound.lower );
   } else {
     double weight = csv[endIndex] - csv[startIndex - 1];
     double mean = ( cs[endIndex] - cs[startIndex - 1] ) / weight;
     #ifdef DEBUGbounded
     Rprintf("  si = %d, ei = %d, mean = %4.2e, lower = %4.2e, upper = %4.2e\n", startIndex, endIndex, mean, bound.lower, bound.upper);
     #endif
-    return fmax2( fmin2( mean, bound.upper ), bound.lower );
+    return Rf_fmax2( Rf_fmin2( mean, bound.upper ), bound.lower );
   }
 }
 
@@ -114,16 +114,16 @@ extern "C" {
 ****************/
 SEXP forwardGauss(SEXP cumSum, SEXP cumSumSq, SEXP cumSumVar, SEXP maxBlocks) {
   // initialise object
-  StepGauss data = StepGauss(length(cumSum), REAL(cumSum), REAL(cumSumSq), REAL(cumSumVar));
+  StepGauss data = StepGauss(Rf_length(cumSum), REAL(cumSum), REAL(cumSumSq), REAL(cumSumVar));
   
   // check lengths
-  if(data.N < 1) error("cumSum must have at least one element");
-  if(length(cumSumSq) != (int) data.N) error("cumSumSq must have same length as cumSum");
-  if(length(cumSumVar) != (int) data.N) error("cumSumVar must have same length as cumSum");
-  if(length(maxBlocks) != 1) error("maxBlocks must be a single integer");
+  if(data.N < 1) Rf_error("cumSum must have at least one element");
+  if(Rf_length(cumSumSq) != (int) data.N) Rf_error("cumSumSq must have same length as cumSum");
+  if(Rf_length(cumSumVar) != (int) data.N) Rf_error("cumSumVar must have same length as cumSum");
+  if(Rf_length(maxBlocks) != 1) Rf_error("maxBlocks must be a single integer");
   
   // run algorithm
-  return data.forward(asInteger(maxBlocks));
+  return data.forward(Rf_asInteger(maxBlocks));
 }
 
 /*************
@@ -142,16 +142,16 @@ SEXP forwardGauss(SEXP cumSum, SEXP cumSumSq, SEXP cumSumVar, SEXP maxBlocks) {
 ****************/
 SEXP pathGauss(SEXP cumSum, SEXP cumSumSq, SEXP cumSumVar, SEXP maxBlocks) {
   // initialise object
-  StepGauss data = StepGauss(length(cumSum), REAL(cumSum), REAL(cumSumSq), REAL(cumSumVar));
+  StepGauss data = StepGauss(Rf_length(cumSum), REAL(cumSum), REAL(cumSumSq), REAL(cumSumVar));
   
   // check lengths
-  if(data.N <= 1) error("there must be more than one block");
-  if(length(cumSumSq) != (int) data.N) error("length of cumSumSq must match cumSum's");
-  if(length(cumSumVar) != (int) data.N) error("length of cumSumVar must match cumSum's");
-  if(length(maxBlocks) != 1) error("maxBlocks must be a single integer");
+  if(data.N <= 1) Rf_error("there must be more than one block");
+  if(Rf_length(cumSumSq) != (int) data.N) Rf_error("length of cumSumSq must match cumSum's");
+  if(Rf_length(cumSumVar) != (int) data.N) Rf_error("length of cumSumVar must match cumSum's");
+  if(Rf_length(maxBlocks) != 1) Rf_error("maxBlocks must be a single integer");
   
   // run algorithm
-  return data.path(asInteger(maxBlocks)); // the solution path, i.e. p[i, k] is the (i+1)th jump in the solution having k+1 jumps
+  return data.path(Rf_asInteger(maxBlocks)); // the solution path, i.e. p[i, k] is the (i+1)th jump in the solution having k+1 jumps
 }
 
 /*************
@@ -173,17 +173,17 @@ SEXP pathGauss(SEXP cumSum, SEXP cumSumSq, SEXP cumSumVar, SEXP maxBlocks) {
 ****************/
 SEXP boundedGauss(SEXP cumSum, SEXP cumSumSq, SEXP cumSumVar, SEXP start, SEXP rightIndex, SEXP lower, SEXP upper) {
   // initialise object
-  StepGauss data = StepGauss(length(cumSum), REAL(cumSum), REAL(cumSumSq), REAL(cumSumVar), REAL(lower), REAL(upper));
+  StepGauss data = StepGauss(Rf_length(cumSum), REAL(cumSum), REAL(cumSumSq), REAL(cumSumVar), REAL(lower), REAL(upper));
   
   // check lengths
-  if(data.N <= 1) error("there must be more than one block");
-  if(length(cumSumSq) != (int) data.N) error("length of cumSumSq must match cumSum's");
-  if(length(cumSumVar) != (int) data.N) error("length of cumSumVar must match cumSum's");
-  if(length(start) != (int) data.N) error("length of start must match cumSum's");
-  if(length(lower) != length(upper)) error("lower must have same length as upper");
-  if(length(upper) != length(rightIndex)) error("upper must have same length as rightIndex");
+  if(data.N <= 1) Rf_error("there must be more than one block");
+  if(Rf_length(cumSumSq) != (int) data.N) Rf_error("length of cumSumSq must match cumSum's");
+  if(Rf_length(cumSumVar) != (int) data.N) Rf_error("length of cumSumVar must match cumSum's");
+  if(Rf_length(start) != (int) data.N) Rf_error("length of start must match cumSum's");
+  if(Rf_length(lower) != Rf_length(upper)) Rf_error("lower must have same length as upper");
+  if(Rf_length(upper) != Rf_length(rightIndex)) Rf_error("upper must have same length as rightIndex");
   
-  Bounds B = Bounds(data.N, INTEGER(start), length(lower), INTEGER(rightIndex), REAL(lower), REAL(upper));
+  Bounds B = Bounds(data.N, INTEGER(start), Rf_length(lower), INTEGER(rightIndex), REAL(lower), REAL(upper));
 
   // run algorithm
   return data.bounded(B); // the optimal feasible solution using minimal number of jumps

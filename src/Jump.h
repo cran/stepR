@@ -10,6 +10,8 @@
   #include <cstddef>
   using std::size_t;
 #endif
+  
+#define R_NO_REMAP true  
 
 #include <R.h>
 #include <Rinternals.h>

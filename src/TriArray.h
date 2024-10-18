@@ -24,36 +24,36 @@ class TriArray {
 
 template <class T>
 TriArray<T>::TriArray() {
-  error("TriArray needs a size!");
+  Rf_error("TriArray needs a size!");
 }
 
 template <class T>
 TriArray<T>::TriArray(unsigned int n) {
-  if(n <= 0) error("TriArray needs a postive size!");
+  if(n <= 0) Rf_error("TriArray needs a postive size!");
   size = n;
   array = (T*) R_alloc(( n * ( n + 1 )) / 2, sizeof(T)); // allocate storage, freed by R
 }
 
 template <class T>
 TriArray<T>::TriArray(unsigned int n, T* arr) {
-  if(n <= 0) error("TriArray needs a postive size!");
+  if(n <= 0) Rf_error("TriArray needs a postive size!");
   size = n;
   array = arr;
 }
 
 template <class T>
 T& TriArray<T>::operator()(unsigned int i, unsigned int j) {
-  if(i >= size) error("First index out of bound!");
-  if(j >= size) error("Second index out of bound!");
-  if(i > j) error("First index may not exceed second index!");
+  if(i >= size) Rf_error("First index out of bound!");
+  if(j >= size) Rf_error("Second index out of bound!");
+  if(i > j) Rf_error("First index may not exceed second index!");
   return array[i * size - (i * ( i - 1 )) / 2 + ( j - i )]; // we skip a triangle of size i-1 before this element
 }
 
 template <class T>
 const T& TriArray<T>::operator()(unsigned int i, unsigned int j) const {
-  if(i >= size) error("First index out of bound!");
-  if(j >= size) error("Second index out of bound!");
-  if(i > j) error("First index may not exceed second index!");
+  if(i >= size) Rf_error("First index out of bound!");
+  if(j >= size) Rf_error("Second index out of bound!");
+  if(i > j) Rf_error("First index may not exceed second index!");
   return array[size * i - (i * ( i - 1 )) / 2 + ( j - i )]; // we skip a triangle of size i-1 before this element
 }
 
@@ -79,16 +79,16 @@ class TriArrayFF : public TriArray<T> {
 
 template <class T>
 T& TriArrayFF<T>::operator()(unsigned int i, unsigned int j) {
-  if(i >= this->size) error("First index out of bound!");
-  if(j >= this->size) error("Second index out of bound!");
-  if(i > j) error("First index may not exceed second index!");
+  if(i >= this->size) Rf_error("First index out of bound!");
+  if(j >= this->size) Rf_error("Second index out of bound!");
+  if(i > j) Rf_error("First index may not exceed second index!");
   return this->array[(j * ( j + 1 )) / 2 + i]; // there is a triangle of size j before this element
 }
 
 template <class T>
 const T& TriArrayFF<T>::operator()(unsigned int i, unsigned int j) const {
-  if(i >= this->size) error("First index out of bound!");
-  if(j >= this->size) error("Second index out of bound!");
-  if(i > j) error("First index may not exceed second index!");
+  if(i >= this->size) Rf_error("First index out of bound!");
+  if(j >= this->size) Rf_error("Second index out of bound!");
+  if(i > j) Rf_error("First index may not exceed second index!");
   return this->array[(j * ( j + 1 )) / 2 + i]; // there is a triangle of size j before this element
 }

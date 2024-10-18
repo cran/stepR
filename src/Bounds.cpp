@@ -13,6 +13,8 @@
   #include <cstddef>
   using std::size_t;
 #endif
+  
+#define R_NO_REMAP true  
 
 #include <R.h>
 #include <Rmath.h>
@@ -38,8 +40,8 @@ LUBound::LUBound() : lower(R_NegInf), upper(R_PosInf) {}
 * add more constraints
 ****************/
 void LUBound::add(double lb, double ub) {
-  lower = fmax2(lower, lb);
-  upper = fmin2(upper, ub);
+  lower = Rf_fmax2(lower, lb);
+  upper = Rf_fmin2(upper, ub);
 }
 void LUBound::add(LUBound b) {
   add(b.lower, b.upper);
@@ -64,7 +66,7 @@ bool LUBound::feasible() {
 ****************/
 Bounds::Bounds(unsigned int n, int* xli, unsigned int ni, int* xri, double* xlb, double * xub) : N(n), li(xli), Ni(ni), ri(xri), lb(xlb), ub(xub) {
   // ensure there are bounds
-  if(Ni < 1) error("no bounds specified!");
+  if(Ni < 1) Rf_error("no bounds specified!");
 
   // allocate arrays
   nexti = (int*) R_alloc(N, sizeof(int));
@@ -100,7 +102,7 @@ Bounds::Bounds(unsigned int n, int* xli, unsigned int ni, int* xri, double* xlb,
     #ifdef DEBUGbounded
     Rprintf("i = %d, cb[i].lower = %4.3e, cb[i].upper = %4.3e\n", i, cb[i].lower, cb[i].upper);
     #endif
-    if(!cb[i].feasible()) error("bounds not feasible at index %d!", i);
+    if(!cb[i].feasible()) Rf_error("bounds not feasible at index %d!", i);
   }
 }
 
@@ -110,14 +112,14 @@ Bounds::Bounds(unsigned int n, int* xli, unsigned int ni, int* xri, double* xlb,
 ****************/
 LUBound Bounds::current(unsigned int l, unsigned int r) {
   // check whether these indices may be asked for
-  if(l >= N || r >= N  || r < l) error ("indices must fulfill l %d <= r %d < N %d", l, r, N);
-  if((int) r < cri[l]) error("for l %d we are already at cri %d, i.e. beyond r %d", l, cri[l], r);
-  if((int) r > cri[l] + 1) error("for l %d we are at cri %d, i.e. r %d is too far", l, cri[l], r);
+  if(l >= N || r >= N  || r < l) Rf_error ("indices must fulfill l %d <= r %d < N %d", l, r, N);
+  if((int) r < cri[l]) Rf_error("for l %d we are already at cri %d, i.e. beyond r %d", l, cri[l], r);
+  if((int) r > cri[l] + 1) Rf_error("for l %d we are at cri %d, i.e. r %d is too far", l, cri[l], r);
   // check whether we have already computed this one
   if(cri[l] == (int) r) return cb[l];
   // add already computed bound on [li+1,ri]
   if(l < N - 1 && cri[l + 1] != (int) r) {
-    error("bound for l + 1 = %d and r = %d needs to be available, but is at cri %d!", l + 1, r, cri[l + 1]);
+    Rf_error("bound for l + 1 = %d and r = %d needs to be available, but is at cri %d!", l + 1, r, cri[l + 1]);
   } else {
     cb[l].add(cb[l + 1]); // add constraint
   }

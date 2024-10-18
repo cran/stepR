@@ -48,16 +48,16 @@ extern "C" {
 ****************/
 SEXP forwardGaussInhibit(SEXP cumSum, SEXP cumSumSq, SEXP cumSumVar, SEXP maxBlocks, SEXP istart, SEXP imiddle, SEXP iend) {
   // initialise object
-  StepGaussInhibit data = StepGaussInhibit(length(cumSum), REAL(cumSum), REAL(cumSumSq), REAL(cumSumVar), asInteger(istart), asInteger(imiddle), asInteger(iend));
+  StepGaussInhibit data = StepGaussInhibit(Rf_length(cumSum), REAL(cumSum), REAL(cumSumSq), REAL(cumSumVar), Rf_asInteger(istart), Rf_asInteger(imiddle), Rf_asInteger(iend));
   
   // check lengths
-  if(data.N < 1) error("cumSum must have at least one element");
-  if(length(cumSumSq) != (int) data.N) error("cumSumSq must have same length as cumSum");
-  if(length(cumSumVar) != (int) data.N) error("cumSumVar must have same length as cumSum");
-  if(length(maxBlocks) != 1) error("maxBlocks must be a single integer");
+  if(data.N < 1) Rf_error("cumSum must have at least one element");
+  if(Rf_length(cumSumSq) != (int) data.N) Rf_error("cumSumSq must have same length as cumSum");
+  if(Rf_length(cumSumVar) != (int) data.N) Rf_error("cumSumVar must have same length as cumSum");
+  if(Rf_length(maxBlocks) != 1) Rf_error("maxBlocks must be a single integer");
   
   // run algorithm
-  return data.forward(asInteger(maxBlocks));
+  return data.forward(Rf_asInteger(maxBlocks));
 }
 
 /*************
@@ -76,16 +76,16 @@ SEXP forwardGaussInhibit(SEXP cumSum, SEXP cumSumSq, SEXP cumSumVar, SEXP maxBlo
 ****************/
 SEXP pathGaussInhibit(SEXP cumSum, SEXP cumSumSq, SEXP cumSumVar, SEXP maxBlocks, SEXP istart, SEXP imiddle, SEXP iend) {
   // initialise object
-  StepGaussInhibit data = StepGaussInhibit(length(cumSum), REAL(cumSum), REAL(cumSumSq), REAL(cumSumVar), asInteger(istart), asInteger(imiddle), asInteger(iend));
+  StepGaussInhibit data = StepGaussInhibit(Rf_length(cumSum), REAL(cumSum), REAL(cumSumSq), REAL(cumSumVar), Rf_asInteger(istart), Rf_asInteger(imiddle), Rf_asInteger(iend));
   
   // check lengths
-  if(data.N <= 1) error("there must be more than one block");
-  if(length(cumSumSq) != (int) data.N) error("length of cumSumSq must match cumSum's");
-  if(length(cumSumVar) != (int) data.N) error("cumSumVar of rightEnd must match cumSum's");
-  if(length(maxBlocks) != 1) error("maxBlocks must be a single integer");
+  if(data.N <= 1) Rf_error("there must be more than one block");
+  if(Rf_length(cumSumSq) != (int) data.N) Rf_error("length of cumSumSq must match cumSum's");
+  if(Rf_length(cumSumVar) != (int) data.N) Rf_error("cumSumVar of rightEnd must match cumSum's");
+  if(Rf_length(maxBlocks) != 1) Rf_error("maxBlocks must be a single integer");
   
   // run algorithm
-  return data.path(asInteger(maxBlocks)); // the solution path, i.e. p[i, k] is the (i+1)th jump in the solution having k+1 jumps
+  return data.path(Rf_asInteger(maxBlocks)); // the solution path, i.e. p[i, k] is the (i+1)th jump in the solution having k+1 jumps
 }
 
 } // end C wrapper
