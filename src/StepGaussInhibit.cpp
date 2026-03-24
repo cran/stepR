@@ -1,4 +1,6 @@
+#include <Rcpp.h>
 #include "StepGaussInhibit.h"
+
 
 /***************
 * class StepGauss
@@ -51,10 +53,10 @@ SEXP forwardGaussInhibit(SEXP cumSum, SEXP cumSumSq, SEXP cumSumVar, SEXP maxBlo
   StepGaussInhibit data = StepGaussInhibit(Rf_length(cumSum), REAL(cumSum), REAL(cumSumSq), REAL(cumSumVar), Rf_asInteger(istart), Rf_asInteger(imiddle), Rf_asInteger(iend));
   
   // check lengths
-  if(data.N < 1) Rf_error("cumSum must have at least one element");
-  if(Rf_length(cumSumSq) != (int) data.N) Rf_error("cumSumSq must have same length as cumSum");
-  if(Rf_length(cumSumVar) != (int) data.N) Rf_error("cumSumVar must have same length as cumSum");
-  if(Rf_length(maxBlocks) != 1) Rf_error("maxBlocks must be a single integer");
+  if(data.N < 1) Rcpp::stop("cumSum must have at least one element");
+  if(Rf_length(cumSumSq) != (int) data.N) Rcpp::stop("cumSumSq must have same length as cumSum");
+  if(Rf_length(cumSumVar) != (int) data.N) Rcpp::stop("cumSumVar must have same length as cumSum");
+  if(Rf_length(maxBlocks) != 1) Rcpp::stop("maxBlocks must be a single integer");
   
   // run algorithm
   return data.forward(Rf_asInteger(maxBlocks));
@@ -79,10 +81,10 @@ SEXP pathGaussInhibit(SEXP cumSum, SEXP cumSumSq, SEXP cumSumVar, SEXP maxBlocks
   StepGaussInhibit data = StepGaussInhibit(Rf_length(cumSum), REAL(cumSum), REAL(cumSumSq), REAL(cumSumVar), Rf_asInteger(istart), Rf_asInteger(imiddle), Rf_asInteger(iend));
   
   // check lengths
-  if(data.N <= 1) Rf_error("there must be more than one block");
-  if(Rf_length(cumSumSq) != (int) data.N) Rf_error("length of cumSumSq must match cumSum's");
-  if(Rf_length(cumSumVar) != (int) data.N) Rf_error("cumSumVar of rightEnd must match cumSum's");
-  if(Rf_length(maxBlocks) != 1) Rf_error("maxBlocks must be a single integer");
+  if(data.N <= 1) Rcpp::stop("there must be more than one block");
+  if(Rf_length(cumSumSq) != (int) data.N) Rcpp::stop("length of cumSumSq must match cumSum's");
+  if(Rf_length(cumSumVar) != (int) data.N) Rcpp::stop("cumSumVar of rightEnd must match cumSum's");
+  if(Rf_length(maxBlocks) != 1) Rcpp::stop("maxBlocks must be a single integer");
   
   // run algorithm
   return data.path(Rf_asInteger(maxBlocks)); // the solution path, i.e. p[i, k] is the (i+1)th jump in the solution having k+1 jumps

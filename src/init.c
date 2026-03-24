@@ -1,5 +1,7 @@
 
-#define R_NO_REMAP true
+#ifndef R_NO_REMAP
+#define R_NO_REMAP
+#endif
 
 #include <R.h>
 #include <Rinternals.h>

@@ -1,3 +1,12 @@
+2026-03-23 Florian Pein, version 2.1-11
+
+  * Replaced Rf_error by Rcpp::stop in BinTree.h, Bounds.cpp, Stepp.cpp, StepBinom.cpp, StepGauss.cpp,
+    StepGaussCut.cpp, StepGaussInhibit.cpp, StepGaussVar.cpp, StepPoisson.cpp, TriArray.h (suggested by Inaki Ucar)
+    
+  * Url to stepRdata package now uses https instead of http
+  
+  * Added guards for #define R_NO_REMAP
+
 2024-10-18 Florian Pein, version 2.1-10
 
   * In multiple .cpp and .h files: set R_NO_REMAP and added Rf_ before all functions (error in the new CRAN version)

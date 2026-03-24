@@ -1,4 +1,6 @@
+#include <Rcpp.h>
 #include "StepGaussCut.h"
+
 
 /***************
 * class StepGauss
@@ -64,13 +66,13 @@ SEXP forwardGaussCut(SEXP bcumSum, SEXP bcumSumSq, SEXP bcumSumVar, SEXP acumSum
   StepGaussCut data = StepGaussCut(Rf_length(bcumSum), REAL(bcumSum), REAL(bcumSumSq), REAL(bcumSumVar), REAL(acumSum), REAL(acumSumSq), REAL(acumSumVar), Rf_asInteger(cbefore), Rf_asInteger(cafter));
   
   // check lengths
-  if(data.N < 1) Rf_error("bcumSum must have at least one element");
-  if(Rf_length(bcumSumSq) != (int) data.N) Rf_error("bcumSumSq must have same length as bcumSum");
-  if(Rf_length(bcumSumVar) != (int) data.N) Rf_error("bcumSumVar must have same length as bcumSum");
-  if(Rf_length(acumSum) != (int) data.N) Rf_error("acumSum must have same length as bcumSum");
-  if(Rf_length(acumSumSq) != (int) data.N) Rf_error("acumSumSq must have same length as bcumSum");
-  if(Rf_length(acumSumVar) != (int) data.N) Rf_error("acumSumVar must have same length as bcumSum");
-  if(Rf_length(maxBlocks) != 1) Rf_error("maxBlocks must be a single integer");
+  if(data.N < 1) Rcpp::stop("bcumSum must have at least one element");
+  if(Rf_length(bcumSumSq) != (int) data.N) Rcpp::stop("bcumSumSq must have same length as bcumSum");
+  if(Rf_length(bcumSumVar) != (int) data.N) Rcpp::stop("bcumSumVar must have same length as bcumSum");
+  if(Rf_length(acumSum) != (int) data.N) Rcpp::stop("acumSum must have same length as bcumSum");
+  if(Rf_length(acumSumSq) != (int) data.N) Rcpp::stop("acumSumSq must have same length as bcumSum");
+  if(Rf_length(acumSumVar) != (int) data.N) Rcpp::stop("acumSumVar must have same length as bcumSum");
+  if(Rf_length(maxBlocks) != 1) Rcpp::stop("maxBlocks must be a single integer");
   
   // run algorithm
   return data.forward(Rf_asInteger(maxBlocks));
@@ -95,13 +97,13 @@ SEXP pathGaussCut(SEXP bcumSum, SEXP bcumSumSq, SEXP bcumSumVar, SEXP acumSum, S
   StepGaussCut data = StepGaussCut(Rf_length(bcumSum), REAL(bcumSum), REAL(bcumSumSq), REAL(bcumSumVar), REAL(acumSum), REAL(acumSumSq), REAL(acumSumVar), Rf_asInteger(cbefore), Rf_asInteger(cafter));
   
   // check lengths
-  if(data.N < 1) Rf_error("cumSum must have at least one element");
-  if(Rf_length(bcumSumSq) != (int) data.N) Rf_error("bcumSumSq must have same length as bcumSum");
-  if(Rf_length(bcumSumVar) != (int) data.N) Rf_error("bcumSumVar must have same length as bcumSum");
-  if(Rf_length(acumSum) != (int) data.N) Rf_error("acumSum must have same length as bcumSum");
-  if(Rf_length(acumSumSq) != (int) data.N) Rf_error("acumSumSq must have same length as bcumSum");
-  if(Rf_length(acumSumVar) != (int) data.N) Rf_error("acumSumVar must have same length as bcumSum");
-  if(Rf_length(maxBlocks) != 1) Rf_error("maxBlocks must be a single integer");
+  if(data.N < 1) Rcpp::stop("cumSum must have at least one element");
+  if(Rf_length(bcumSumSq) != (int) data.N) Rcpp::stop("bcumSumSq must have same length as bcumSum");
+  if(Rf_length(bcumSumVar) != (int) data.N) Rcpp::stop("bcumSumVar must have same length as bcumSum");
+  if(Rf_length(acumSum) != (int) data.N) Rcpp::stop("acumSum must have same length as bcumSum");
+  if(Rf_length(acumSumSq) != (int) data.N) Rcpp::stop("acumSumSq must have same length as bcumSum");
+  if(Rf_length(acumSumVar) != (int) data.N) Rcpp::stop("acumSumVar must have same length as bcumSum");
+  if(Rf_length(maxBlocks) != 1) Rcpp::stop("maxBlocks must be a single integer");
   
   // run algorithm
   return data.path(Rf_asInteger(maxBlocks)); // the solution path, i.e. p[i, k] is the (i+1)th jump in the solution having k+1 jumps

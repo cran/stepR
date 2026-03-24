@@ -1,5 +1,7 @@
+#include <Rcpp.h>
 #include "Step.h"
 #include <cstdio>
+
 
 /***************
 * class Step
@@ -26,7 +28,7 @@ Step::Step(unsigned int n, double* xlb, double* xub) : N(n), lb(xlb), ub(xub) {}
 * calculate cost of a block with boundary conditions, needs to be implemented for each derived class
 ****************/
 double Step::costBound(unsigned int startIndex, unsigned int endIndex, const LUBound& bound) const {
-  Rf_error("Step::costBound has to be overwritten!");
+  Rcpp::stop("Step::costBound has to be overwritten!");
   return R_NaReal;
 }
 
@@ -35,7 +37,7 @@ double Step::costBound(unsigned int startIndex, unsigned int endIndex, const LUB
 * calculate eatimate of a block with boundary conditions, needs to be implemented for each derived class
 ****************/
 double Step::estBound(unsigned int startIndex, unsigned int endIndex, const LUBound& bound) const {
-  Rf_error("Step::estBound has to be overwritten!");
+  Rcpp::stop("Step::estBound has to be overwritten!");
   return R_NaReal;
 }
 
@@ -57,7 +59,7 @@ Jump Step::findCandidate(const Jump& prev, const Jump& next) const {
   double fullcost = cost(prev.rightIndex + 1, next.rightIndex); // the cost of the entire block
   
   if(next.rightIndex - prev.rightIndex < 2) {
-    Rf_error("No room left for candidate!");
+    Rcpp::stop("No room left for candidate!");
   } else {
     for(int i = prev.rightIndex + 1; i < next.rightIndex; i++) {
       pim = fullcost - ( cost(prev.rightIndex + 1, i) + cost(i + 1, next.rightIndex) );
@@ -89,8 +91,8 @@ Jump Step::findCandidate(const Jump& prev, const Jump& next) const {
 ****************/
 SEXP Step::forward(unsigned int maxBlocks) const {
   // check maxNum
-  if(maxBlocks < 1) Rf_error("there must be at least one block allowed");
-  if(maxBlocks > N) Rf_error("there may not be more than N blocks");
+  if(maxBlocks < 1) Rcpp::stop("there must be at least one block allowed");
+  if(maxBlocks > N) Rcpp::stop("there may not be more than N blocks");
   
   // initialize computation
   Jump before = Jump(); // "before" the observed data
@@ -127,7 +129,7 @@ SEXP Step::forward(unsigned int maxBlocks) const {
       // find best candidate again
       bt.first();
       while(bt.getValue().rightIndex != cand.rightIndex) {
-        if(!bt.next()) Rf_error("Could not find candidate %d again!", cand.rightIndex);
+        if(!bt.next()) Rcpp::stop("Could not find candidate %d again!", cand.rightIndex);
       }
       
       // select best candidate
@@ -289,8 +291,8 @@ SEXP Step::path(unsigned int maxBlocks) const {
   TriArrayFF<int> p(N - 1); // the solution path, i.e. p[i, k] is the (i+1)th jump in the solution having k+1 jumps
   
   // check maxBlocks
-  if(maxBlocks < 1) Rf_error("there must be at least one block allowed");
-  if(maxBlocks > N) Rf_error("there may not be more than N blocks");
+  if(maxBlocks < 1) Rcpp::stop("there must be at least one block allowed");
+  if(maxBlocks > N) Rcpp::stop("there may not be more than N blocks");
   
   // compute D
   for(unsigned int n = 0; n < N; n++) {
@@ -576,12 +578,12 @@ SEXP confBand(SEXP confLeft, SEXP confRight, SEXP start, SEXP rightIndex, SEXP l
   int minl; // minimal left index for this block
   
   // check lengths
-  if(Rf_length(confLeft) < 1) Rf_error("there must be at least one block");
-  if(Rf_length(confLeft) != Rf_length(confRight)) Rf_error("confLeft must have same length as confRight (number of blocks)");
-  if(cl[Rf_length(confLeft) - 1] != Rf_length(start)) Rf_error("confLeft must end with n, i.e. length of start");
-  if(cr[0] != 0) Rf_error("confRight must start with 0");
-  if(Rf_length(lower) != Rf_length(upper)) Rf_error("lower must have same length as upper");
-  if(Rf_length(upper) != Rf_length(rightIndex)) Rf_error("upper must have same length as rightIndex");
+  if(Rf_length(confLeft) < 1) Rcpp::stop("there must be at least one block");
+  if(Rf_length(confLeft) != Rf_length(confRight)) Rcpp::stop("confLeft must have same length as confRight (number of blocks)");
+  if(cl[Rf_length(confLeft) - 1] != Rf_length(start)) Rcpp::stop("confLeft must end with n, i.e. length of start");
+  if(cr[0] != 0) Rcpp::stop("confRight must start with 0");
+  if(Rf_length(lower) != Rf_length(upper)) Rcpp::stop("lower must have same length as upper");
+  if(Rf_length(upper) != Rf_length(rightIndex)) Rcpp::stop("upper must have same length as rightIndex");
   
   Bounds B = Bounds(Rf_length(start), INTEGER(start), Rf_length(lower), INTEGER(rightIndex), REAL(lower), REAL(upper));
 

@@ -1,5 +1,7 @@
+#include <Rcpp.h>
 #include "StepGaussVar.h"
 #include <cmath>
+
 
 /***************
 * class StepGaussVar
@@ -116,9 +118,9 @@ SEXP forwardGaussVar(SEXP cumSumSq, SEXP cumSumVar, SEXP maxBlocks) {
   StepGaussVar data = StepGaussVar(Rf_length(cumSumSq), REAL(cumSumSq), REAL(cumSumVar));
   
   // check lengths
-  if(data.N < 1) Rf_error("cumSum must have at least one element");
-  if(Rf_length(cumSumVar) != (int) data.N) Rf_error("cumSumVar must have same length as cumSum");
-  if(Rf_length(maxBlocks) != 1) Rf_error("maxBlocks must be a single integer");
+  if(data.N < 1) Rcpp::stop("cumSum must have at least one element");
+  if(Rf_length(cumSumVar) != (int) data.N) Rcpp::stop("cumSumVar must have same length as cumSum");
+  if(Rf_length(maxBlocks) != 1) Rcpp::stop("maxBlocks must be a single integer");
   
   // run algorithm
   return data.forward(Rf_asInteger(maxBlocks));
@@ -142,9 +144,9 @@ SEXP pathGaussVar(SEXP cumSumSq, SEXP cumSumVar, SEXP maxBlocks) {
   StepGaussVar data = StepGaussVar(Rf_length(cumSumSq), REAL(cumSumSq), REAL(cumSumVar));
   
   // check lengths
-  if(data.N <= 1) Rf_error("there must be more than one block");
-  if(Rf_length(cumSumVar) != (int) data.N) Rf_error("length of cumSumVar must match cumSum's");
-  if(Rf_length(maxBlocks) != 1) Rf_error("maxBlocks must be a single integer");
+  if(data.N <= 1) Rcpp::stop("there must be more than one block");
+  if(Rf_length(cumSumVar) != (int) data.N) Rcpp::stop("length of cumSumVar must match cumSum's");
+  if(Rf_length(maxBlocks) != 1) Rcpp::stop("maxBlocks must be a single integer");
   
   // run algorithm
   return data.path(Rf_asInteger(maxBlocks)); // the solution path, i.e. p[i, k] is the (i+1)th jump in the solution having k+1 jumps
@@ -171,11 +173,11 @@ SEXP boundedGaussVar(SEXP cumSumSq, SEXP cumSumVar, SEXP start, SEXP rightIndex,
   StepGaussVar data = StepGaussVar(Rf_length(cumSumSq), REAL(cumSumSq), REAL(cumSumVar), REAL(lower), REAL(upper));
   
   // check lengths
-  if(data.N <= 1) Rf_error("there must be more than one block");
-  if(Rf_length(cumSumVar) != (int) data.N) Rf_error("length of cumSumVar must match cumSum's");
-  if(Rf_length(start) != (int) data.N) Rf_error("length of start must match cumSum's");
-  if(Rf_length(lower) != Rf_length(upper)) Rf_error("lower must have same length as upper");
-  if(Rf_length(upper) != Rf_length(rightIndex)) Rf_error("upper must have same length as rightIndex");
+  if(data.N <= 1) Rcpp::stop("there must be more than one block");
+  if(Rf_length(cumSumVar) != (int) data.N) Rcpp::stop("length of cumSumVar must match cumSum's");
+  if(Rf_length(start) != (int) data.N) Rcpp::stop("length of start must match cumSum's");
+  if(Rf_length(lower) != Rf_length(upper)) Rcpp::stop("lower must have same length as upper");
+  if(Rf_length(upper) != Rf_length(rightIndex)) Rcpp::stop("upper must have same length as rightIndex");
   
   Bounds B = Bounds(data.N, INTEGER(start), Rf_length(lower), INTEGER(rightIndex), REAL(lower), REAL(upper));
 
